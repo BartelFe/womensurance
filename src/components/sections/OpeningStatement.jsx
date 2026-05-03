@@ -134,7 +134,7 @@ export default function OpeningStatement() {
                 className="absolute top-0 bottom-0 flex flex-col items-center"
                 style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}
               >
-                <div className="pt-[76px] flex flex-col items-center gap-[4px]">
+                <div className="pt-2 md:pt-[76px] flex flex-col items-center gap-[4px]">
                   <span
                     className="font-mono"
                     style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgba(244,237,228,0.60)' }}
