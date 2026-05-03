@@ -4,6 +4,18 @@ import BackgroundField from '../canvas/BackgroundField';
 import { splitChars } from '../../utils/splitText';
 import ScrollHint from '../ui/ScrollHint';
 
+// Life phases mapped to percentage positions across the right chart area (0–100 %)
+// SVG viewBox is 0 0 600 400 → multiply pos by 6 to get SVG x-coordinate
+const LIFE_PHASES = [
+  { age: '25', label: 'AUSBILDUNG',   pos: 4  },
+  { age: '28', label: 'ERSTER JOB',  pos: 18 },
+  { age: '32', label: 'BEZIEHUNG',   pos: 34 },
+  { age: '35', label: 'KIND',        pos: 50 },
+  { age: '42', label: 'TEILZEIT',    pos: 65 },
+  { age: '50', label: 'CARE-ARBEIT', pos: 80 },
+  { age: '67', label: 'RENTE',       pos: 96 },
+];
+
 export default function OpeningStatement() {
   const headlineRef = useRef(null);
   const subRef = useRef(null);
@@ -21,7 +33,6 @@ export default function OpeningStatement() {
     const maleLine = maleLineRef.current;
     const femaleLine = femaleLineRef.current;
 
-    // Prime the draw animation (set dashoffset = full length = invisible)
     if (maleLine && femaleLine) {
       const mLen = maleLine.getTotalLength();
       const fLen = femaleLine.getTotalLength();
@@ -36,18 +47,12 @@ export default function OpeningStatement() {
       { opacity: 0, y: 12 },
       { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
     );
-
     tl.fromTo(
       allChars,
       { yPercent: 110, opacity: 0 },
-      {
-        yPercent: 0, opacity: 1, duration: 0.9,
-        stagger: { each: 0.012, from: 'start' },
-        ease: 'power4.out',
-      },
+      { yPercent: 0, opacity: 1, duration: 0.9, stagger: { each: 0.012, from: 'start' }, ease: 'power4.out' },
       '-=0.2'
     );
-
     tl.fromTo(
       subRef.current,
       { opacity: 0, y: 16 },
@@ -55,7 +60,6 @@ export default function OpeningStatement() {
       '-=0.4'
     );
 
-    // Draw the diverging lines after headline finishes
     if (maleLine && femaleLine) {
       tl.to(maleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, '-=0.3');
       tl.to(femaleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, '<0.15');
@@ -72,7 +76,7 @@ export default function OpeningStatement() {
     >
       <BackgroundField />
 
-      {/* Row 1: Top eyebrow */}
+      {/* Row 1 */}
       <div className="relative z-10 px-6 md:px-12 pt-24">
         <div ref={eyebrowRef} className="eyebrow text-paper/40 flex items-center gap-3">
           <span className="h-px w-8 bg-paper/30" />
@@ -80,9 +84,10 @@ export default function OpeningStatement() {
         </div>
       </div>
 
-      {/* Row 2: Headline (left) + abstract lines (right) */}
-      <div className="relative z-10 flex items-center px-6 md:px-12 gap-0">
-        {/* Left: text content */}
+      {/* Row 2: text (left) + chart area (right) */}
+      <div className="relative z-10 flex items-center px-6 md:px-12">
+
+        {/* ── Left column: typography, unchanged ── */}
         <div className="w-full md:w-[55%] shrink-0">
           <h1
             ref={headlineRef}
@@ -102,56 +107,99 @@ export default function OpeningStatement() {
             className="mt-8 max-w-md body-lead text-paper/60"
             style={{ fontSize: 'clamp(0.9rem, 1.1vw, 1.1rem)' }}
           >
-            Eine Beratung, die nicht zuhört, ist eine Verkaufsfläche. Diese Seite fängt nicht mit einem Produkt an. Sie fängt mit einer Zahl an, die dich betrifft.
+            Eine Beratung, die nicht zuhört, ist eine Verkaufsfläche. Diese Seite fängt
+            nicht mit einem Produkt an. Sie fängt mit einer Zahl an, die dich betrifft.
           </div>
         </div>
 
-        {/* Right: abstract diverging lines — desktop only */}
+        {/* ── Right column: life-phase grid + diverging curves ── */}
         <div className="hidden md:block flex-1 self-stretch relative pointer-events-none">
+
+          {/* Left-edge fade — blends chart into the typography column */}
+          <div
+            className="absolute inset-y-0 left-0 w-20 z-20 pointer-events-none"
+            style={{ background: 'linear-gradient(to right, #0a0807, transparent)' }}
+          />
+
+          {/* Life-phase vertical grid lines + labels — z-[5], behind curves */}
+          <div className="absolute inset-0 z-[5]">
+            {LIFE_PHASES.map(({ age, label, pos }) => (
+              <div
+                key={age}
+                className="absolute top-0 bottom-0 flex flex-col items-center"
+                style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}
+              >
+                {/* Age + station label */}
+                <div className="pt-[76px] flex flex-col items-center gap-[4px]">
+                  <span
+                    className="font-mono"
+                    style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgba(244,237,228,0.25)' }}
+                  >
+                    {age}
+                  </span>
+                  <span
+                    className="font-mono"
+                    style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgba(244,237,228,0.12)', whiteSpace: 'nowrap' }}
+                  >
+                    {label}
+                  </span>
+                </div>
+                {/* Vertical rule */}
+                <div
+                  className="w-px mt-2"
+                  style={{ flex: 1, background: 'rgba(244,237,228,0.07)' }}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/*
+            SVG curves — z-[10], on top of the grid.
+
+            SVG x-coordinates match grid positions:
+              pos %  ×  6  =  SVG x
+              AUSBILDUNG  24  · ERSTER JOB 108 · BEZIEHUNG 204
+              KIND       300  · TEILZEIT   390 · CARE      480  · RENTE 576
+
+            Both lines start at y=200 (vertical centre).
+            Male  rises  → pension keeps growing.
+            Female drops → gap opens from KIND onward.
+          */}
           <svg
             viewBox="0 0 600 400"
-            className="absolute inset-0 w-full h-full"
+            className="absolute inset-0 w-full h-full z-[10]"
             preserveAspectRatio="none"
             aria-hidden="true"
           >
-            <defs>
-              {/* Fade mask: transparent → opaque → transparent, left to right */}
-              <linearGradient id="heroLineFade" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%"   stopColor="white" stopOpacity="0" />
-                <stop offset="14%"  stopColor="white" stopOpacity="1" />
-                <stop offset="80%"  stopColor="white" stopOpacity="1" />
-                <stop offset="100%" stopColor="white" stopOpacity="0" />
-              </linearGradient>
-              <mask id="heroLineMask">
-                <rect width="600" height="400" fill="url(#heroLineFade)" />
-              </mask>
-            </defs>
-
-            <g mask="url(#heroLineMask)">
-              {/* White line — diverges upward */}
-              <path
-                ref={maleLineRef}
-                d="M 0 198 C 80 196, 200 178, 340 148 S 510 80, 600 48"
-                fill="none"
-                stroke="#f4ede4"
-                strokeWidth="0.85"
-                opacity="0.45"
-              />
-              {/* Pink line — diverges downward */}
-              <path
-                ref={femaleLineRef}
-                d="M 0 202 C 80 204, 200 222, 340 256 S 510 328, 600 358"
-                fill="none"
-                stroke="#ff2e88"
-                strokeWidth="0.85"
-                opacity="0.75"
-              />
-            </g>
+            {/* Male — diverges upward */}
+            <path
+              ref={maleLineRef}
+              d="M 0,200 C 40,198 85,193 108,187
+                 C 165,172 240,154 300,136
+                 C 355,120 430,94 480,70
+                 C 528,48 568,38 600,33"
+              fill="none"
+              stroke="#f4ede4"
+              strokeWidth="1"
+              opacity="0.4"
+            />
+            {/* Female — diverges downward */}
+            <path
+              ref={femaleLineRef}
+              d="M 0,200 C 40,202 85,207 108,213
+                 C 165,227 240,248 300,268
+                 C 355,284 430,318 480,344
+                 C 528,368 568,378 600,384"
+              fill="none"
+              stroke="#ff2e88"
+              strokeWidth="1"
+              opacity="0.8"
+            />
           </svg>
         </div>
       </div>
 
-      {/* Row 3: Bottom bar */}
+      {/* Row 3 */}
       <div className="relative z-10 px-6 md:px-12 pb-10 flex items-end justify-between">
         <ScrollHint label="Beginnen" />
         <div className="hidden md:flex flex-col items-end gap-3 text-right">
