@@ -10,7 +10,8 @@ export default function TheGap() {
   const pinRef = useRef(null);
   const numRef = useRef(null);
   const labelRef = useRef(null);
-  const introRef = useRef(null);
+  const introMobileRef = useRef(null);
+  const introDesktopRef = useRef(null);
   const linesRef = useRef(null);
   const tickerRef = useRef(null);
 
@@ -19,10 +20,9 @@ export default function TheGap() {
     const pin = pinRef.current;
     const num = numRef.current;
     const label = labelRef.current;
-    const intro = introRef.current;
     const lines = linesRef.current;
     const ticker = tickerRef.current;
-    if (!root_ || !pin || !num || !label || !intro || !lines || !ticker) return;
+    if (!root_ || !pin || !num || !label || !lines || !ticker) return;
 
     const malePath = lines.querySelector('#male-line');
     const femalePath = lines.querySelector('#female-line');
@@ -46,7 +46,12 @@ export default function TheGap() {
       },
     });
 
-    tl.to(intro, { opacity: 0, y: -40, duration: 0.5 }, 0);
+    // Fade out intro question(s) — both mobile and desktop elements, whichever is visible
+    const introEls = [introMobileRef.current, introDesktopRef.current].filter(Boolean);
+    if (introEls.length) {
+      tl.to(introEls, { opacity: 0, y: 30, duration: 0.5 }, 0);
+    }
+
     tl.to(malePath, { strokeDashoffset: 0, duration: 1, ease: 'none' }, 0.3);
     tl.to(femalePath, { strokeDashoffset: 0, duration: 1, ease: 'none' }, 0.5);
     tl.to(dashedPath, { strokeDashoffset: 0, duration: 0.7, ease: 'none' }, 1.0);
@@ -77,18 +82,6 @@ export default function TheGap() {
   return (
     <section ref={root} id="gap" className="relative bg-ink text-paper">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden flex flex-col">
-
-        {/* Intro overlay */}
-        <div ref={introRef} className="absolute inset-0 flex flex-col items-center justify-center px-6 z-20 pointer-events-none">
-          <div className="eyebrow text-paper/40 mb-6">Akt 01 · Die Lücke</div>
-          <h2
-            className="display-xl text-paper text-balance text-center max-w-5xl"
-            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}
-          >
-            Wenn zwei gleich starten,<br />
-            warum endet sie <span className="display-italic text-pink">unten</span>?
-          </h2>
-        </div>
 
         {/* SVG chart — occupies upper portion */}
         <div className="flex-1 relative min-h-0">
@@ -135,33 +128,70 @@ export default function TheGap() {
           </svg>
         </div>
 
-        {/* Bottom data bar — no overlap with chart */}
-        <div className="relative z-10 shrink-0 border-t border-paper/10 bg-ink/80 backdrop-blur-sm px-6 md:px-12 py-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <div className="eyebrow text-paper/40 mb-2">Gender Pension Gap</div>
-            <div
-              ref={numRef}
-              className="data-num text-pink leading-none"
-              style={{ fontSize: 'clamp(4rem, 12vw, 12rem)' }}
+        {/* Bottom data bar */}
+        <div className="relative z-10 shrink-0 border-t border-paper/10 bg-ink/80 backdrop-blur-sm px-6 md:px-12 py-6">
+
+          {/* Mobile: intro question sits above the number, centered */}
+          <div
+            ref={introMobileRef}
+            className="md:hidden text-center mb-5 pointer-events-none"
+          >
+            <div className="eyebrow text-paper/40 mb-2">Akt 01 · Die Lücke</div>
+            <h2
+              className="display-xl text-paper text-balance"
+              style={{ fontSize: 'clamp(1.4rem, 4.5vw, 2.2rem)', lineHeight: 1.15 }}
             >
-              −0.0
-            </div>
-            <div
-              ref={labelRef}
-              className="display-italic text-paper/80 mt-2 max-w-sm"
-              style={{ fontSize: 'clamp(1rem, 1.5vw, 1.5rem)' }}
-            >
-              Prozent weniger Rente. Im Schnitt. In Deutschland. Heute.
-            </div>
+              Wenn zwei gleich starten,<br />
+              warum endet sie <span className="display-italic text-pink">unten</span>?
+            </h2>
           </div>
 
-          <div ref={tickerRef} className="flex flex-col gap-3 md:max-w-xs md:pb-1">
-            {gapStats.slice(1).map((s) => (
-              <div key={s.id} data-stat className="flex items-baseline gap-3 border-l-2 border-pink/60 pl-3">
-                <div className="data-num text-paper text-2xl md:text-3xl">{s.value}{s.unit}</div>
-                <div className="text-xs text-paper/50 leading-snug">{s.label}</div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            {/* Number + desktop intro question side by side */}
+            <div className="flex flex-col md:flex-row md:items-end md:gap-10">
+              <div>
+                <div className="eyebrow text-paper/40 mb-2">Gender Pension Gap</div>
+                <div
+                  ref={numRef}
+                  className="data-num text-pink leading-none"
+                  style={{ fontSize: 'clamp(4rem, 12vw, 12rem)' }}
+                >
+                  −0.0
+                </div>
+                <div
+                  ref={labelRef}
+                  className="display-italic text-paper/80 mt-2 max-w-sm"
+                  style={{ fontSize: 'clamp(1rem, 1.5vw, 1.5rem)' }}
+                >
+                  Prozent weniger Rente. Im Schnitt. In Deutschland. Heute.
+                </div>
               </div>
-            ))}
+
+              {/* Desktop: intro question at same height as number */}
+              <div
+                ref={introDesktopRef}
+                className="hidden md:block pointer-events-none mb-3"
+              >
+                <div className="eyebrow text-paper/40 mb-3">Akt 01 · Die Lücke</div>
+                <h2
+                  className="display-xl text-paper text-balance max-w-lg"
+                  style={{ fontSize: 'clamp(1.8rem, 2.8vw, 3.2rem)', lineHeight: 1.1 }}
+                >
+                  Wenn zwei gleich starten,<br />
+                  warum endet sie <span className="display-italic text-pink">unten</span>?
+                </h2>
+              </div>
+            </div>
+
+            {/* Stats ticker */}
+            <div ref={tickerRef} className="flex flex-col gap-3 md:max-w-xs md:pb-1">
+              {gapStats.slice(1).map((s) => (
+                <div key={s.id} data-stat className="flex items-baseline gap-3 border-l-2 border-pink/60 pl-3">
+                  <div className="data-num text-paper text-2xl md:text-3xl">{s.value}{s.unit}</div>
+                  <div className="text-xs text-paper/50 leading-snug">{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

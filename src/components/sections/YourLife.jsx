@@ -118,7 +118,7 @@ export default function YourLife() {
         </div>
 
         {/* Horizontal track */}
-        <div className="absolute inset-0 flex items-center pt-32 pb-32">
+        <div className="absolute inset-0 flex items-center pt-44 pb-36 md:pt-32 md:pb-32">
           <div ref={trackRef} className="flex gap-8 pl-6 md:pl-12 will-change-transform">
             {lifePhases.map((phase, i) => (
               <article
@@ -163,30 +163,33 @@ export default function YourLife() {
 
         {/* Bottom: Toggle pills */}
         <div className="absolute bottom-0 left-0 right-0 z-30 p-4 md:p-10 pointer-events-none">
-          <div className="bg-ink/95 backdrop-blur rounded-2xl md:rounded-full px-3 py-3 flex flex-wrap items-center gap-2 w-full md:w-fit pointer-events-auto">
+          <div className="bg-ink/95 backdrop-blur rounded-2xl md:rounded-full px-3 py-3 w-full md:w-fit pointer-events-auto">
             <span className="eyebrow text-paper/50 px-3 hidden md:inline">Tippe an, was auf dich zutrifft</span>
-            {lifeToggles.map((t) => {
-              const on = toggles[t.id];
-              return (
-                <button
-                  key={t.id}
-                  onClick={() => toggle(t.id)}
-                  data-cursor="toggle"
-                  data-cursor-label={on ? '−' : '+'}
-                  className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
-                    on
-                      ? 'bg-pink text-ink shadow-[0_0_0_1px_var(--color-pink)]'
-                      : 'bg-paper/10 text-paper hover:bg-paper/20'
-                  }`}
-                >
-                  <span className={`inline-flex h-3.5 w-3.5 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/20'}`}>
-                    {on ? '✓' : '+'}
-                  </span>
-                  <span>{t.label}</span>
-                  <span className="font-mono opacity-60">{t.impact}</span>
-                </button>
-              );
-            })}
+            {/* 2×2 grid on mobile, single row on desktop */}
+            <div className="grid grid-cols-2 gap-2 md:flex md:flex-row md:items-center md:gap-2">
+              {lifeToggles.map((t) => {
+                const on = toggles[t.id];
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => toggle(t.id)}
+                    data-cursor="toggle"
+                    data-cursor-label={on ? '−' : '+'}
+                    className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
+                      on
+                        ? 'bg-pink text-ink shadow-[0_0_0_1px_var(--color-pink)]'
+                        : 'bg-paper/10 text-paper hover:bg-paper/20'
+                    }`}
+                  >
+                    <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/20'}`}>
+                      {on ? '✓' : '+'}
+                    </span>
+                    <span>{t.label}</span>
+                    <span className="font-mono opacity-60">{t.impact}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
