@@ -85,7 +85,7 @@ export default function OpeningStatement() {
       <BackgroundField />
 
       {/* Fixed-nav clearance */}
-      <div className="h-20 md:h-24 shrink-0" />
+      <div className="h-28 md:h-24 shrink-0" />
 
       {/* ── Main content row: text left + chart right ── */}
       <div className="flex-1 relative z-10 flex flex-col md:flex-row md:items-center px-6 md:px-12 min-h-0">
@@ -95,7 +95,7 @@ export default function OpeningStatement() {
           <h1
             ref={headlineRef}
             className="display-xl text-paper"
-            style={{ fontSize: 'clamp(2.2rem, min(9vw, 12vh), 9.5rem)' }}
+            style={{ fontSize: 'clamp(3rem, min(9vw, 12vh), 9.5rem)' }}
           >
             <span className="block line-mask"><span data-line>Über deine</span></span>
             <span className="block line-mask"><span data-line>Zukunft wird</span></span>
@@ -137,20 +137,20 @@ export default function OpeningStatement() {
                 <div className="pt-[76px] flex flex-col items-center gap-[4px]">
                   <span
                     className="font-mono"
-                    style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgba(244,237,228,0.25)' }}
+                    style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgba(244,237,228,0.60)' }}
                   >
                     {age}
                   </span>
                   <span
                     className="font-mono"
-                    style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgba(244,237,228,0.12)', whiteSpace: 'nowrap' }}
+                    style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgba(244,237,228,0.38)', whiteSpace: 'nowrap' }}
                   >
                     {label}
                   </span>
                 </div>
                 <div
                   className="w-px mt-2"
-                  style={{ flex: 1, background: 'rgba(244,237,228,0.07)' }}
+                  style={{ flex: 1, background: 'rgba(244,237,228,0.15)' }}
                 />
               </div>
             ))}
@@ -209,13 +209,6 @@ export default function OpeningStatement() {
           Erstgespräch buchen
         </a>
 
-        <div className="hidden md:flex flex-col items-end gap-2 text-right">
-          <div className="eyebrow text-paper/40">Issue 01 · 2026</div>
-          <div className="font-mono text-xs text-paper/30 leading-relaxed">
-            Lesedauer ≈ 4 min<br />
-            Durchscrollen → die Zahl wächst.
-          </div>
-        </div>
       </div>
     </section>
   );

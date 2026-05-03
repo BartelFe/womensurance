@@ -97,7 +97,7 @@ export default function YourLife() {
     <section ref={root} id="life" className="relative bg-paper text-ink">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden">
         {/* Top bar — counter only */}
-        <div className="absolute top-0 right-0 z-30 p-6 md:p-10 pointer-events-none">
+        <div className="absolute top-0 right-0 z-30 pt-20 pr-6 pb-4 md:pt-24 md:pr-10 pointer-events-none">
           <div className="flex items-baseline justify-end gap-1">
             <span className="data-num text-ink text-4xl md:text-6xl">−</span>
             <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{baseGap.toFixed(1)}</span>
@@ -152,8 +152,8 @@ export default function YourLife() {
 
         {/* Bottom: Toggle pills */}
         <div className="absolute bottom-0 left-0 right-0 z-30 p-4 md:p-8 pointer-events-none flex justify-center md:justify-center">
-          <div className="bg-ink/95 backdrop-blur rounded-2xl md:rounded-full px-4 py-4 w-full md:w-fit pointer-events-auto">
-            <span className="eyebrow text-paper/50 px-3 hidden md:inline">Tippe an, was auf dich zutrifft</span>
+          <div className="px-1 py-2 w-full md:w-fit pointer-events-auto">
+            <span className="eyebrow text-ink/40 px-3 hidden md:inline">Tippe an, was auf dich zutrifft</span>
             {/* 2×2 grid on mobile, single row on desktop */}
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-row md:items-center md:gap-2">
               {lifeToggles.map((t) => {
@@ -167,10 +167,10 @@ export default function YourLife() {
                     className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
                       on
                         ? 'bg-pink text-ink shadow-[0_0_0_1px_var(--color-pink)]'
-                        : 'bg-paper/10 text-paper hover:bg-paper/20'
+                        : 'bg-ink/10 text-ink hover:bg-ink/15'
                     }`}
                   >
-                    <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/20'}`}>
+                    <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-ink/15'}`}>
                       {on ? '✓' : '+'}
                     </span>
                     <span>{t.label}</span>

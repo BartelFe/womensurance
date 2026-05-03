@@ -16,7 +16,13 @@ export default function Nav() {
     let last = 0;
     const onScroll = () => {
       const y = window.scrollY;
-      setHidden(y > last && y > 200);
+      if (window.innerWidth < 768) {
+        // Mobile: disappear as soon as user starts scrolling
+        setHidden(y > 40);
+      } else {
+        // Desktop: only hide when scrolling downward past 200px
+        setHidden(y > last && y > 200);
+      }
       last = y;
     };
     window.addEventListener('scroll', onScroll, { passive: true });
