@@ -10,7 +10,13 @@ export default function Nav() {
     gsap.fromTo(
       root.current,
       { y: -32, opacity: 0 },
-      { y: 0, opacity: 1, delay: 1.6, duration: 0.8, ease: 'power3.out' }
+      {
+        y: 0, opacity: 1, delay: 1.6, duration: 0.8, ease: 'power3.out',
+        onComplete: () => {
+          // Clear GSAP's inline transform/opacity so Tailwind's translate classes take over
+          if (root.current) gsap.set(root.current, { clearProps: 'transform,opacity' });
+        },
+      }
     );
 
     let last = 0;

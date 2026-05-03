@@ -96,8 +96,8 @@ export default function YourLife() {
   return (
     <section ref={root} id="life" className="relative bg-paper text-ink">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden">
-        {/* Top bar — counter only */}
-        <div className="absolute top-0 right-0 z-30 pt-20 pr-6 pb-4 md:pt-24 md:pr-10 pointer-events-none">
+        {/* Top bar — counter sits where the navbar was on mobile (navbar gone when in this section) */}
+        <div className="absolute top-0 right-0 z-30 pt-5 pr-6 pb-4 md:pt-24 md:pr-10 pointer-events-none">
           <div className="flex items-baseline justify-end gap-1">
             <span className="data-num text-ink text-4xl md:text-6xl">−</span>
             <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{baseGap.toFixed(1)}</span>
@@ -107,7 +107,7 @@ export default function YourLife() {
         </div>
 
         {/* Horizontal track */}
-        <div className="absolute inset-0 flex items-center pt-32 pb-52 md:pt-32 md:pb-36">
+        <div className="absolute inset-0 flex items-center pt-28 pb-48 md:pt-32 md:pb-36">
           <div ref={trackRef} className="flex gap-8 pl-6 md:pl-12 will-change-transform">
             {lifePhases.map((phase, i) => (
               <article

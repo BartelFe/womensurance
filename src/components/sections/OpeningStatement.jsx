@@ -4,13 +4,13 @@ import BackgroundField from '../canvas/BackgroundField';
 import { splitChars } from '../../utils/splitText';
 
 const LIFE_PHASES = [
-  { age: '25', label: 'AUSBILDUNG',   pos: 4  },
-  { age: '28', label: 'ERSTER JOB',  pos: 18 },
-  { age: '32', label: 'BEZIEHUNG',   pos: 34 },
-  { age: '35', label: 'KIND',        pos: 50 },
-  { age: '42', label: 'TEILZEIT',    pos: 65 },
-  { age: '50', label: 'CARE-ARBEIT', pos: 80 },
-  { age: '67', label: 'RENTE',       pos: 96 },
+  { age: '25', label: 'AUSBILDUNG',   pos: 4,  mobileLabel: false },
+  { age: '28', label: 'ERSTER JOB',  pos: 18, mobileLabel: true  },
+  { age: '32', label: 'BEZIEHUNG',   pos: 34, mobileLabel: false },
+  { age: '35', label: 'KIND',        pos: 50, mobileLabel: true  },
+  { age: '42', label: 'TEILZEIT',    pos: 65, mobileLabel: false },
+  { age: '50', label: 'CARE-ARBEIT', pos: 80, mobileLabel: false },
+  { age: '67', label: 'RENTE',       pos: 96, mobileLabel: true  },
 ];
 
 const BOOKING_URL = 'https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled';
@@ -117,7 +117,7 @@ export default function OpeningStatement() {
         </div>
 
         {/* ── Chart column: life-phase grid + diverging curves ── */}
-        <div className="flex-1 relative min-h-0 mt-6 md:mt-0 md:self-stretch">
+        <div className="flex-1 relative min-h-0 mt-2 md:mt-0 md:self-stretch">
 
           {/* Left fade — desktop only */}
           <div
@@ -127,7 +127,7 @@ export default function OpeningStatement() {
 
           {/* Life-phase grid lines — both mobile and desktop */}
           <div ref={gridRef} className="absolute inset-0 z-[5]">
-            {LIFE_PHASES.map(({ age, label, pos }) => (
+            {LIFE_PHASES.map(({ age, label, pos, mobileLabel }) => (
               <div
                 key={age}
                 data-grid-col
@@ -142,7 +142,7 @@ export default function OpeningStatement() {
                     {age}
                   </span>
                   <span
-                    className="font-mono"
+                    className={`font-mono${mobileLabel ? '' : ' hidden md:block'}`}
                     style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgba(244,237,228,0.38)', whiteSpace: 'nowrap' }}
                   >
                     {label}
