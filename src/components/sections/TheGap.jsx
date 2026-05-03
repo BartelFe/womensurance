@@ -5,13 +5,21 @@ import { gapStats, HERO_GAP_VALUE } from '../../data/gapStats';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// HTML label positions derived from SVG viewBox 0 0 1200 540
+const AXIS_LABELS = [
+  { age: '25', left: '5%' },
+  { age: '35', left: '28.75%' },
+  { age: '45', left: '52.5%' },
+  { age: '55', left: '76.25%' },
+  { age: '67', left: '94.2%' },
+];
+
 export default function TheGap() {
   const root = useRef(null);
   const pinRef = useRef(null);
   const numRef = useRef(null);
   const labelRef = useRef(null);
-  const introMobileRef = useRef(null);
-  const introDesktopRef = useRef(null);
+  const introRef = useRef(null);
   const linesRef = useRef(null);
   const tickerRef = useRef(null);
 
@@ -20,9 +28,10 @@ export default function TheGap() {
     const pin = pinRef.current;
     const num = numRef.current;
     const label = labelRef.current;
+    const intro = introRef.current;
     const lines = linesRef.current;
     const ticker = tickerRef.current;
-    if (!root_ || !pin || !num || !label || !lines || !ticker) return;
+    if (!root_ || !pin || !num || !label || !intro || !lines || !ticker) return;
 
     const malePath = lines.querySelector('#male-line');
     const femalePath = lines.querySelector('#female-line');
@@ -46,12 +55,8 @@ export default function TheGap() {
       },
     });
 
-    // Fade out intro question(s) — both mobile and desktop elements, whichever is visible
-    const introEls = [introMobileRef.current, introDesktopRef.current].filter(Boolean);
-    if (introEls.length) {
-      tl.to(introEls, { opacity: 0, y: 30, duration: 0.5 }, 0);
-    }
-
+    // Intro text fades out first, then lines draw
+    tl.to(intro, { opacity: 0, y: 40, duration: 0.5 }, 0);
     tl.to(malePath, { strokeDashoffset: 0, duration: 1, ease: 'none' }, 0.3);
     tl.to(femalePath, { strokeDashoffset: 0, duration: 1, ease: 'none' }, 0.5);
     tl.to(dashedPath, { strokeDashoffset: 0, duration: 0.7, ease: 'none' }, 1.0);
@@ -83,8 +88,10 @@ export default function TheGap() {
     <section ref={root} id="gap" className="relative bg-ink text-paper">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden flex flex-col">
 
-        {/* SVG chart — occupies upper portion */}
-        <div className="flex-1 relative min-h-0">
+        {/* Chart area */}
+        <div className="flex-1 relative min-h-0 overflow-hidden">
+
+          {/* SVG — paths only, no text (text distorts with preserveAspectRatio="none") */}
           <svg
             ref={linesRef}
             viewBox="0 0 1200 540"
@@ -116,74 +123,66 @@ export default function TheGap() {
               fill="none" stroke="#ff2e88" strokeWidth="1.5"
               strokeDasharray="4 6" opacity="0.6"
             />
-
-            <text x="1090" y="108" fill="#f4ede4" fontSize="13" fontFamily="JetBrains Mono" opacity="0.6">Männer</text>
-            <text x="1090" y="490" fill="#ff2e88" fontSize="13" fontFamily="JetBrains Mono">Frauen</text>
-
-            <text x="60" y="530" fill="#f4ede4" fontSize="11" fontFamily="JetBrains Mono" opacity="0.4">25</text>
-            <text x="345" y="530" fill="#f4ede4" fontSize="11" fontFamily="JetBrains Mono" opacity="0.4">35</text>
-            <text x="630" y="530" fill="#f4ede4" fontSize="11" fontFamily="JetBrains Mono" opacity="0.4">45</text>
-            <text x="915" y="530" fill="#f4ede4" fontSize="11" fontFamily="JetBrains Mono" opacity="0.4">55</text>
-            <text x="1130" y="530" fill="#f4ede4" fontSize="11" fontFamily="JetBrains Mono" opacity="0.4">67</text>
           </svg>
+
+          {/* HTML line labels — undistorted */}
+          <div className="absolute font-mono text-[11px] text-paper/60 pointer-events-none"
+               style={{ left: '90.8%', top: '18%', transform: 'translateX(-50%)' }}>
+            Männer
+          </div>
+          <div className="absolute font-mono text-[11px] text-pink pointer-events-none"
+               style={{ left: '90.8%', top: '88%', transform: 'translateX(-50%)' }}>
+            Frauen
+          </div>
+
+          {/* HTML axis labels — undistorted */}
+          {AXIS_LABELS.map(({ age, left }) => (
+            <div
+              key={age}
+              className="absolute bottom-2 font-mono text-[10px] text-paper/40 pointer-events-none"
+              style={{ left, transform: 'translateX(-50%)' }}
+            >
+              {age}
+            </div>
+          ))}
+
+          {/* Intro question — centered in chart, large and prominent */}
+          <div
+            ref={introRef}
+            className="absolute inset-0 flex items-center justify-center px-6 md:px-16 z-20 pointer-events-none"
+          >
+            <h2
+              className="display-xl text-paper text-balance text-center"
+              style={{ fontSize: 'clamp(2.6rem, 6.5vw, 6rem)', lineHeight: 1.05 }}
+            >
+              Wenn zwei gleich starten,<br />
+              warum endet sie{' '}
+              <span className="display-italic text-pink">unten</span>?
+            </h2>
+          </div>
         </div>
 
         {/* Bottom data bar */}
         <div className="relative z-10 shrink-0 border-t border-paper/10 bg-ink/80 backdrop-blur-sm px-6 md:px-12 py-6">
-
-          {/* Mobile: intro question sits above the number, centered */}
-          <div
-            ref={introMobileRef}
-            className="md:hidden text-center mb-5 pointer-events-none"
-          >
-            <div className="eyebrow text-paper/40 mb-2">Akt 01 · Die Lücke</div>
-            <h2
-              className="display-xl text-paper text-balance"
-              style={{ fontSize: 'clamp(1.4rem, 4.5vw, 2.2rem)', lineHeight: 1.15 }}
-            >
-              Wenn zwei gleich starten,<br />
-              warum endet sie <span className="display-italic text-pink">unten</span>?
-            </h2>
-          </div>
-
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            {/* Number + desktop intro question side by side */}
-            <div className="flex flex-col md:flex-row md:items-end md:gap-10">
-              <div>
-                <div className="eyebrow text-paper/40 mb-2">Gender Pension Gap</div>
-                <div
-                  ref={numRef}
-                  className="data-num text-pink leading-none"
-                  style={{ fontSize: 'clamp(4rem, 12vw, 12rem)' }}
-                >
-                  −0.0
-                </div>
-                <div
-                  ref={labelRef}
-                  className="display-italic text-paper/80 mt-2 max-w-sm"
-                  style={{ fontSize: 'clamp(1rem, 1.5vw, 1.5rem)' }}
-                >
-                  Prozent weniger Rente. Im Schnitt. In Deutschland. Heute.
-                </div>
-              </div>
-
-              {/* Desktop: intro question at same height as number */}
+            <div>
+              <div className="eyebrow text-paper/40 mb-2">Gender Pension Gap</div>
               <div
-                ref={introDesktopRef}
-                className="hidden md:block pointer-events-none mb-3"
+                ref={numRef}
+                className="data-num text-pink leading-none"
+                style={{ fontSize: 'clamp(4rem, 12vw, 12rem)' }}
               >
-                <div className="eyebrow text-paper/40 mb-3">Akt 01 · Die Lücke</div>
-                <h2
-                  className="display-xl text-paper text-balance max-w-lg"
-                  style={{ fontSize: 'clamp(1.8rem, 2.8vw, 3.2rem)', lineHeight: 1.1 }}
-                >
-                  Wenn zwei gleich starten,<br />
-                  warum endet sie <span className="display-italic text-pink">unten</span>?
-                </h2>
+                −0.0
+              </div>
+              <div
+                ref={labelRef}
+                className="display-italic text-paper/80 mt-2 max-w-sm"
+                style={{ fontSize: 'clamp(1rem, 1.5vw, 1.5rem)' }}
+              >
+                Prozent weniger Rente. Im Schnitt. In Deutschland. Heute.
               </div>
             </div>
 
-            {/* Stats ticker */}
             <div ref={tickerRef} className="flex flex-col gap-3 md:max-w-xs md:pb-1">
               {gapStats.slice(1).map((s) => (
                 <div key={s.id} data-stat className="flex items-baseline gap-3 border-l-2 border-pink/60 pl-3">

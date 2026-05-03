@@ -34,9 +34,10 @@ export default function Nav() {
   return (
     <nav
       ref={root}
-      className={`fixed top-0 left-0 right-0 z-[300] flex items-center justify-between px-6 md:px-10 py-5 transition-transform duration-500 ${
-        hidden ? '-translate-y-full' : 'translate-y-0'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-[300] flex items-center justify-between px-6 md:px-10 py-5 transition-transform duration-500
+        bg-ink/20 backdrop-blur-xl border-b border-white/[0.07]
+        shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.3)]
+        ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
     >
       {/* Logo wordmark */}
       <a href="#hero" onClick={scrollTo('hero')} className="flex items-baseline gap-2 group">

@@ -20,6 +20,7 @@ export default function OpeningStatement() {
   const subRef = useRef(null);
   const maleLineRef = useRef(null);
   const femaleLineRef = useRef(null);
+  const gridRef = useRef(null);
 
   useEffect(() => {
     if (!headlineRef.current) return;
@@ -38,6 +39,12 @@ export default function OpeningStatement() {
       gsap.set(femaleLine, { strokeDasharray: fLen, strokeDashoffset: fLen });
     }
 
+    // Grid columns — set initial hidden state
+    const gridCols = gridRef.current?.querySelectorAll('[data-grid-col]');
+    if (gridCols?.length) {
+      gsap.set(gridCols, { scaleY: 0, transformOrigin: 'top', opacity: 0 });
+    }
+
     const tl = gsap.timeline({ delay: 1.4 });
 
     tl.fromTo(
@@ -51,9 +58,20 @@ export default function OpeningStatement() {
       { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
       '-=0.4'
     );
+
     if (maleLine && femaleLine) {
-      tl.to(maleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, '-=0.3');
-      tl.to(femaleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, '<0.15');
+      tl.addLabel('linesStart', '-=0.3');
+      tl.to(maleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, 'linesStart');
+      tl.to(femaleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, 'linesStart+=0.15');
+
+      // Grid columns build left → right alongside the SVG lines
+      if (gridCols?.length) {
+        tl.to(
+          gridCols,
+          { scaleY: 1, opacity: 1, duration: 0.5, stagger: 0.12, ease: 'power2.out' },
+          'linesStart'
+        );
+      }
     }
 
     return () => tl.kill();
@@ -107,11 +125,12 @@ export default function OpeningStatement() {
             style={{ background: 'linear-gradient(to right, #0a0807, transparent)' }}
           />
 
-          {/* Life-phase grid lines — desktop only */}
-          <div className="hidden md:block absolute inset-0 z-[5]">
+          {/* Life-phase grid lines — both mobile and desktop */}
+          <div ref={gridRef} className="absolute inset-0 z-[5]">
             {LIFE_PHASES.map(({ age, label, pos }) => (
               <div
                 key={age}
+                data-grid-col
                 className="absolute top-0 bottom-0 flex flex-col items-center"
                 style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}
               >
@@ -141,7 +160,7 @@ export default function OpeningStatement() {
             SVG curves — shown on both mobile and desktop.
 
             Desktop: sits over the life-phase grid. Grid columns at pos% × 6 = SVG x.
-            White line (Männer): rises from y=200 to y=145 — stays below label area (y≈80).
+            White line (Männer): rises from y=200 to y=141 — stays below label area.
             Pink  line (Frauen): falls from y=200 to y=384 — gap opens at KIND (x=300).
           */}
           <svg

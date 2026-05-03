@@ -96,29 +96,18 @@ export default function YourLife() {
   return (
     <section ref={root} id="life" className="relative bg-paper text-ink">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden">
-        {/* Top bar */}
-        <div className="absolute top-0 left-0 right-0 z-30 flex items-start justify-between p-6 md:p-10 pointer-events-none">
-          <div>
-            <div className="eyebrow text-ink/40">Akt 02 · Dein Leben</div>
-            <div className="display-italic text-ink mt-2" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.4rem)' }}>
-              Sieben Stationen, eine Lücke.
-            </div>
+        {/* Top bar — counter only */}
+        <div className="absolute top-0 right-0 z-30 p-6 md:p-10 pointer-events-none">
+          <div className="flex items-baseline justify-end gap-1">
+            <span className="data-num text-ink text-4xl md:text-6xl">−</span>
+            <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{baseGap.toFixed(1)}</span>
+            <span className="data-num text-ink text-4xl md:text-6xl">%</span>
           </div>
-
-          {/* Live counter */}
-          <div className="text-right pointer-events-none">
-            <div className="eyebrow text-ink/40 mb-2">Deine Lücke</div>
-            <div className="flex items-baseline justify-end gap-1">
-              <span className="data-num text-ink text-4xl md:text-6xl">−</span>
-              <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{baseGap.toFixed(1)}</span>
-              <span className="data-num text-ink text-4xl md:text-6xl">%</span>
-            </div>
-            <div className="text-xs font-mono text-ink/50 mt-1">der Männer-Rente</div>
-          </div>
+          <div className="text-xs font-mono text-ink/50 mt-1 text-right">der Männer-Rente</div>
         </div>
 
         {/* Horizontal track */}
-        <div className="absolute inset-0 flex items-center pt-44 pb-36 md:pt-32 md:pb-32">
+        <div className="absolute inset-0 flex items-center pt-32 pb-52 md:pt-32 md:pb-36">
           <div ref={trackRef} className="flex gap-8 pl-6 md:pl-12 will-change-transform">
             {lifePhases.map((phase, i) => (
               <article
@@ -162,8 +151,8 @@ export default function YourLife() {
         </div>
 
         {/* Bottom: Toggle pills */}
-        <div className="absolute bottom-0 left-0 right-0 z-30 p-4 md:p-10 pointer-events-none">
-          <div className="bg-ink/95 backdrop-blur rounded-2xl md:rounded-full px-3 py-3 w-full md:w-fit pointer-events-auto">
+        <div className="absolute bottom-0 left-0 right-0 z-30 p-4 md:p-8 pointer-events-none flex justify-center md:justify-center">
+          <div className="bg-ink/95 backdrop-blur rounded-2xl md:rounded-full px-4 py-4 w-full md:w-fit pointer-events-auto">
             <span className="eyebrow text-paper/50 px-3 hidden md:inline">Tippe an, was auf dich zutrifft</span>
             {/* 2×2 grid on mobile, single row on desktop */}
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-row md:items-center md:gap-2">
