@@ -128,11 +128,21 @@ export default function YourLife() {
                   {phase.title}
                 </h3>
 
-                <p className="body-lead text-ink/70 mb-6">{phase.body}</p>
+                <p
+                  className="body-lead text-ink/70 mb-6"
+                  style={{ fontSize: 'clamp(1.05rem, 1vw, 1.3rem)' }}
+                >
+                  {phase.body}
+                </p>
 
                 <div className="mt-auto pt-6 border-t border-clay-light/60">
                   <div className="eyebrow text-clay mb-2">Was zählt jetzt</div>
-                  <p className="text-sm text-ink/65 leading-relaxed">{phase.insurance}</p>
+                  <p
+                    className="text-ink/65 leading-relaxed"
+                    style={{ fontSize: 'clamp(0.875rem, 0.85vw, 1.05rem)' }}
+                  >
+                    {phase.insurance}
+                  </p>
                 </div>
 
                 {/* Decorative number */}
