@@ -113,7 +113,7 @@ export default function YourLife() {
               <article
                 key={phase.id}
                 data-phase-card
-                className="shrink-0 w-[78vw] md:w-[440px] bg-bone border border-clay-light/60 p-8 md:p-10 rounded-sm relative flex flex-col"
+                className="shrink-0 w-[78vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-8 md:p-10 xl:p-12 rounded-sm relative flex flex-col"
                 style={{ minHeight: '50vh' }}
               >
                 <div className="flex items-baseline justify-between mb-6">
