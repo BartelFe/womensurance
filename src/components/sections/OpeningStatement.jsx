@@ -109,7 +109,7 @@ export default function OpeningStatement() {
           <div
             ref={subRef}
             className="hidden md:block mt-8 max-w-md body-lead text-paper/60"
-            style={{ fontSize: 'clamp(0.9rem, 1.1vw, 1.1rem)' }}
+            style={{ fontSize: 'clamp(0.9rem, 1.1vw, 1.5rem)' }}
           >
             Eine Beratung, die nicht zuhört, ist eine Verkaufsfläche. Diese Seite fängt
             nicht mit einem Produkt an. Sie fängt mit einer Zahl an, die dich betrifft.
