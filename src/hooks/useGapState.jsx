@@ -1,7 +1,21 @@
 import { createContext, useContext, useState, useCallback, useMemo } from 'react';
 
-// ⚠️ Alle Zahlen sind plausible Platzhalter (Größenordnung DRV/Destatis) —
-// vor Live-Schaltung mit Julia validieren.
+// ── Zahlen-Grundlage (Stand Recherche 07/2026, mit Julia final validieren) ──
+// BELEGT:
+//  - BASE_GAP 39,4 %  → Destatis, Gender Pension Gap 2023 (eigene Alters-
+//    sicherungsleistungen OHNE Hinterbliebenenrenten), PM N016 v. 04/2024.
+//  - BASE_EURO 450 €  → DRV 2024: Ø Zahlbetrag Altersrente Männer ~1.405 €,
+//    Frauen ~955 € → Differenz ~450 €/Monat (WSI/DRV Rentenbestand).
+//  - RETIREMENT_YEARS 20 → Restlebenserwartung Frauen ab 65 ≈ 21 Jahre.
+// HERGELEITET (Entgeltpunkt-Logik, Rentenwert 40,79 € seit 07/2025):
+//  - parttime 310 €  ≈ 15 Jahre 50%-Teilzeit bei Ø-Lohn = 7,5 EP × 40,79 €.
+//  - children 180 €  ≈ Elternzeit + verzögerter Wiedereinstieg ~4,4 EP.
+//    (reine Kindererziehungszeiten werden tlw. staatlich kompensiert —
+//    Wert bildet die typischen Folgeeffekte ab; mit Julia schärfen!)
+//  - care 120 €      ≈ 2–3 Jahre reduzierte Arbeit ~3 EP.
+//  - pause 90 €      ≈ 2 Jahre ohne Beiträge ~2,2 EP.
+// ⚠️ Kategorien überschneiden sich real (Teilzeit oft WEGEN Kind) — die
+// Summe ist eine bewusst vereinfachte Beispielrechnung, kein Bescheid.
 //
 // Ein Lebensereignis wirkt dreifach:
 //  - pct   → Beitrag zum prozentualen Pension Gap
@@ -15,7 +29,7 @@ export const TOGGLE_META = [
     pct: 5,
     euro: 90,
     x: 204,
-    drop: 18,
+    drop: 24,
     receiptLabel: 'Karrierepause',
     receiptSub: 'Jahre ohne Einzahlung',
   },
@@ -26,7 +40,7 @@ export const TOGGLE_META = [
     pct: 8,
     euro: 180,
     x: 300,
-    drop: 26,
+    drop: 34,
     receiptLabel: 'Kind & Elternzeit',
     receiptSub: 'Reduzierte Rentenpunkte',
   },
@@ -37,7 +51,7 @@ export const TOGGLE_META = [
     pct: 12,
     euro: 310,
     x: 390,
-    drop: 40,
+    drop: 52,
     receiptLabel: 'Teilzeit über Jahre',
     receiptSub: 'Halbe Stunden, halbe Punkte',
   },
@@ -48,14 +62,14 @@ export const TOGGLE_META = [
     pct: 6,
     euro: 120,
     x: 480,
-    drop: 30,
+    drop: 40,
     receiptLabel: 'Pflege von Angehörigen',
     receiptSub: 'Unbezahlt, unsichtbar',
   },
 ];
 
-export const BASE_GAP = 39.4; // % — Gender Pension Gap Deutschland
-export const BASE_EURO = 440; // €/Monat — Ø Rentendifferenz Frau/Mann (Platzhalter)
+export const BASE_GAP = 39.4; // % — Gender Pension Gap (Destatis 2023, ohne Hinterbliebene)
+export const BASE_EURO = 450; // €/Monat — Ø Rentendifferenz Frau/Mann (DRV 2024)
 export const RETIREMENT_YEARS = 20; // für die Lebenssumme auf dem Kassenzettel
 
 const GapContext = createContext(null);

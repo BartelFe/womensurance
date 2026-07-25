@@ -18,12 +18,17 @@ const LIFE_PHASES = [
   { age: '67', label: 'RENTE',       pos: 96, mobileLabel: true  },
 ];
 
-// Stützstellen (x) und Grundverläufe (y) beider Linien.
+// Stützstellen (x) und Grundverläufe (y) beider Linien (viewBox 600×440).
 // Weiblich = Durchschnitts-Story (39,4 %): der Auto-Play-Drop beim Zeichnen.
+// Die Basis-Kurve endet bewusst "hoch" (260), damit die Toggles die Lücke
+// sichtbar weiter aufreißen können (max. Drop-Summe 150 → Ende 410 < Floor 425).
+// Nebeneffekt: Lückenlänge bleibt grob proportional zum Prozentwert
+// (39,4 % ≙ 150px · 70 % ≙ ~300px).
 const XS       = [0,   24,  108, 204, 300, 390, 480, 576, 600];
-const MALE_Y   = [200, 199, 193, 177, 160, 152, 146, 142, 141];
-const FEMALE_Y = [200, 201, 210, 228, 258, 290, 330, 372, 384];
-const Y_FLOOR = 392; // unterhalb reißt das Chart optisch aus
+const MALE_Y   = [170, 169, 164, 150, 133, 124, 117, 111, 110];
+const FEMALE_Y = [170, 172, 180, 196, 220, 238, 252, 258, 260];
+const VIEW_H = 440;
+const Y_FLOOR = 425; // unterhalb reißt das Chart optisch aus
 
 // Catmull-Rom → kubische Bézier-Segmente ("C x1,y1 x2,y2 x,y …")
 function smoothSegments(pts) {
@@ -99,7 +104,7 @@ export default function OpeningStatement() {
     }
     if (gapLabelRef.current) {
       const mid = (yMale + yFemale) / 2;
-      gapLabelRef.current.style.top = `${(mid / 400) * 100}%`;
+      gapLabelRef.current.style.top = `${(mid / VIEW_H) * 100}%`;
     }
   };
 
@@ -364,7 +369,7 @@ export default function OpeningStatement() {
 
             {/* SVG: Lücken-Fläche + Linien + Marker */}
             <svg
-              viewBox="0 0 600 400"
+              viewBox={`0 0 600 ${VIEW_H}`}
               className="absolute inset-0 w-full h-full z-[10]"
               preserveAspectRatio="none"
               aria-hidden="true"
@@ -428,7 +433,7 @@ export default function OpeningStatement() {
               className="absolute z-[15] font-mono text-pink pointer-events-none text-right"
               style={{
                 left: `${(576 / 600) * 100}%`,
-                top: `${(((MALE_Y[XS.indexOf(576)] + FEMALE_Y[XS.indexOf(576)]) / 2) / 400) * 100}%`,
+                top: `${(((MALE_Y[XS.indexOf(576)] + FEMALE_Y[XS.indexOf(576)]) / 2) / VIEW_H) * 100}%`,
                 transform: 'translate(-112%, -50%)',
                 fontSize: '9px',
                 letterSpacing: '0.2em',
@@ -444,7 +449,7 @@ export default function OpeningStatement() {
                 className="absolute z-[15] font-mono text-pink pointer-events-none"
                 style={{
                   left: `${(m.x / 600) * 100}%`,
-                  top: `${(m.y / 400) * 100}%`,
+                  top: `${(m.y / VIEW_H) * 100}%`,
                   transform: 'translate(-50%, -190%)',
                   fontSize: '8px',
                   letterSpacing: '0.18em',
