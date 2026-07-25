@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Loader from '../components/layout/Loader';
 import OpeningStatement from '../components/sections/OpeningStatement';
-import TheGap from '../components/sections/TheGap';
+import TheReceipt from '../components/sections/TheReceipt';
 import YourLife from '../components/sections/YourLife';
 import TheTruth from '../components/sections/TheTruth';
 import MeetJulia from '../components/sections/MeetJulia';
@@ -57,7 +57,7 @@ export default function Home() {
       {showLoader && <Loader onComplete={markIntroSeen} />}
       <main className="relative">
         <OpeningStatement />
-        <TheGap />
+        <TheReceipt />
         <YourLife />
         <TheTruth />
         <MeetJulia />

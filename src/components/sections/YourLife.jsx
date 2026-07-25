@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { lifePhases, lifeToggles } from '../../data/lifePhases';
-import { useGap } from '../../hooks/useGapState';
+import { lifePhases } from '../../data/lifePhases';
+import { useGap, TOGGLE_META } from '../../hooks/useGapState';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -235,7 +235,7 @@ export default function YourLife() {
             <span className="eyebrow text-ink/40 px-3 hidden md:inline">Tippe an, was auf dich zutrifft</span>
             {/* 2×2 grid on mobile, single row on desktop */}
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-row md:items-center md:gap-2">
-              {lifeToggles.map((t) => {
+              {TOGGLE_META.map((t) => {
                 const on = toggles[t.id];
                 return (
                   <button
@@ -253,7 +253,7 @@ export default function YourLife() {
                       {on ? '✓' : '+'}
                     </span>
                     <span>{t.label}</span>
-                    <span className="font-mono opacity-60">{t.impact}</span>
+                    <span className="font-mono opacity-60">−{t.euro} €</span>
                   </button>
                 );
               })}

@@ -59,12 +59,8 @@ export const lifePhases = [
     subpageLabel: 'Was du jetzt tun kannst',
   },
 ];
-// Hinweis: Die frühere 7. Kachel "Rente" ist bewusst entfernt —
-// das Rententhema lebt in der Unterseite /rentenluecke (Teilzeit/Care-Arbeit).
-
-export const lifeToggles = [
-  { id: 'parttime', label: 'Teilzeit gearbeitet', impact: '+12 %' },
-  { id: 'children', label: 'Kinder bekommen', impact: '+8 %' },
-  { id: 'care', label: 'Angehörige gepflegt', impact: '+6 %' },
-  { id: 'pause', label: 'Karrierepause', impact: '+5 %' },
-];
+// Hinweise:
+// - Die frühere 7. Kachel "Rente" ist bewusst entfernt — das Rententhema
+//   lebt in der Unterseite /rentenluecke (Teilzeit/Care-Arbeit).
+// - Die Lebensereignis-Toggles (inkl. €-Beträge) leben zentral in
+//   src/hooks/useGapState.jsx (TOGGLE_META).

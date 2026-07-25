@@ -1,9 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import BackgroundField from '../canvas/BackgroundField';
 import { splitChars } from '../../utils/splitText';
 import { BOOKING_URL } from '../../config/site';
+import { useGap, TOGGLE_META } from '../../hooks/useGapState';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
+// ── Chart-Geometrie (viewBox 0 0 600 400) ─────────────────────
+// Lebensphasen-Raster (Spaltenköpfe)
 const LIFE_PHASES = [
   { age: '25', label: 'AUSBILDUNG',   pos: 4,  mobileLabel: false },
   { age: '28', label: 'ERSTER JOB',  pos: 18, mobileLabel: true  },
@@ -14,15 +18,85 @@ const LIFE_PHASES = [
   { age: '67', label: 'RENTE',       pos: 96, mobileLabel: true  },
 ];
 
+// Stützstellen (x) und Grundverläufe (y) beider Linien.
+// Weiblich = Durchschnitts-Story (39,4 %): der Auto-Play-Drop beim Zeichnen.
+const XS       = [0,   24,  108, 204, 300, 390, 480, 576, 600];
+const MALE_Y   = [200, 199, 193, 177, 160, 152, 146, 142, 141];
+const FEMALE_Y = [200, 201, 210, 228, 258, 290, 330, 372, 384];
+const Y_FLOOR = 392; // unterhalb reißt das Chart optisch aus
+
+// Catmull-Rom → kubische Bézier-Segmente ("C x1,y1 x2,y2 x,y …")
+function smoothSegments(pts) {
+  let d = '';
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += ` C ${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0]},${p2[1].toFixed(1)}`;
+  }
+  return d;
+}
+
+function linePath(ys) {
+  const pts = XS.map((x, i) => [x, ys[i]]);
+  return `M ${pts[0][0]},${pts[0][1]}${smoothSegments(pts)}`;
+}
+
+// Fläche zwischen weiblicher und männlicher Linie (Lücke)
+const MALE_REVERSED = smoothSegments(XS.map((x, i) => [x, MALE_Y[i]]).reverse());
+function areaPath(ys) {
+  return `${linePath(ys)} L 600,${MALE_Y[MALE_Y.length - 1]}${MALE_REVERSED} Z`;
+}
+
+const MALE_PATH = linePath(MALE_Y);
+
 export default function OpeningStatement() {
   const headlineRef = useRef(null);
   const subRef = useRef(null);
   const maleLineRef = useRef(null);
   const femaleLineRef = useRef(null);
+  const areaRef = useRef(null);
   const gridRef = useRef(null);
+  const chipsRef = useRef(null);
+  const counterBoxRef = useRef(null);
+  const euroRef = useRef(null);
 
+  const { toggles, toggle, gap, euroGap } = useGap();
+  const reduced = useReducedMotion();
+
+  const [introDone, setIntroDone] = useState(false);
+  const chartReady = useRef(false);
+  const firstRun = useRef(true);
+  const displayedEuro = useRef(0);
+  const ysRef = useRef(null);
+
+  // Ziel-Y-Werte aus aktiven Toggles: jeder Klick drückt die Linie ab
+  // seinem Lebensereignis-Punkt weiter nach unten.
+  const targetYs = useMemo(() => {
+    return XS.map((x, i) => {
+      let y = FEMALE_Y[i];
+      TOGGLE_META.forEach((m) => {
+        if (toggles[m.id] && x >= m.x) y += m.drop;
+      });
+      return Math.min(y, Y_FLOOR);
+    });
+  }, [toggles]);
+
+  const updatePaths = (ys) => {
+    if (femaleLineRef.current) femaleLineRef.current.setAttribute('d', linePath(ys));
+    if (areaRef.current) areaRef.current.setAttribute('d', areaPath(ys));
+  };
+
+  // ── Intro / Auto-Play-Story ──────────────────────────────────
   useEffect(() => {
     if (!headlineRef.current) return;
+
+    // Initialzustand (Toggles können bei Rückkehr von Unterseite gesetzt sein)
+    ysRef.current = [...targetYs];
+    updatePaths(ysRef.current);
 
     const lines = headlineRef.current.querySelectorAll('[data-line]');
     lines.forEach((line) => splitChars(line));
@@ -30,6 +104,21 @@ export default function OpeningStatement() {
 
     const maleLine = maleLineRef.current;
     const femaleLine = femaleLineRef.current;
+    const area = areaRef.current;
+    const gridCols = gridRef.current?.querySelectorAll('[data-grid-col]');
+    const chips = chipsRef.current;
+    const counterBox = counterBoxRef.current;
+
+    if (reduced) {
+      // Reduced Motion: alles sofort sichtbar, keine Choreografie
+      gsap.set([subRef.current, chips, counterBox], { opacity: 1 });
+      if (area) gsap.set(area, { opacity: 1 });
+      if (euroRef.current) euroRef.current.textContent = String(euroGap);
+      displayedEuro.current = euroGap;
+      chartReady.current = true;
+      setIntroDone(true);
+      return;
+    }
 
     if (maleLine && femaleLine) {
       const mLen = maleLine.getTotalLength();
@@ -37,12 +126,10 @@ export default function OpeningStatement() {
       gsap.set(maleLine, { strokeDasharray: mLen, strokeDashoffset: mLen });
       gsap.set(femaleLine, { strokeDasharray: fLen, strokeDashoffset: fLen });
     }
-
-    // Grid columns — set initial hidden state
-    const gridCols = gridRef.current?.querySelectorAll('[data-grid-col]');
-    if (gridCols?.length) {
-      gsap.set(gridCols, { scaleY: 0, transformOrigin: 'top', opacity: 0 });
-    }
+    if (area) gsap.set(area, { opacity: 0 });
+    if (gridCols?.length) gsap.set(gridCols, { scaleY: 0, transformOrigin: 'top', opacity: 0 });
+    if (chips) gsap.set(chips, { opacity: 0, y: 14 });
+    if (counterBox) gsap.set(counterBox, { opacity: 0, y: 10 });
 
     const tl = gsap.timeline({ delay: 1.4 });
 
@@ -60,10 +147,11 @@ export default function OpeningStatement() {
 
     if (maleLine && femaleLine) {
       tl.addLabel('linesStart', '-=0.3');
-      tl.to(maleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, 'linesStart');
-      tl.to(femaleLine, { strokeDashoffset: 0, duration: 2.2, ease: 'power1.inOut' }, 'linesStart+=0.15');
+      // Männerlinie zieht ruhig nach oben …
+      tl.to(maleLine, { strokeDashoffset: 0, duration: 2.0, ease: 'power1.inOut' }, 'linesStart');
+      // … die Frauenlinie fällt — das ist der Auto-Play-Drop.
+      tl.to(femaleLine, { strokeDashoffset: 0, duration: 2.4, ease: 'power2.in' }, 'linesStart+=0.15');
 
-      // Grid columns build left → right alongside the SVG lines
       if (gridCols?.length) {
         tl.to(
           gridCols,
@@ -71,10 +159,100 @@ export default function OpeningStatement() {
           'linesStart'
         );
       }
+
+      // Lücke füllt sich pink, sobald beide Linien stehen
+      if (area) {
+        tl.to(area, { opacity: 1, duration: 0.9, ease: 'power2.out' }, 'linesStart+=1.9');
+      }
+
+      // Euro-Zähler tickt hoch
+      if (counterBox && euroRef.current) {
+        tl.to(counterBox, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 'linesStart+=1.7');
+        const obj = { v: 0 };
+        tl.to(
+          obj,
+          {
+            v: euroGap,
+            duration: 1.4,
+            ease: 'power2.out',
+            onUpdate: () => {
+              displayedEuro.current = obj.v;
+              if (euroRef.current) euroRef.current.textContent = String(Math.round(obj.v));
+            },
+          },
+          'linesStart+=1.9'
+        );
+      }
+
+      // Einladung zur Interaktion
+      if (chips) {
+        tl.to(chips, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 'linesStart+=2.6');
+      }
+
+      tl.call(() => {
+        // Dash-Trick beenden, damit spätere Morphs die Linie nicht "kürzen"
+        gsap.set(femaleLine, { strokeDasharray: 'none', strokeDashoffset: 0 });
+        chartReady.current = true;
+        setIntroDone(true);
+      });
     }
 
     return () => tl.kill();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reduced]);
+
+  // ── Toggle → dramatischer Linien-Drop ────────────────────────
+  useEffect(() => {
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+    if (!ysRef.current) return;
+
+    if (!chartReady.current) {
+      // Intro läuft noch: Ziel still übernehmen
+      ysRef.current = [...targetYs];
+      updatePaths(ysRef.current);
+      return;
+    }
+
+    const from = [...ysRef.current];
+    const to = [...targetYs];
+    const proxy = { t: 0 };
+    const tween = gsap.to(proxy, {
+      t: 1,
+      duration: 1.1,
+      ease: 'back.out(1.4)', // kurzer freier Fall mit Nachfedern
+      onUpdate: () => {
+        const ys = from.map((f, i) => f + (to[i] - f) * proxy.t);
+        ysRef.current = ys;
+        updatePaths(ys);
+      },
+    });
+    return () => tween.kill();
+  }, [targetYs]);
+
+  // ── Euro-Zähler folgt jeder Änderung ─────────────────────────
+  useEffect(() => {
+    if (!introDone || !euroRef.current) return;
+    const obj = { v: displayedEuro.current };
+    const tween = gsap.to(obj, {
+      v: euroGap,
+      duration: 0.9,
+      ease: 'power3.out',
+      onUpdate: () => {
+        displayedEuro.current = obj.v;
+        if (euroRef.current) euroRef.current.textContent = String(Math.round(obj.v));
+      },
+    });
+    return () => tween.kill();
+  }, [euroGap, introDone]);
+
+  // Marker der aktiven Lebensereignisse (auf Ziel-Position)
+  const markers = TOGGLE_META.filter((m) => toggles[m.id]).map((m) => {
+    const i = XS.indexOf(m.x);
+    return { ...m, y: targetYs[i] };
+  });
 
   return (
     <section
@@ -84,17 +262,17 @@ export default function OpeningStatement() {
       <BackgroundField />
 
       {/* Fixed-nav clearance */}
-      <div className="h-28 md:h-24 shrink-0" />
+      <div className="h-24 md:h-24 shrink-0" />
 
-      {/* ── Main content row: text left + chart right ── */}
-      <div className="flex-1 relative z-10 flex flex-col md:flex-row md:items-center px-6 md:px-12 min-h-0">
+      {/* ── Main content row: text left + interactive chart right ── */}
+      <div className="flex-1 relative z-10 flex flex-col md:flex-row md:items-stretch px-6 md:px-12 min-h-0">
 
         {/* Text column */}
-        <div className="shrink-0 w-full md:w-[48%] text-center md:text-left">
+        <div className="shrink-0 w-full md:w-[44%] text-center md:text-left flex flex-col justify-center">
           <h1
             ref={headlineRef}
             className="display-xl text-paper"
-            style={{ fontSize: 'clamp(3rem, min(9vw, 12vh), 9.5rem)' }}
+            style={{ fontSize: 'clamp(2.6rem, min(8vw, 11vh), 8.5rem)' }}
           >
             <span className="block line-mask"><span data-line>Über deine</span></span>
             <span className="block line-mask"><span data-line>Zukunft wird</span></span>
@@ -107,97 +285,173 @@ export default function OpeningStatement() {
           {/* Subtitle — desktop only */}
           <div
             ref={subRef}
-            className="hidden md:block mt-8 max-w-md body-lead text-paper/60"
-            style={{ fontSize: 'clamp(0.9rem, 1.1vw, 1.5rem)' }}
+            className="hidden md:block mt-6 max-w-md body-lead text-paper/60"
+            style={{ fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)' }}
           >
-            Eine Beratung, die nicht zuhört, ist eine Verkaufsfläche. Diese Seite fängt
-            nicht mit einem Produkt an. Sie fängt mit einer Zahl an, die dich betrifft.
+            Diese Grafik ist keine Deko. Sie ist dein Leben in einer Linie —
+            und sie reagiert auf dich.
           </div>
         </div>
 
-        {/* ── Chart column: life-phase grid + diverging curves ── */}
-        <div className="flex-1 relative min-h-0 mt-2 md:mt-0 md:self-stretch">
+        {/* ── Chart column ── */}
+        <div className="flex-1 flex flex-col min-h-0 mt-2 md:mt-0 md:pl-8">
 
-          {/* Left fade — desktop only */}
-          <div
-            className="hidden md:block absolute inset-y-0 left-0 w-20 z-20 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, var(--color-ink), transparent)' }}
-          />
+          {/* Chart area */}
+          <div className="relative flex-1 min-h-0">
 
-          {/* Life-phase grid lines — both mobile and desktop */}
-          <div ref={gridRef} className="absolute inset-0 z-[5]">
-            {LIFE_PHASES.map(({ age, label, pos, mobileLabel }) => (
-              <div
-                key={age}
-                data-grid-col
-                className="absolute top-0 bottom-0 flex flex-col items-center"
-                style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}
-              >
-                <div className="pt-2 md:pt-[76px] flex flex-col items-center gap-[4px]">
-                  <span
-                    className="font-mono"
-                    style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgb(var(--paper-rgb) / 0.6)' }}
-                  >
-                    {age}
-                  </span>
-                  <span
-                    className={`font-mono${mobileLabel ? '' : ' hidden md:block'}`}
-                    style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgb(var(--paper-rgb) / 0.38)', whiteSpace: 'nowrap' }}
-                  >
-                    {label}
-                  </span>
-                </div>
+            {/* Left fade — desktop only */}
+            <div
+              className="hidden md:block absolute inset-y-0 left-0 w-20 z-20 pointer-events-none"
+              style={{ background: 'linear-gradient(to right, var(--color-ink), transparent)' }}
+            />
+
+            {/* Life-phase grid lines */}
+            <div ref={gridRef} className="absolute inset-0 z-[5]">
+              {LIFE_PHASES.map(({ age, label, pos, mobileLabel }) => (
                 <div
-                  className="w-px mt-2"
-                  style={{ flex: 1, background: 'rgb(var(--paper-rgb) / 0.15)' }}
-                />
+                  key={age}
+                  data-grid-col
+                  className="absolute top-0 bottom-0 flex flex-col items-center"
+                  style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}
+                >
+                  <div className="pt-2 md:pt-10 flex flex-col items-center gap-[4px]">
+                    <span
+                      className="font-mono"
+                      style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgb(var(--paper-rgb) / 0.6)' }}
+                    >
+                      {age}
+                    </span>
+                    <span
+                      className={`font-mono${mobileLabel ? '' : ' hidden md:block'}`}
+                      style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgb(var(--paper-rgb) / 0.38)', whiteSpace: 'nowrap' }}
+                    >
+                      {label}
+                    </span>
+                  </div>
+                  <div
+                    className="w-px mt-2"
+                    style={{ flex: 1, background: 'rgb(var(--paper-rgb) / 0.15)' }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* SVG: Lücken-Fläche + Linien + Marker */}
+            <svg
+              viewBox="0 0 600 400"
+              className="absolute inset-0 w-full h-full z-[10]"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="gapFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--color-pink)" stopOpacity="0.02" />
+                  <stop offset="100%" stopColor="var(--color-pink)" stopOpacity="0.16" />
+                </linearGradient>
+              </defs>
+
+              {/* Lücke */}
+              <path ref={areaRef} d={areaPath(FEMALE_Y)} fill="url(#gapFill)" stroke="none" />
+
+              {/* Männer */}
+              <path
+                ref={maleLineRef}
+                d={MALE_PATH}
+                fill="none"
+                stroke="var(--color-paper)"
+                strokeWidth="1"
+                opacity="0.4"
+              />
+              {/* Frauen */}
+              <path
+                ref={femaleLineRef}
+                d={linePath(FEMALE_Y)}
+                fill="none"
+                stroke="var(--color-pink)"
+                strokeWidth="1.4"
+                opacity="0.9"
+              />
+
+              {/* Marker aktiver Lebensereignisse */}
+              {markers.map((m) => (
+                <g key={m.id} style={{ transition: 'transform 0.3s' }}>
+                  <circle cx={m.x} cy={m.y} r="5" fill="var(--color-pink)" opacity="0.25">
+                    <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx={m.x} cy={m.y} r="2.6" fill="var(--color-pink)" />
+                </g>
+              ))}
+            </svg>
+
+            {/* Marker-Labels (HTML, unverzerrt) */}
+            {markers.map((m) => (
+              <div
+                key={m.id}
+                className="absolute z-[15] font-mono text-pink pointer-events-none"
+                style={{
+                  left: `${(m.x / 600) * 100}%`,
+                  top: `${(m.y / 400) * 100}%`,
+                  transform: 'translate(-50%, -190%)',
+                  fontSize: '8px',
+                  letterSpacing: '0.18em',
+                }}
+              >
+                −{m.euro} €
               </div>
             ))}
+
+            {/* Euro-Zähler — deine Lücke, live */}
+            <div
+              ref={counterBoxRef}
+              className="absolute left-0 bottom-1 md:bottom-3 z-20 pointer-events-none"
+            >
+              <div className="eyebrow text-paper/40 mb-1">Deine Rentenlücke</div>
+              <div className="flex items-baseline gap-1">
+                <span className="data-num text-pink" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4.5rem)' }}>
+                  −<span ref={euroRef}>0</span> €
+                </span>
+              </div>
+              <div className="font-mono text-[10px] text-paper/45 mt-1">
+                pro Monat Rente · {gap.toFixed(1)} % weniger als Männer
+              </div>
+            </div>
           </div>
 
-          {/*
-            SVG curves — shown on both mobile and desktop.
-
-            Desktop: sits over the life-phase grid. Grid columns at pos% × 6 = SVG x.
-            White line (Männer): rises from y=200 to y=141 — stays below label area.
-            Pink  line (Frauen): falls from y=200 to y=384 — gap opens at KIND (x=300).
-          */}
-          <svg
-            viewBox="0 0 600 400"
-            className="absolute inset-0 w-full h-full z-[10]"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            {/* Male — gentle upward rise, stays well below label area */}
-            <path
-              ref={maleLineRef}
-              d="M 0,200 C 60,197 130,190 204,177
-                 C 265,167 285,163 300,160
-                 C 350,154 420,150 480,146
-                 C 530,143 570,142 600,141"
-              fill="none"
-              stroke="var(--color-paper)"
-              strokeWidth="1"
-              opacity="0.4"
-            />
-            {/* Female — clear downward fall */}
-            <path
-              ref={femaleLineRef}
-              d="M 0,200 C 60,203 130,212 204,228
-                 C 265,242 285,248 300,258
-                 C 350,276 420,312 480,342
-                 C 530,364 570,378 600,384"
-              fill="none"
-              stroke="var(--color-pink)"
-              strokeWidth="1"
-              opacity="0.8"
-            />
-          </svg>
+          {/* Toggle-Chips: der Lead-Magnet */}
+          <div ref={chipsRef} className="shrink-0 pt-3 pb-1">
+            <div className="eyebrow text-paper/50 mb-2 text-center md:text-left">
+              Und bei dir? Tippe an, was zutrifft
+            </div>
+            <div className="flex flex-wrap justify-center md:justify-start gap-2">
+              {TOGGLE_META.map((m) => {
+                const on = toggles[m.id];
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => toggle(m.id)}
+                    data-cursor="toggle"
+                    data-cursor-label={on ? '−' : '+'}
+                    className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-medium transition-all duration-300 border ${
+                      on
+                        ? 'bg-pink text-ink border-pink'
+                        : 'bg-transparent text-paper/70 border-paper/25 hover:border-pink hover:text-pink'
+                    }`}
+                  >
+                    <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/15'}`}>
+                      {on ? '✓' : '+'}
+                    </span>
+                    <span>{m.label}</span>
+                    <span className="font-mono opacity-60">−{m.euro} €</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── Bottom bar: CTA always visible ── */}
-      <div className="shrink-0 relative z-10 px-6 md:px-12 pb-10 pt-4 flex items-center justify-center md:justify-between">
+      <div className="shrink-0 relative z-10 px-6 md:px-12 pb-8 pt-3 flex items-center justify-center md:justify-between">
         <a
           href={BOOKING_URL}
           target="_blank"
@@ -207,7 +461,6 @@ export default function OpeningStatement() {
           <span className="h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
           Erstgespräch buchen
         </a>
-
       </div>
     </section>
   );
