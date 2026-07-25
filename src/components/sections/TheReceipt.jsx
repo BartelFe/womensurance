@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGap, RETIREMENT_YEARS } from '../../hooks/useGapState';
+import { useGap, TOGGLE_META, BASE_EURO, RETIREMENT_YEARS } from '../../hooks/useGapState';
 import { BOOKING_URL } from '../../config/site';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,8 +10,12 @@ const fmt = (n) => Math.round(n).toLocaleString('de-DE');
 
 /**
  * "Der Kassenzettel" — übersetzt die Hero-Interaktion in Euro.
- * Gepinnte Scroll-Sequenz: Posten stempeln sich nacheinander ein,
- * Monatssumme zählt hoch, dann die Lebenssumme + VERMEIDBAR-Stempel.
+ *
+ * WICHTIG (Pin-Stabilität): Die Timeline wird EINMAL gebaut und nie
+ * neu aufgesetzt — sonst verschieben sich die Pin-Spacer und die
+ * nachfolgende Horizontal-Section bricht ein. Alle 5 möglichen Posten
+ * sind immer Teil der Timeline; inaktive sind nur per CSS versteckt.
+ * Live-Werte (€) kommen aus Refs, nicht aus Closure-Variablen.
  * ⚠️ Beispielrechnung mit Platzhalter-Werten — mit Julia validieren.
  */
 export default function TheReceipt() {
@@ -20,23 +24,22 @@ export default function TheReceipt() {
   const monthlyRef = useRef(null);
   const lifetimeRef = useRef(null);
 
-  const { euroGap, baseEuro, activeMeta, gap } = useGap();
-  const lifetime = euroGap * 12 * RETIREMENT_YEARS;
+  const { toggles, euroGap, activeMeta, gap } = useGap();
 
-  const items = [
-    {
-      id: 'base',
-      label: 'Gender Pension Gap · Basis',
-      sub: 'Ø Rente Frau vs. Mann, Deutschland',
-      euro: baseEuro,
-    },
-    ...activeMeta.map((m) => ({
-      id: m.id,
-      label: m.receiptLabel,
-      sub: m.receiptSub,
-      euro: m.euro,
-    })),
-  ];
+  // Live-Werte für die Scrub-Tweens (Timeline bleibt statisch)
+  const euroLive = useRef(euroGap);
+  const tMonthly = useRef(0);
+  const tLifetime = useRef(0);
+  useEffect(() => {
+    euroLive.current = euroGap;
+    // Wenn der Bon schon (teil-)gescrollt ist, Anzeige an neue Summe angleichen
+    if (monthlyRef.current && tMonthly.current > 0) {
+      monthlyRef.current.textContent = `−${fmt(tMonthly.current * euroGap)} €`;
+    }
+    if (lifetimeRef.current && tLifetime.current > 0) {
+      lifetimeRef.current.textContent = `−${fmt(tLifetime.current * euroGap * 12 * RETIREMENT_YEARS)} €`;
+    }
+  }, [euroGap]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -64,28 +67,31 @@ export default function TheReceipt() {
       tl.fromTo(intro, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0);
       tl.fromTo(card, { opacity: 0, yPercent: 10, rotate: 0 }, { opacity: 1, yPercent: 0, rotate: -1.2, duration: 0.7 }, 0.3);
 
-      // Posten stempeln sich ein
+      // Posten stempeln sich ein (alle 5 immer in der Timeline)
       rows.forEach((row, i) => {
         tl.fromTo(
           row,
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.35 },
-          1.1 + i * 0.35
+          1.1 + i * 0.3
         );
       });
-      const afterRows = 1.1 + rows.length * 0.35 + 0.25;
+      const afterRows = 1.1 + rows.length * 0.3 + 0.25;
 
-      // Monatssumme zählt hoch
+      // Monatssumme zählt hoch — Zielwert live aus Ref
       tl.fromTo(sumBlock, { opacity: 0 }, { opacity: 1, duration: 0.3 }, afterRows);
-      const objM = { v: 0 };
+      const objM = { t: 0 };
       tl.to(
         objM,
         {
-          v: euroGap,
+          t: 1,
           duration: 0.8,
           ease: 'none',
           onUpdate: () => {
-            if (monthlyRef.current) monthlyRef.current.textContent = `−${fmt(objM.v)} €`;
+            tMonthly.current = objM.t;
+            if (monthlyRef.current) {
+              monthlyRef.current.textContent = `−${fmt(objM.t * euroLive.current)} €`;
+            }
           },
         },
         afterRows
@@ -99,15 +105,18 @@ export default function TheReceipt() {
         { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' },
         afterRows + 1.0
       );
-      const objL = { v: 0 };
+      const objL = { t: 0 };
       tl.to(
         objL,
         {
-          v: lifetime,
+          t: 1,
           duration: 0.9,
           ease: 'power1.in',
           onUpdate: () => {
-            if (lifetimeRef.current) lifetimeRef.current.textContent = `−${fmt(objL.v)} €`;
+            tLifetime.current = objL.t;
+            if (lifetimeRef.current) {
+              lifetimeRef.current.textContent = `−${fmt(objL.t * euroLive.current * 12 * RETIREMENT_YEARS)} €`;
+            }
           },
         },
         afterRows + 1.0
@@ -127,9 +136,14 @@ export default function TheReceipt() {
       tl.to({}, { duration: 0.6 });
     }, root);
 
-    return () => ctx.revert();
-    // Bei Toggle-Änderung neu aufbauen (Posten kommen dazu/fallen weg)
-  }, [items.length, euroGap, lifetime]);
+    // Sicherheitsnetz: alle Trigger einmal sauber in Dokument-Reihenfolge vermessen
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ctx.revert();
+    };
+  }, []); // ← bewusst leer: Timeline wird nie neu gebaut
 
   return (
     <section ref={root} id="gap" className="relative bg-ink text-paper">
@@ -139,21 +153,21 @@ export default function TheReceipt() {
           {/* ── Links: die These ── */}
           <div data-receipt-intro>
             <div className="eyebrow text-paper/40 mb-6">Die Rechnung</div>
-            <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.4rem, 5.5vw, 5.5rem)' }}>
-              Prozente fühlst du nicht.{' '}
-              <span className="display-italic text-pink">Euro schon.</span>
+            <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2rem, 4.5vw, 4.2rem)' }}>
+              Was die Prozente in{' '}
+              <span className="display-italic text-pink">Euros</span> bedeuten.
             </h2>
             <p className="mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
               {gap.toFixed(1)} % klingen abstrakt. Aber die Lücke hat einen
               Preis — jeden Monat, zwanzig Rentenjahre lang. Das hier ist
               dein Bon.
             </p>
-            {activeMeta.length === 0 && (
-              <p className="mt-6 max-w-md font-mono text-xs text-paper/35 leading-relaxed">
-                Tipp: Wähl oben im Diagramm an, was auf dich zutrifft — der
-                Kassenzettel rechnet live mit.
-              </p>
-            )}
+            <p
+              className={`mt-6 max-w-md font-mono text-xs text-paper/35 leading-relaxed ${activeMeta.length === 0 ? '' : 'invisible'}`}
+            >
+              Tipp: Wähl oben im Diagramm an, was auf dich zutrifft — der
+              Kassenzettel rechnet live mit.
+            </p>
           </div>
 
           {/* ── Rechts: der Kassenzettel ── */}
@@ -163,7 +177,7 @@ export default function TheReceipt() {
               className="relative w-full max-w-sm bg-bone text-ink font-mono shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
               style={{ fontSize: '12px', lineHeight: 1.7 }}
             >
-              {/* Perforationskante oben/unten */}
+              {/* Perforationskante oben */}
               <div
                 className="h-2 w-full"
                 style={{
@@ -188,18 +202,29 @@ export default function TheReceipt() {
 
                 <div className="border-t border-dashed border-ink/25 my-4" />
 
-                {/* Posten */}
+                {/* Posten — Basis immer, Lebensereignisse je nach Auswahl */}
                 <div className="flex justify-between text-ink/45 text-[10px] tracking-[0.12em] mb-2">
                   <span>POSITION</span>
                   <span>€ / MONAT</span>
                 </div>
-                {items.map((it) => (
-                  <div key={it.id} data-row className="flex items-baseline justify-between gap-3 py-1">
+                <div data-row className="flex items-baseline justify-between gap-3 py-1">
+                  <div className="min-w-0">
+                    <div className="truncate">Gender Pension Gap · Basis</div>
+                    <div className="text-ink/40 text-[10px] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
+                  </div>
+                  <div className="shrink-0 font-bold">−{fmt(BASE_EURO)}</div>
+                </div>
+                {TOGGLE_META.map((m) => (
+                  <div
+                    key={m.id}
+                    data-row
+                    className={`flex items-baseline justify-between gap-3 py-1 ${toggles[m.id] ? '' : 'hidden'}`}
+                  >
                     <div className="min-w-0">
-                      <div className="truncate">{it.label}</div>
-                      <div className="text-ink/40 text-[10px] truncate">{it.sub}</div>
+                      <div className="truncate">{m.receiptLabel}</div>
+                      <div className="text-ink/40 text-[10px] truncate">{m.receiptSub}</div>
                     </div>
-                    <div className="shrink-0 font-bold">−{fmt(it.euro)}</div>
+                    <div className="shrink-0 font-bold">−{fmt(m.euro)}</div>
                   </div>
                 ))}
 
@@ -260,6 +285,7 @@ export default function TheReceipt() {
                   </div>
                 </div>
               </div>
+              {/* Perforationskante unten */}
               <div
                 className="h-2 w-full"
                 style={{

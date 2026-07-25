@@ -59,6 +59,8 @@ export default function OpeningStatement() {
   const maleLineRef = useRef(null);
   const femaleLineRef = useRef(null);
   const areaRef = useRef(null);
+  const gapLineRef = useRef(null);
+  const gapLabelRef = useRef(null);
   const gridRef = useRef(null);
   const chipsRef = useRef(null);
   const counterBoxRef = useRef(null);
@@ -88,6 +90,17 @@ export default function OpeningStatement() {
   const updatePaths = (ys) => {
     if (femaleLineRef.current) femaleLineRef.current.setAttribute('d', linePath(ys));
     if (areaRef.current) areaRef.current.setAttribute('d', areaPath(ys));
+    // Lücken-Konnektor (Rente, x=576): von Männer- zu Frauen-Linie
+    const yFemale = ys[XS.indexOf(576)];
+    const yMale = MALE_Y[XS.indexOf(576)];
+    if (gapLineRef.current) {
+      gapLineRef.current.setAttribute('y1', yMale);
+      gapLineRef.current.setAttribute('y2', yFemale);
+    }
+    if (gapLabelRef.current) {
+      const mid = (yMale + yFemale) / 2;
+      gapLabelRef.current.style.top = `${(mid / 400) * 100}%`;
+    }
   };
 
   // ── Intro / Auto-Play-Story ──────────────────────────────────
@@ -105,6 +118,8 @@ export default function OpeningStatement() {
     const maleLine = maleLineRef.current;
     const femaleLine = femaleLineRef.current;
     const area = areaRef.current;
+    const gapLine = gapLineRef.current;
+    const gapLabel = gapLabelRef.current;
     const gridCols = gridRef.current?.querySelectorAll('[data-grid-col]');
     const chips = chipsRef.current;
     const counterBox = counterBoxRef.current;
@@ -113,6 +128,8 @@ export default function OpeningStatement() {
       // Reduced Motion: alles sofort sichtbar, keine Choreografie
       gsap.set([subRef.current, chips, counterBox], { opacity: 1 });
       if (area) gsap.set(area, { opacity: 1 });
+      if (gapLine) gsap.set(gapLine, { opacity: 0.7 });
+      if (gapLabel) gsap.set(gapLabel, { opacity: 1 });
       if (euroRef.current) euroRef.current.textContent = String(euroGap);
       displayedEuro.current = euroGap;
       chartReady.current = true;
@@ -127,6 +144,8 @@ export default function OpeningStatement() {
       gsap.set(femaleLine, { strokeDasharray: fLen, strokeDashoffset: fLen });
     }
     if (area) gsap.set(area, { opacity: 0 });
+    if (gapLine) gsap.set(gapLine, { opacity: 0 });
+    if (gapLabel) gsap.set(gapLabel, { opacity: 0 });
     if (gridCols?.length) gsap.set(gridCols, { scaleY: 0, transformOrigin: 'top', opacity: 0 });
     if (chips) gsap.set(chips, { opacity: 0, y: 14 });
     if (counterBox) gsap.set(counterBox, { opacity: 0, y: 10 });
@@ -163,6 +182,13 @@ export default function OpeningStatement() {
       // Lücke füllt sich pink, sobald beide Linien stehen
       if (area) {
         tl.to(area, { opacity: 1, duration: 0.9, ease: 'power2.out' }, 'linesStart+=1.9');
+      }
+      // Konnektor macht die Lücke explizit: Strich von Linie zu Linie
+      if (gapLine) {
+        tl.to(gapLine, { opacity: 0.75, duration: 0.6, ease: 'power2.out' }, 'linesStart+=2.2');
+      }
+      if (gapLabel) {
+        tl.to(gapLabel, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 'linesStart+=2.4');
       }
 
       // Euro-Zähler tickt hoch
@@ -372,6 +398,19 @@ export default function OpeningStatement() {
                 opacity="0.9"
               />
 
+              {/* Lücken-Konnektor: vertikaler Strich Männer→Frauen bei Rente */}
+              <line
+                ref={gapLineRef}
+                x1="576"
+                y1={MALE_Y[XS.indexOf(576)]}
+                x2="576"
+                y2={FEMALE_Y[XS.indexOf(576)]}
+                stroke="var(--color-pink)"
+                strokeWidth="1.4"
+                strokeDasharray="4 5"
+                opacity="0.75"
+              />
+
               {/* Marker aktiver Lebensereignisse */}
               {markers.map((m) => (
                 <g key={m.id} style={{ transition: 'transform 0.3s' }}>
@@ -382,6 +421,21 @@ export default function OpeningStatement() {
                 </g>
               ))}
             </svg>
+
+            {/* Label am Lücken-Konnektor */}
+            <div
+              ref={gapLabelRef}
+              className="absolute z-[15] font-mono text-pink pointer-events-none text-right"
+              style={{
+                left: `${(576 / 600) * 100}%`,
+                top: `${(((MALE_Y[XS.indexOf(576)] + FEMALE_Y[XS.indexOf(576)]) / 2) / 400) * 100}%`,
+                transform: 'translate(-112%, -50%)',
+                fontSize: '9px',
+                letterSpacing: '0.2em',
+              }}
+            >
+              DIE LÜCKE
+            </div>
 
             {/* Marker-Labels (HTML, unverzerrt) */}
             {markers.map((m) => (
@@ -422,8 +476,9 @@ export default function OpeningStatement() {
             <div className="eyebrow text-paper/50 mb-2 text-center md:text-left">
               Und bei dir? Tippe an, was zutrifft
             </div>
-            <div className="flex flex-wrap justify-center md:justify-start gap-2">
-              {TOGGLE_META.map((m) => {
+            {/* Immer 2×2 oder 4×1 — nie 3+1 */}
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2">
+              {TOGGLE_META.map((m, i) => {
                 const on = toggles[m.id];
                 return (
                   <button
@@ -431,17 +486,18 @@ export default function OpeningStatement() {
                     onClick={() => toggle(m.id)}
                     data-cursor="toggle"
                     data-cursor-label={on ? '−' : '+'}
-                    className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-medium transition-all duration-300 border ${
+                    className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-all duration-300 border ${
                       on
                         ? 'bg-pink text-ink border-pink'
-                        : 'bg-transparent text-paper/70 border-paper/25 hover:border-pink hover:text-pink'
+                        : 'chip-pulse bg-transparent text-paper/70 border-paper/25 hover:border-pink hover:text-pink'
                     }`}
+                    style={on ? undefined : { animationDelay: `${i * 0.35}s` }}
                   >
                     <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/15'}`}>
                       {on ? '✓' : '+'}
                     </span>
-                    <span>{m.label}</span>
-                    <span className="font-mono opacity-60">−{m.euro} €</span>
+                    <span className="whitespace-nowrap">{m.label}</span>
+                    <span className="font-mono opacity-60 whitespace-nowrap hidden sm:inline">−{m.euro} €</span>
                   </button>
                 );
               })}

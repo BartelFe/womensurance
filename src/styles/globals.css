@@ -119,26 +119,26 @@
 }
 
 @layer components {
-  /* Display-Typo: Lato Heavy (900) — CI-Font von Julia */
+  /* Display-Typo: Lato Bold (700) — 900 wirkte zu schwer (Feedback Felix) */
   .display-xl {
     font-family: 'Lato', system-ui, sans-serif;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 0.98;
   }
 
   .display-lg {
     font-family: 'Lato', system-ui, sans-serif;
-    font-weight: 900;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
   }
 
   .display-italic {
     font-family: 'Lato', system-ui, sans-serif;
     font-style: italic;
-    font-weight: 900;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    letter-spacing: -0.015em;
   }
 
   .eyebrow {
@@ -173,6 +173,18 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Pulsierende Aufforderung auf inaktiven Hero-Chips */
+@keyframes chipPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--pink-rgb) / 0.4); }
+  55% { box-shadow: 0 0 0 8px rgb(var(--pink-rgb) / 0); }
+}
+.chip-pulse {
+  animation: chipPulse 2.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .chip-pulse { animation: none; }
 }
 
 /* GSAP / SplitText helpers */

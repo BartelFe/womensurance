@@ -33,6 +33,13 @@ export default function Home() {
     }
   };
 
+  // Sicherheitsnetz gegen Pin-Überlappungen: nach dem Loader (bzw. Mount)
+  // alle ScrollTrigger einmal in Dokument-Reihenfolge neu vermessen.
+  useEffect(() => {
+    const t = setTimeout(() => ScrollTrigger.refresh(), showLoader ? 4600 : 600);
+    return () => clearTimeout(t);
+  }, [showLoader]);
+
   // Hash-Navigation: /#gap, /#julia … oder /#phase-<id> (Kachel in der Horizontal-Section)
   useEffect(() => {
     const hash = location.hash;
