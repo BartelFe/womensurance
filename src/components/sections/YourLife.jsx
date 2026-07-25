@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { lifePhases } from '../../data/lifePhases';
-import { useGap, TOGGLE_META } from '../../hooks/useGapState';
+import { useGap } from '../../hooks/useGapState';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,7 +14,8 @@ export default function YourLife() {
   const counterRef = useRef(null);
   const [expandedId, setExpandedId] = useState(null);
 
-  const { toggles, toggle, gap, baseGap } = useGap();
+  // Toggles leben jetzt ausschließlich im Hero — hier nur noch die Anzeige
+  const { gap, baseGap } = useGap();
 
   // Animate counter on gap change
   useEffect(() => {
@@ -120,16 +121,15 @@ export default function YourLife() {
           <div className="text-xs font-mono text-ink/50 mt-1 text-right">der Männer-Rente</div>
         </div>
 
-        {/* Horizontal track */}
-        <div className="absolute inset-0 flex items-center pt-28 pb-48 md:pt-32 md:pb-36">
-          <div ref={trackRef} className="flex gap-8 pl-6 md:pl-12 will-change-transform">
+        {/* Horizontal track — Karten füllen die Höhe (Pills sind weg) */}
+        <div className="absolute inset-0 flex items-stretch pt-28 pb-8 md:pt-32 md:pb-12">
+          <div ref={trackRef} className="flex h-full items-stretch gap-6 md:gap-8 pl-6 md:pl-12 will-change-transform">
             {lifePhases.map((phase, i) => (
               <article
                 key={phase.id}
                 data-phase-card
                 data-phase-id={phase.id}
-                className="shrink-0 w-[78vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-8 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
-                style={{ minHeight: '50vh' }}
+                className="shrink-0 h-full w-[80vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-7 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
               >
                 <div className="flex items-baseline justify-between mb-6">
                   <span className="eyebrow text-clay">{String(i + 1).padStart(2, '0')} / {String(lifePhases.length).padStart(2, '0')}</span>
@@ -174,11 +174,12 @@ export default function YourLife() {
                     <Link
                       to={phase.subpage}
                       data-cursor="link"
-                      className="mt-6 group flex w-full items-center justify-between gap-3 rounded-full bg-pink text-ink px-6 py-4 text-sm font-bold hover:bg-pink-deep hover:text-paper transition-colors shadow-[0_14px_36px_-10px_rgb(var(--pink-rgb)/0.65)]"
+                      className="mt-5 group inline-flex w-full md:w-auto items-center justify-between md:justify-start gap-3 rounded-full bg-pink text-ink px-5 py-3 text-xs md:text-sm font-bold whitespace-nowrap hover:bg-pink-deep hover:text-paper transition-colors shadow-[0_14px_36px_-10px_rgb(var(--pink-rgb)/0.65)]"
                     >
                       <span className="inline-flex items-center gap-2.5">
-                        <span className="h-2 w-2 rounded-full bg-ink animate-pulse group-hover:bg-paper" />
-                        {phase.subpageLabel || 'Zur Themenseite'}
+                        <span className="h-2 w-2 shrink-0 rounded-full bg-ink animate-pulse group-hover:bg-paper" />
+                        <span className="md:hidden">{phase.subpageShort || phase.subpageLabel}</span>
+                        <span className="hidden md:inline">{phase.subpageLabel}</span>
                       </span>
                       <svg width="15" height="15" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
                         <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -226,38 +227,6 @@ export default function YourLife() {
 
             {/* End spacer */}
             <div className="shrink-0 w-[20vw]" />
-          </div>
-        </div>
-
-        {/* Bottom: Toggle pills */}
-        <div className="absolute bottom-0 left-0 right-0 z-30 p-4 md:p-8 pointer-events-none flex justify-center md:justify-center">
-          <div className="px-1 py-2 w-full md:w-fit pointer-events-auto">
-            <span className="eyebrow text-ink/40 px-3 hidden md:inline">Tippe an, was auf dich zutrifft</span>
-            {/* 2×2 grid on mobile, single row on desktop */}
-            <div className="grid grid-cols-2 gap-2 md:flex md:flex-row md:items-center md:gap-2">
-              {TOGGLE_META.map((t) => {
-                const on = toggles[t.id];
-                return (
-                  <button
-                    key={t.id}
-                    onClick={() => toggle(t.id)}
-                    data-cursor="toggle"
-                    data-cursor-label={on ? '−' : '+'}
-                    className={`group inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition-all duration-300 ${
-                      on
-                        ? 'bg-pink text-ink shadow-[0_0_0_1px_var(--color-pink)]'
-                        : 'bg-ink/10 text-ink hover:bg-ink/15'
-                    }`}
-                  >
-                    <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-ink/15'}`}>
-                      {on ? '✓' : '+'}
-                    </span>
-                    <span>{t.label}</span>
-                    <span className="font-mono opacity-60">−{t.euro} €</span>
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </div>
       </div>

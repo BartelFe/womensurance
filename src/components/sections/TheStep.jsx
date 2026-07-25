@@ -83,12 +83,6 @@ export default function TheStep() {
       />
 
       <div className="relative max-w-6xl mx-auto text-center">
-        <div className="eyebrow text-paper/40 mb-10 inline-flex items-center gap-3">
-          <span className="h-px w-8 bg-paper/30" />
-          Akt 07 · Der Schritt
-          <span className="h-px w-8 bg-paper/30" />
-        </div>
-
         <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.6rem, 9vw, 10rem)' }}>
           <span className="block line-mask"><span data-line>30 Minuten.</span></span>
           <span className="block line-mask"><span data-line>Kostenlos.</span></span>
@@ -96,7 +90,7 @@ export default function TheStep() {
         </h2>
 
         <p className="mt-12 max-w-xl mx-auto body-lead text-paper/55">
-          Wenn nach diesem Gespräch klar ist, dass wir nicht passen — auch okay. Aber du gehst mit drei Sachen raus, die du vorher nicht hattest: Klarheit, eine erste Strategie und keine Verkaufsversuche.
+          Wenn nach diesem Gespräch klar ist, dass wir nicht passen — auch okay. Aber du gehst mit Klarheit und den nächsten relevanten Schritten raus.
         </p>
 
         <div data-cta className="mt-12 flex flex-col items-center gap-6">
@@ -107,11 +101,9 @@ export default function TheStep() {
             </svg>
           </MagneticButton>
 
-          <div className="eyebrow text-paper/30 mt-2">Kein Anruf · Direkt im Outlook-Kalender</div>
-
           {/* Social Media — sichtbar unter dem CTA */}
           <div className="mt-6 flex flex-col items-center gap-4">
-            <div className="eyebrow text-paper/40">Oder folge Julia</div>
+            <div className="eyebrow text-paper/40">Oder folge mir</div>
             <div className="flex items-center gap-3">
               {SOCIALS.map((s) => (
                 <a

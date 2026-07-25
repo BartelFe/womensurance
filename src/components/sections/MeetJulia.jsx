@@ -135,7 +135,7 @@ export default function MeetJulia() {
                 <div className="bg-ink text-paper p-5 rounded-sm">
                   <div className="eyebrow text-pink mb-3">Womensurance</div>
                   <p className="text-xs text-paper/70 leading-relaxed font-light">
-                    Unabhängige Beratung. Kein Druck. Kein Produkt, das du nicht brauchst.
+                    Unabhängige Beratung. Versicherung von Frau zu Frau: Für alle Lebenslagen.
                   </p>
                 </div>
               </div>
@@ -185,14 +185,11 @@ export default function MeetJulia() {
               <div className="eyebrow text-clay mb-6">Die Geschichte</div>
 
               <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
-                Kauffrau für Versicherungen und Finanzen. Gründerin von Womensurance. Geboren in der Ukraine, beraten in Bayern. Und seit über zehn Jahren überzeugt, dass die wichtigsten finanziellen Entscheidungen einer Frau viel zu oft von Männern getroffen werden, die ihr Leben nicht kennen.
+                Als Fachwirtin und erfahrene Beraterin unterstütze ich Frauen dabei, ihre Versicherungen selbstbewusst und informiert zu gestalten. Ich kenne die Stolpersteine und Unsicherheiten, die viele Frauen beim Thema Versicherung erleben und helfe, diese zu überwinden.
               </p>
               <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
-                Ich höre zu, bevor ich rechne. Ich frage, bevor ich vorschlage. Und ich verkaufe nichts, was du nicht brauchst — auch wenn es einfacher wäre.
-              </p>
-              <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
-                Das ist Womensurance: nicht eine weitere Versicherungsmarke, sondern{' '}
-                <strong className="text-paper font-medium">die eine Stelle</strong>, an der du gefragt wirst, was du eigentlich willst.
+                <strong className="text-paper font-medium">Mein Anspruch:</strong><br />
+                Jede Frau soll sich in jeder Lebenslage sicher fühlen und die passende Absicherung finden.
               </p>
 
               {/* Credentials */}

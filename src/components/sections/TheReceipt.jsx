@@ -64,8 +64,9 @@ export default function TheReceipt() {
         },
       });
 
-      tl.fromTo(intro, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5 }, 0);
-      tl.fromTo(card, { opacity: 0, yPercent: 10, rotate: 0 }, { opacity: 1, yPercent: 0, rotate: -1.2, duration: 0.7 }, 0.3);
+      // Früh sichtbar werden — sonst wirkt der Pin-Einstieg wie ein schwarzer Screen
+      tl.fromTo(intro, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2 }, 0);
+      tl.fromTo(card, { opacity: 0, yPercent: 8, rotate: 0 }, { opacity: 1, yPercent: 0, rotate: -1.2, duration: 0.45 }, 0.1);
 
       // Posten stempeln sich ein (alle 5 immer in der Timeline)
       rows.forEach((row, i) => {
@@ -73,10 +74,10 @@ export default function TheReceipt() {
           row,
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.35 },
-          1.1 + i * 0.3
+          0.8 + i * 0.3
         );
       });
-      const afterRows = 1.1 + rows.length * 0.3 + 0.25;
+      const afterRows = 0.8 + rows.length * 0.3 + 0.25;
 
       // Monatssumme zählt hoch — Zielwert live aus Ref
       tl.fromTo(sumBlock, { opacity: 0 }, { opacity: 1, duration: 0.3 }, afterRows);
@@ -148,22 +149,22 @@ export default function TheReceipt() {
   return (
     <section ref={root} id="gap" className="relative bg-ink text-paper">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-5 md:gap-16 items-center">
 
-          {/* ── Links: die These ── */}
+          {/* ── Links: die These (mobil nur die Überschrift) ── */}
           <div data-receipt-intro>
-            <div className="eyebrow text-paper/40 mb-6">Die Rechnung</div>
-            <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2rem, 4.5vw, 4.2rem)' }}>
+            <div className="eyebrow text-paper/40 mb-3 md:mb-6">Die Rechnung</div>
+            <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(1.8rem, 4.5vw, 4.2rem)' }}>
               Was die Prozente in{' '}
               <span className="display-italic text-pink">Euros</span> bedeuten.
             </h2>
-            <p className="mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
+            <p className="hidden md:block mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
               {gap.toFixed(1)} % klingen abstrakt. Aber die Lücke hat einen
               Preis — jeden Monat, zwanzig Rentenjahre lang. Das hier ist
               dein Bon.
             </p>
             <p
-              className={`mt-6 max-w-md font-mono text-xs text-paper/35 leading-relaxed ${activeMeta.length === 0 ? '' : 'invisible'}`}
+              className={`hidden md:block mt-6 max-w-md font-mono text-xs text-paper/35 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
             >
               Tipp: Wähl oben im Diagramm an, was auf dich zutrifft — der
               Kassenzettel rechnet live mit.
@@ -174,8 +175,8 @@ export default function TheReceipt() {
           <div className="flex justify-center md:justify-end">
             <div
               data-receipt-card
-              className="relative w-full max-w-sm bg-bone text-ink font-mono shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
-              style={{ fontSize: '12px', lineHeight: 1.7 }}
+              className="relative w-full max-w-[330px] md:max-w-sm bg-bone text-ink font-mono shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)] text-[11px] md:text-[12px]"
+              style={{ lineHeight: 1.65 }}
             >
               {/* Perforationskante oben */}
               <div
@@ -188,7 +189,7 @@ export default function TheReceipt() {
                   transform: 'translateY(-7px)',
                 }}
               />
-              <div className="px-6 pb-6 pt-2 md:px-8">
+              <div className="px-5 pb-5 pt-2 md:px-8 md:pb-6">
                 {/* Kopf */}
                 <div className="text-center">
                   <div className="font-bold tracking-[0.3em] text-[13px]">WOMENSURANCE</div>

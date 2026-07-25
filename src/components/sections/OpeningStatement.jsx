@@ -319,16 +319,12 @@ export default function OpeningStatement() {
             className="hidden md:block mt-6 max-w-md body-lead text-paper/60"
             style={{ fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)' }}
           >
-            Diese Grafik ist keine Deko. Sie ist dein Leben in einer Linie —
-            und sie reagiert auf dich.
+            Versicherung von Frau zu Frau: Für alle Lebenslagen
           </div>
         </div>
 
         {/* ── Chart column ── */}
-        <div className="flex-1 flex flex-col min-h-0 mt-2 md:mt-0 md:pl-8">
-
-          {/* Chart area */}
-          <div className="relative flex-1 min-h-0">
+        <div className="flex-1 relative min-h-0 mt-2 md:mt-0 md:pl-8">
 
             {/* Left fade — desktop only */}
             <div
@@ -474,15 +470,27 @@ export default function OpeningStatement() {
                 pro Monat Rente · {gap.toFixed(1)} % weniger als Männer
               </div>
             </div>
-          </div>
+        </div>
+      </div>
 
-          {/* Toggle-Chips: der Lead-Magnet */}
-          <div ref={chipsRef} className="shrink-0 pt-3 pb-1">
-            <div className="eyebrow text-paper/50 mb-2 text-center md:text-left">
-              Und bei dir? Tippe an, was zutrifft
-            </div>
-            {/* Immer 2×2 oder 4×1 — nie 3+1 */}
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-2">
+      {/* ── Bottom bar: CTA (nur Desktop) + Toggle-Chips auf einer Höhe ── */}
+      <div className="shrink-0 relative z-10 px-6 md:px-12 pb-5 md:pb-8 pt-2 md:pt-3 flex items-end justify-between gap-6">
+        <a
+          href={BOOKING_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="hidden md:inline-flex group items-center gap-2 eyebrow text-paper border border-paper/30 hover:border-pink hover:text-pink rounded-full px-5 py-3 transition-colors shrink-0"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
+          Erstgespräch buchen
+        </a>
+
+        <div ref={chipsRef} className="w-full md:w-auto">
+          <div className="hidden md:block eyebrow text-paper/50 mb-2 md:text-right">
+            Und bei dir? Tippe an, was zutrifft
+          </div>
+          {/* Immer 2×2 oder 4×1 — nie 3+1 */}
+          <div className="grid grid-cols-2 xl:grid-cols-4 gap-2">
               {TOGGLE_META.map((m, i) => {
                 const on = toggles[m.id];
                 return (
@@ -507,21 +515,7 @@ export default function OpeningStatement() {
                 );
               })}
             </div>
-          </div>
         </div>
-      </div>
-
-      {/* ── Bottom bar: CTA always visible ── */}
-      <div className="shrink-0 relative z-10 px-6 md:px-12 pb-8 pt-3 flex items-center justify-center md:justify-between">
-        <a
-          href={BOOKING_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="group inline-flex items-center gap-2 eyebrow text-paper border border-paper/30 hover:border-pink hover:text-pink rounded-full px-5 py-3 transition-colors"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
-          Erstgespräch buchen
-        </a>
       </div>
     </section>
   );

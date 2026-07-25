@@ -77,7 +77,7 @@ export default function TheTruth() {
           className="mt-12 max-w-xl body-lead text-paper/55"
           style={{ fontSize: 'clamp(1rem, 1.2vw, 1.2rem)' }}
         >
-          Diese Zahl ist eine Statistik. Was sie für dich bedeutet — wie groß deine Lücke wirklich ist, und was du jetzt tun kannst — das passiert nicht in einem Online-Tool. Das passiert im Gespräch.
+          Diese Zahl ist eine Statistik. Was sie für dich bedeutet — wie groß deine individuelle Lücke wirklich ist, und was du jetzt konkret tun kannst, erfährst du in einem kostenlosen Talk mit mir.
         </div>
       </div>
 

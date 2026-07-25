@@ -48,6 +48,7 @@ export const lifePhases = [
     insurance: 'BU-Höhe an reduziertes Einkommen anpassen. Vorsorgelücke aktiv ausgleichen.',
     subpage: '/rentenluecke',
     subpageLabel: 'Deine Rentenlücke verstehen & schließen',
+    subpageShort: 'Rentenlücke verstehen & schließen',
   },
   {
     id: 'divorce',
@@ -57,6 +58,7 @@ export const lifePhases = [
     insurance: 'Versorgungsausgleich verstehen. Eigene Policen sichern. Ansprüche prüfen lassen.',
     subpage: '/scheidung',
     subpageLabel: 'Was du jetzt tun kannst',
+    subpageShort: 'Was du jetzt tun kannst',
   },
 ];
 // Hinweise:

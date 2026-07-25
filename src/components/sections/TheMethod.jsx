@@ -63,27 +63,28 @@ export default function TheMethod() {
               data-method-card
               className="group relative bg-paper text-ink rounded-sm p-8 md:p-12 border border-clay-light shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]"
             >
+              {/* Mobil gestapelt (Nummer über Titel), Desktop nebeneinander */}
               <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
-                <div className="col-span-3 md:col-span-2">
+                <div className="col-span-12 md:col-span-2">
                   <div
                     className="display-italic text-pink"
-                    style={{ fontSize: 'clamp(3rem, 5vw, 5rem)', lineHeight: 0.9 }}
+                    style={{ fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 0.9 }}
                   >
                     {step.n}
                   </div>
                 </div>
-                <div className="col-span-9 md:col-span-10">
+                <div className="col-span-12 md:col-span-10">
                   <h3
-                    className="display-lg text-ink mb-4"
-                    style={{ fontSize: 'clamp(1.6rem, 2.4vw, 2.4rem)' }}
+                    className="display-lg text-ink mb-4 text-balance"
+                    style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2.4rem)' }}
                   >
                     {step.title}
                   </h3>
                   <p className="body-lead text-ink/65 max-w-2xl">{step.body}</p>
                 </div>
               </div>
-              {/* Tick mark */}
-              <div className="absolute top-6 right-6 eyebrow text-clay opacity-50">
+              {/* Tick mark — mobil ausgeblendet (überlappte mit den Titeln) */}
+              <div className="hidden md:block absolute top-6 right-6 eyebrow text-clay opacity-50">
                 {String(i + 1).padStart(2, '0')} / {String(methodSteps.length).padStart(2, '0')}
               </div>
             </article>
