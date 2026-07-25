@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import BackgroundField from '../canvas/BackgroundField';
 import { splitChars } from '../../utils/splitText';
+import { BOOKING_URL } from '../../config/site';
 
 const LIFE_PHASES = [
   { age: '25', label: 'AUSBILDUNG',   pos: 4,  mobileLabel: false },
@@ -12,8 +13,6 @@ const LIFE_PHASES = [
   { age: '50', label: 'CARE-ARBEIT', pos: 80, mobileLabel: false },
   { age: '67', label: 'RENTE',       pos: 96, mobileLabel: true  },
 ];
-
-const BOOKING_URL = 'https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled';
 
 export default function OpeningStatement() {
   const headlineRef = useRef(null);
@@ -122,7 +121,7 @@ export default function OpeningStatement() {
           {/* Left fade — desktop only */}
           <div
             className="hidden md:block absolute inset-y-0 left-0 w-20 z-20 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, #0a0807, transparent)' }}
+            style={{ background: 'linear-gradient(to right, var(--color-ink), transparent)' }}
           />
 
           {/* Life-phase grid lines — both mobile and desktop */}
@@ -137,20 +136,20 @@ export default function OpeningStatement() {
                 <div className="pt-2 md:pt-[76px] flex flex-col items-center gap-[4px]">
                   <span
                     className="font-mono"
-                    style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgba(244,237,228,0.60)' }}
+                    style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgb(var(--paper-rgb) / 0.6)' }}
                   >
                     {age}
                   </span>
                   <span
                     className={`font-mono${mobileLabel ? '' : ' hidden md:block'}`}
-                    style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgba(244,237,228,0.38)', whiteSpace: 'nowrap' }}
+                    style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgb(var(--paper-rgb) / 0.38)', whiteSpace: 'nowrap' }}
                   >
                     {label}
                   </span>
                 </div>
                 <div
                   className="w-px mt-2"
-                  style={{ flex: 1, background: 'rgba(244,237,228,0.15)' }}
+                  style={{ flex: 1, background: 'rgb(var(--paper-rgb) / 0.15)' }}
                 />
               </div>
             ))}
@@ -177,7 +176,7 @@ export default function OpeningStatement() {
                  C 350,154 420,150 480,146
                  C 530,143 570,142 600,141"
               fill="none"
-              stroke="#f4ede4"
+              stroke="var(--color-paper)"
               strokeWidth="1"
               opacity="0.4"
             />
@@ -189,7 +188,7 @@ export default function OpeningStatement() {
                  C 350,276 420,312 480,342
                  C 530,364 570,378 600,384"
               fill="none"
-              stroke="#ff2e88"
+              stroke="var(--color-pink)"
               strokeWidth="1"
               opacity="0.8"
             />

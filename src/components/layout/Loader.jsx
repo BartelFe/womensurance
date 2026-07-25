@@ -35,7 +35,8 @@ export default function Loader({ onComplete }) {
       );
     }
 
-    tl.to({}, { duration: 0.4 });
+    // Haltezeit: Gesamt-Anzeigedauer (1.6s Counter + Hold) um 50 % verlängert (2.0s → 3.0s)
+    tl.to({}, { duration: 1.4 });
     tl.to(root.current, { y: '-100%', duration: 1.0, ease: 'expo.inOut' });
 
     return () => tl.kill();

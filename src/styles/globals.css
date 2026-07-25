@@ -4,15 +4,31 @@
 
 @layer base {
   :root {
+    /* Hex-Variablen (für Inline-Styles, SVG, Gradients) */
     --color-ink: #0a0807;
     --color-paper: #f4ede4;
     --color-bone: #fffaf3;
     --color-pink: #ff2e88;
     --color-pink-soft: #ffd0e2;
+    --color-pink-deep: #c91068;
     --color-clay: #7a4a3a;
     --color-clay-mid: #a87864;
     --color-clay-light: #e8d5ce;
     --color-muted: #7a5f58;
+    --color-green: #a7a376;
+
+    /* RGB-Triplets (für Tailwind-Opacity-Modifier: rgb(var(--x) / <alpha>)) */
+    --ink-rgb: 10 8 7;
+    --paper-rgb: 244 237 228;
+    --bone-rgb: 255 250 243;
+    --pink-rgb: 255 46 136;
+    --pink-soft-rgb: 255 208 226;
+    --pink-deep-rgb: 201 16 104;
+    --clay-rgb: 122 74 58;
+    --clay-mid-rgb: 168 120 100;
+    --clay-light-rgb: 232 213 206;
+    --muted-rgb: 122 95 88;
+    --green-rgb: 167 163 118;
   }
 
   * {

@@ -1,23 +1,28 @@
 /** @type {import('tailwindcss').Config} */
+// Alle Farben laufen über CSS-Variablen (siehe globals.css), damit das
+// Farb-Panel (ThemePanel) die komplette Site live umfärben kann.
+const v = (name) => `rgb(var(--${name}-rgb) / <alpha-value>)`;
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        ink: '#0a0807',
-        paper: '#f4ede4',
-        bone: '#fffaf3',
+        ink: v('ink'),
+        paper: v('paper'),
+        bone: v('bone'),
         pink: {
-          DEFAULT: '#ff2e88',
-          soft: '#ffd0e2',
-          deep: '#c91068',
+          DEFAULT: v('pink'),
+          soft: v('pink-soft'),
+          deep: v('pink-deep'),
         },
         clay: {
-          DEFAULT: '#7a4a3a',
-          mid: '#a87864',
-          light: '#e8d5ce',
+          DEFAULT: v('clay'),
+          mid: v('clay-mid'),
+          light: v('clay-light'),
         },
-        muted: '#7a5f58',
+        muted: v('muted'),
+        green: v('green'),
       },
       fontFamily: {
         display: ['Fraunces', 'serif'],

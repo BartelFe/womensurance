@@ -98,7 +98,7 @@ export default function TheGap() {
             className="absolute inset-0 w-full h-full"
             preserveAspectRatio="none"
           >
-            <g opacity="0.08" stroke="#f4ede4" strokeWidth="1">
+            <g opacity="0.08" stroke="var(--color-paper)" strokeWidth="1">
               {Array.from({ length: 5 }).map((_, i) => (
                 <line key={i} x1={0} x2={1200} y1={(i + 1) * 108} y2={(i + 1) * 108} />
               ))}
@@ -110,17 +110,17 @@ export default function TheGap() {
             <path
               id="male-line"
               d="M 60 440 C 250 415, 450 360, 700 270 S 1050 160, 1140 120"
-              fill="none" stroke="#f4ede4" strokeWidth="2.2" opacity="0.6"
+              fill="none" stroke="var(--color-paper)" strokeWidth="2.2" opacity="0.6"
             />
             <path
               id="female-line"
               d="M 60 440 C 250 438, 420 430, 600 422 S 950 432, 1140 470"
-              fill="none" stroke="#ff2e88" strokeWidth="2.5"
+              fill="none" stroke="var(--color-pink)" strokeWidth="2.5"
             />
             <path
               id="projection-line"
               d="M 1140 120 L 1140 470"
-              fill="none" stroke="#ff2e88" strokeWidth="1.5"
+              fill="none" stroke="var(--color-pink)" strokeWidth="1.5"
               strokeDasharray="4 6" opacity="0.6"
             />
           </svg>

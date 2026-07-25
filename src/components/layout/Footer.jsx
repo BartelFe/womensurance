@@ -85,6 +85,12 @@ export default function Footer() {
           <div className="flex gap-6">
             <a href="#impressum" className="hover:text-pink">Datenschutz</a>
             <a href="#impressum" className="hover:text-pink">Impressum</a>
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('wmns-open-consent'))}
+              className="hover:text-pink"
+            >
+              Cookie-Einstellungen
+            </button>
           </div>
         </div>
       </div>

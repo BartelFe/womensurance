@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { lifePhases, lifeToggles } from '../../data/lifePhases';
@@ -11,6 +12,7 @@ export default function YourLife() {
   const pinRef = useRef(null);
   const trackRef = useRef(null);
   const counterRef = useRef(null);
+  const [expandedId, setExpandedId] = useState(null);
 
   const { toggles, toggle, gap, baseGap } = useGap();
 
@@ -86,7 +88,19 @@ export default function YourLife() {
       );
     });
 
+    // Nav-Dropdown kann gezielt zu einer Kachel springen
+    window.__scrollToPhase = (phaseId) => {
+      const st = mainTween.scrollTrigger;
+      const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
+      if (!st || !card) return;
+      const ratio = Math.max(0, Math.min(1, (card.offsetLeft - 48) / scrollDistance()));
+      const y = st.start + ratio * (st.end - st.start);
+      if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.6 });
+      else window.scrollTo({ top: y, behavior: 'smooth' });
+    };
+
     return () => {
+      delete window.__scrollToPhase;
       cardTweens.forEach((t) => t.scrollTrigger?.kill());
       mainTween.scrollTrigger?.kill();
       mainTween.kill();
@@ -113,7 +127,8 @@ export default function YourLife() {
               <article
                 key={phase.id}
                 data-phase-card
-                className="shrink-0 w-[78vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-8 md:p-10 xl:p-12 rounded-sm relative flex flex-col"
+                data-phase-id={phase.id}
+                className="shrink-0 w-[78vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-8 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
                 style={{ minHeight: '50vh' }}
               >
                 <div className="flex items-baseline justify-between mb-6">
@@ -143,6 +158,30 @@ export default function YourLife() {
                   >
                     {phase.insurance}
                   </p>
+
+                  {/* Aufklappen (Karten mit Zusatztext) oder Unterseite (Teilzeit/Scheidung) */}
+                  {phase.details && (
+                    <button
+                      onClick={() => setExpandedId(phase.id)}
+                      data-cursor="link"
+                      className="mt-5 inline-flex items-center gap-2 eyebrow text-clay hover:text-pink transition-colors"
+                    >
+                      <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none">+</span>
+                      Mehr erfahren
+                    </button>
+                  )}
+                  {phase.subpage && (
+                    <Link
+                      to={phase.subpage}
+                      data-cursor="link"
+                      className="mt-5 inline-flex items-center gap-2 eyebrow text-pink hover:text-pink-deep transition-colors"
+                    >
+                      {phase.subpageLabel || 'Zur Themenseite'}
+                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Link>
+                  )}
                 </div>
 
                 {/* Decorative number */}
@@ -151,6 +190,33 @@ export default function YourLife() {
                   style={{ fontSize: '8rem', lineHeight: 1 }}
                 >
                   {String(i + 1).padStart(2, '0')}
+                </div>
+
+                {/* Aufklapp-Overlay: legt sich über die Kachel, kein Layout-Shift im Pin */}
+                <div
+                  className={`absolute inset-0 z-10 bg-ink text-paper p-8 md:p-10 flex flex-col transition-all duration-500 ${
+                    expandedId === phase.id ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <div>
+                      <div className="eyebrow text-pink mb-2">Mehr zu dieser Phase</div>
+                      <h4 className="display-lg text-paper" style={{ fontSize: 'clamp(1.4rem, 2vw, 2rem)' }}>
+                        {phase.title}
+                      </h4>
+                    </div>
+                    <button
+                      onClick={() => setExpandedId(null)}
+                      aria-label="Schließen"
+                      data-cursor="link"
+                      className="text-paper/50 hover:text-pink text-2xl leading-none -mt-1"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <p className="body-lead text-paper/75 overflow-y-auto pr-1" style={{ fontSize: 'clamp(0.95rem, 0.95vw, 1.15rem)' }}>
+                    {phase.details}
+                  </p>
                 </div>
               </article>
             ))}

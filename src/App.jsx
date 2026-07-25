@@ -1,45 +1,54 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLenis } from './hooks/useLenis';
 import { GapProvider } from './hooks/useGapState';
 
 import Cursor from './components/layout/Cursor';
 import GrainOverlay from './components/layout/GrainOverlay';
-import Loader from './components/layout/Loader';
 import Nav from './components/layout/Nav';
 import Footer from './components/layout/Footer';
+import ThemePanel from './components/layout/ThemePanel';
+import CookieConsent from './components/layout/CookieConsent';
 
-import OpeningStatement from './components/sections/OpeningStatement';
-import TheGap from './components/sections/TheGap';
-import YourLife from './components/sections/YourLife';
-import TheTruth from './components/sections/TheTruth';
-import MeetJulia from './components/sections/MeetJulia';
-import TheMethod from './components/sections/TheMethod';
-import Voices from './components/sections/Voices';
-import TheStep from './components/sections/TheStep';
+import Home from './pages/Home';
+import Rentenluecke from './pages/Rentenluecke';
+import Scheidung from './pages/Scheidung';
+
+/** Scrollt bei Seitenwechsel nach oben und aktualisiert ScrollTrigger */
+function ScrollManager() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo(0, 0);
+    // ScrollTrigger nach dem Paint der neuen Seite neu vermessen
+    const t = setTimeout(() => ScrollTrigger.refresh(), 100);
+    return () => clearTimeout(t);
+  }, [pathname]);
+
+  return null;
+}
 
 export default function App() {
-  const [loaderDone, setLoaderDone] = useState(false);
   useLenis();
 
   return (
     <GapProvider>
-      <Loader onComplete={() => setLoaderDone(true)} />
+      <ScrollManager />
       <Cursor />
       <GrainOverlay />
       <Nav />
+      <ThemePanel />
 
-      <main className="relative">
-        <OpeningStatement />
-        <TheGap />
-        <YourLife />
-        <TheTruth />
-        <MeetJulia />
-        <TheMethod />
-        <Voices />
-        <TheStep />
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/rentenluecke" element={<Rentenluecke />} />
+        <Route path="/scheidung" element={<Scheidung />} />
+      </Routes>
 
       <Footer />
+      <CookieConsent />
     </GapProvider>
   );
 }

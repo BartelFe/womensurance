@@ -1,9 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
+import { lifePhases } from '../../data/lifePhases';
+import { BOOKING_URL } from '../../config/site';
+
+const LINKS = [
+  { id: 'gap', label: 'Die Lücke' },
+  { id: 'life', label: 'Dein Leben', dropdown: true },
+  { id: 'julia', label: 'Vorstellung' },
+  { id: 'method', label: 'Ablauf' },
+];
 
 export default function Nav() {
   const root = useRef(null);
   const [hidden, setHidden] = useState(false);
+  const [lifeOpen, setLifeOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     if (!root.current) return;
@@ -35,12 +49,29 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollTo = (id) => (e) => {
+  /** Zu einer Section scrollen — von Unterseiten aus erst zur Startseite navigieren */
+  const goToSection = (id) => (e) => {
     e.preventDefault();
+    setLifeOpen(false);
+    if (!isHome) {
+      navigate(`/#${id}`);
+      return;
+    }
     const el = document.getElementById(id);
     if (!el) return;
     if (window.__lenis) window.__lenis.scrollTo(el, { offset: -40, duration: 1.4 });
     else el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  /** Zu einer bestimmten Kachel in der Horizontal-Section scrollen */
+  const goToPhase = (phaseId) => (e) => {
+    e.preventDefault();
+    setLifeOpen(false);
+    if (!isHome) {
+      navigate(`/#phase-${phaseId}`);
+      return;
+    }
+    window.__scrollToPhase?.(phaseId);
   };
 
   return (
@@ -52,22 +83,74 @@ export default function Nav() {
         ${hidden ? '-translate-y-full' : 'translate-y-0'}`}
     >
       {/* Logo wordmark */}
-      <a href="#hero" onClick={scrollTo('hero')} className="flex items-baseline gap-2 group">
+      <a href="/#hero" onClick={goToSection('hero')} className="flex items-baseline gap-2 group">
         <span className="display-italic text-paper text-2xl">womensurance</span>
         <span className="eyebrow text-paper/40 hidden md:inline">— DVM</span>
       </a>
 
-      {/* Center links — minimal */}
+      {/* Center links */}
       <div className="hidden md:flex items-center gap-10 eyebrow text-paper/60">
-        <a href="#gap" onClick={scrollTo('gap')} className="hover:text-pink transition-colors">Die Lücke</a>
-        <a href="#life" onClick={scrollTo('life')} className="hover:text-pink transition-colors">Dein Leben</a>
-        <a href="#julia" onClick={scrollTo('julia')} className="hover:text-pink transition-colors">Julia</a>
-        <a href="#method" onClick={scrollTo('method')} className="hover:text-pink transition-colors">Weg</a>
+        {LINKS.map((link) =>
+          link.dropdown ? (
+            <div
+              key={link.id}
+              className="relative"
+              onMouseEnter={() => setLifeOpen(true)}
+              onMouseLeave={() => setLifeOpen(false)}
+            >
+              <a
+                href={`/#${link.id}`}
+                onClick={goToSection(link.id)}
+                aria-haspopup="true"
+                aria-expanded={lifeOpen}
+                className={`inline-flex items-center gap-1.5 transition-colors ${lifeOpen ? 'text-pink' : 'hover:text-pink'}`}
+              >
+                {link.label}
+                <svg
+                  width="8" height="8" viewBox="0 0 8 8" fill="none"
+                  className={`transition-transform duration-300 ${lifeOpen ? 'rotate-180' : ''}`}
+                >
+                  <path d="M1 2.5l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+
+              {/* Dropdown: Kachel-Überschriften der Horizontal-Section */}
+              <div
+                className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 transition-all duration-300 ${
+                  lifeOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-1 pointer-events-none'
+                }`}
+              >
+                <div className="min-w-[240px] bg-ink/90 backdrop-blur-xl border border-white/[0.08] rounded-md shadow-2xl py-3">
+                  {lifePhases.map((phase, i) => (
+                    <a
+                      key={phase.id}
+                      href={`/#phase-${phase.id}`}
+                      onClick={goToPhase(phase.id)}
+                      className="flex items-baseline gap-3 px-5 py-2 text-paper/60 hover:text-pink hover:bg-white/[0.04] transition-colors"
+                    >
+                      <span className="font-mono text-[9px] text-paper/30">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="normal-case tracking-normal font-body text-[13px] font-normal">{phase.title}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <a
+              key={link.id}
+              href={`/#${link.id}`}
+              onClick={goToSection(link.id)}
+              className="hover:text-pink transition-colors"
+            >
+              {link.label}
+            </a>
+          )
+        )}
       </div>
 
       {/* CTA */}
       <a
-        href="https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled"
+        href={BOOKING_URL}
         target="_blank"
         rel="noreferrer"
         className="group inline-flex items-center gap-2 eyebrow text-paper border border-paper/30 hover:border-pink hover:text-pink rounded-full px-4 py-2.5 transition-colors"

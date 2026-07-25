@@ -1,10 +1,23 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 function ParticleField() {
   const points = useRef(null);
   const { viewport, mouse } = useThree();
+  const [color, setColor] = useState('#f4ede4');
+
+  // Partikelfarbe folgt dem Theme (Farb-Panel)
+  useEffect(() => {
+    const readVar = () => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue('--color-paper').trim();
+      if (v) setColor(v);
+    };
+    readVar();
+    const onTheme = (e) => { if (e.detail?.paper) setColor(e.detail.paper); };
+    window.addEventListener('wmns-theme', onTheme);
+    return () => window.removeEventListener('wmns-theme', onTheme);
+  }, []);
 
   // Generate static particle positions
   const { positions, scales } = useMemo(() => {
@@ -51,7 +64,7 @@ function ParticleField() {
       </bufferGeometry>
       <pointsMaterial
         size={0.012}
-        color="#f4ede4"
+        color={color}
         transparent
         opacity={0.55}
         sizeAttenuation
