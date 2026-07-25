@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import TopicPage from '../components/topic/TopicPage';
+import PensionGapChart from '../components/topic/PensionGapChart';
 
 // ⚠️ Zahlen/Quellen sind Platzhalter in plausibler Größenordnung —
 // vor Live-Schaltung mit Julia validieren und exakte Quellen (Destatis, DRV) einsetzen.
@@ -18,6 +19,7 @@ export default function Rentenluecke() {
 
   return (
     <TopicPage
+      afterHero={<PensionGapChart />}
       eyebrow="Themenseite · Teilzeit / Care-Arbeit"
       titleLines={[
         { text: 'Die Rentenlücke' },

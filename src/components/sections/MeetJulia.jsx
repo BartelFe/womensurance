@@ -83,7 +83,7 @@ export default function MeetJulia() {
               </div>
 
               <div className="eyebrow text-ink/40 mt-4 mb-10 md:mb-16">
-                Kauffrau für Versicherungen · DVM Regensburg
+                Kauffrau für Versicherungen · DVM Ingolstadt
               </div>
             </div>
 

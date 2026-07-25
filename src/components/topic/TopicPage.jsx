@@ -24,6 +24,7 @@ export default function TopicPage({
   actions,
   ctaHeadline,
   ctaBody,
+  afterHero = null,
 }) {
   const root = useRef(null);
 
@@ -71,6 +72,9 @@ export default function TopicPage({
           Lücke
         </div>
       </section>
+
+      {/* ── Optionale Grafik-Sektion direkt nach dem Hero ── */}
+      {afterHero}
 
       {/* ── Zahlen-Band ── */}
       <section className="bg-ink text-paper border-t border-paper/10 px-6 md:px-12 py-14">

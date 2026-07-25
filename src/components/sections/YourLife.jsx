@@ -129,32 +129,32 @@ export default function YourLife() {
                 key={phase.id}
                 data-phase-card
                 data-phase-id={phase.id}
-                className="shrink-0 h-full w-[80vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-7 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
+                className="shrink-0 h-full w-[80vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-5 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
               >
-                <div className="flex items-baseline justify-between mb-6">
+                <div className="flex items-baseline justify-between mb-4 md:mb-6">
                   <span className="eyebrow text-clay">{String(i + 1).padStart(2, '0')} / {String(lifePhases.length).padStart(2, '0')}</span>
                   <span className="font-mono text-xs text-ink/50">Alter {phase.age}</span>
                 </div>
 
                 <h3
-                  className="display-lg text-ink mb-5"
-                  style={{ fontSize: 'clamp(2rem, 3vw, 3rem)' }}
+                  className="display-lg text-ink mb-3 md:mb-5"
+                  style={{ fontSize: 'clamp(1.6rem, 3vw, 3rem)' }}
                 >
                   {phase.title}
                 </h3>
 
                 <p
-                  className="body-lead text-ink/70 mb-6"
-                  style={{ fontSize: 'clamp(1.05rem, 1vw, 1.3rem)' }}
+                  className="body-lead text-ink/70 mb-4 md:mb-6"
+                  style={{ fontSize: 'clamp(0.95rem, 1vw, 1.3rem)' }}
                 >
                   {phase.body}
                 </p>
 
-                <div className="mt-auto pt-6 border-t border-clay-light/60">
-                  <div className="eyebrow text-clay mb-2">Was zählt jetzt</div>
+                <div className="mt-auto pt-4 md:pt-6 border-t border-clay-light/60">
+                  <div className="eyebrow text-clay mb-1.5 md:mb-2">Was zählt jetzt</div>
                   <p
                     className="text-ink/65 leading-relaxed"
-                    style={{ fontSize: 'clamp(0.875rem, 0.85vw, 1.05rem)' }}
+                    style={{ fontSize: 'clamp(0.8rem, 0.85vw, 1.05rem)' }}
                   >
                     {phase.insurance}
                   </p>
@@ -174,7 +174,7 @@ export default function YourLife() {
                     <Link
                       to={phase.subpage}
                       data-cursor="link"
-                      className="mt-5 group inline-flex w-full md:w-auto items-center justify-between md:justify-start gap-3 rounded-full bg-pink text-ink px-5 py-3 text-xs md:text-sm font-bold whitespace-nowrap hover:bg-pink-deep hover:text-paper transition-colors shadow-[0_14px_36px_-10px_rgb(var(--pink-rgb)/0.65)]"
+                      className="mt-4 md:mt-5 group inline-flex w-full md:w-auto items-center justify-between md:justify-start gap-3 rounded-full bg-pink text-ink px-4 py-2.5 md:px-5 md:py-3 text-xs md:text-sm font-bold whitespace-nowrap hover:bg-pink-deep hover:text-paper transition-colors shadow-[0_14px_36px_-10px_rgb(var(--pink-rgb)/0.65)]"
                     >
                       <span className="inline-flex items-center gap-2.5">
                         <span className="h-2 w-2 shrink-0 rounded-full bg-ink animate-pulse group-hover:bg-paper" />
@@ -188,9 +188,9 @@ export default function YourLife() {
                   )}
                 </div>
 
-                {/* Decorative number */}
+                {/* Decorative number — mobil weg (nahm den Buttons Platz) */}
                 <div
-                  className="absolute -bottom-6 -right-2 display-italic text-clay-light/40 select-none pointer-events-none"
+                  className="hidden md:block absolute -bottom-6 -right-2 display-italic text-clay-light/40 select-none pointer-events-none"
                   style={{ fontSize: '8rem', lineHeight: 1 }}
                 >
                   {String(i + 1).padStart(2, '0')}
