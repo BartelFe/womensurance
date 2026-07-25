@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../ui/MagneticButton';
 import DataNumber from '../ui/DataNumber';
+import FaqSection from './FaqSection';
 import { BOOKING_URL } from '../../config/site';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,6 +26,8 @@ export default function TopicPage({
   ctaHeadline,
   ctaBody,
   afterHero = null,
+  afterQuote = null,
+  faq = null,
 }) {
   const root = useRef(null);
 
@@ -126,6 +129,9 @@ export default function TopicPage({
         </div>
       </section>
 
+      {/* ── Optionale Sektion(en) nach dem Zitat ── */}
+      {afterQuote}
+
       {/* ── Handlungsliste ── */}
       <section className="bg-paper text-ink px-6 md:px-12 py-24 md:py-32">
         <div className="max-w-6xl mx-auto">
@@ -150,6 +156,9 @@ export default function TopicPage({
           </div>
         </div>
       </section>
+
+      {/* ── FAQ (SEO) ── */}
+      {faq && <FaqSection title={faq.title} items={faq.items} note={faq.note} />}
 
       {/* ── CTA ── */}
       <section className="bg-ink text-paper px-6 md:px-12 py-28 md:py-40 relative overflow-hidden">

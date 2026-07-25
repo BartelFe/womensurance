@@ -1,5 +1,40 @@
 import { useEffect } from 'react';
 import TopicPage from '../components/topic/TopicPage';
+import SplitAccounts from '../components/topic/SplitAccounts';
+import MistakesStack from '../components/topic/MistakesStack';
+
+// FAQ auf "versorgungsausgleich"-Suchintention optimiert (~23.500 Suchen/Monat)
+// — Feinschliff in dedizierter SEO-Session.
+const FAQ = {
+  title: 'Häufige Fragen zum Versorgungsausgleich',
+  items: [
+    {
+      q: 'Was ist der Versorgungsausgleich?',
+      a: 'Das gerichtliche Verfahren, das bei einer Scheidung alle in der Ehezeit erworbenen Rentenanrechte hälftig zwischen den Ehepartnern teilt. Es läuft automatisch mit der Scheidung — du musst es nicht beantragen, kannst es aber auch nicht einfach ignorieren.',
+    },
+    {
+      q: 'Wie wird der Versorgungsausgleich berechnet?',
+      a: 'Für jedes Anrecht wird der Ehezeitanteil ermittelt: der Teil der Rentenansprüche, der zwischen Eheschließung und Zustellung des Scheidungsantrags entstanden ist. Davon erhält der andere Partner grundsätzlich die Hälfte. Die Versorgungsträger melden die Werte an das Familiengericht — geprüft werden sollten sie trotzdem.',
+    },
+    {
+      q: 'Welche Rentenansprüche werden geteilt?',
+      a: 'Praktisch alle: gesetzliche Rente, Betriebsrenten, Beamtenversorgung, berufsständische Versorgungswerke, Riester- und Rürup-Verträge sowie private Rentenversicherungen. Kapital-Lebensversicherungen mit Einmalzahlung fallen dagegen in den Zugewinnausgleich, nicht in den Versorgungsausgleich.',
+    },
+    {
+      q: 'Kann man den Versorgungsausgleich ausschließen?',
+      a: 'Ja — per notariellem Ehevertrag oder Scheidungsfolgenvereinbarung. Aber das Gericht prüft solche Vereinbarungen auf Fairness, und für dich gilt: Ein Verzicht ohne echten Gegenwert ist fast immer ein Verlustgeschäft für die Person, die für die Familie beruflich zurückgesteckt hat.',
+    },
+    {
+      q: 'Was passiert bei kurzer Ehe?',
+      a: 'Bei einer Ehezeit von bis zu drei Jahren findet der Versorgungsausgleich nur statt, wenn ihn ein Ehepartner ausdrücklich beantragt. Auch Kleinstbeträge werden oft nicht ausgeglichen — was sich bei mehreren kleinen Anrechten trotzdem summieren kann.',
+    },
+    {
+      q: 'Kann der Versorgungsausgleich später angepasst werden?',
+      a: 'In engen Grenzen. Stirbt zum Beispiel die ausgleichsberechtigte Person, kann die Kürzung beim Ex-Partner unter Umständen entfallen. Grobe Fehler im Beschluss lassen sich dagegen später kaum noch korrigieren — deshalb ist der richtige Zeitpunkt zum Prüfen vor dem Gerichtstermin, nicht danach.',
+    },
+  ],
+  note: 'Vereinfachte Antworten für den ersten Überblick — keine Rechtsberatung. Für die juristische Seite gehören Anwältin oder Notar an deine Seite; wir kümmern uns um deine Vorsorge.',
+};
 
 // ⚠️ Zahlen/Quellen sind Platzhalter in plausibler Größenordnung —
 // vor Live-Schaltung mit Julia validieren (Versorgungsausgleich ist ihr Spezialthema).
@@ -18,6 +53,9 @@ export default function Scheidung() {
 
   return (
     <TopicPage
+      afterHero={<SplitAccounts />}
+      afterQuote={<MistakesStack />}
+      faq={FAQ}
       eyebrow="Themenseite · Scheidung"
       titleLines={[
         { text: 'Getrennte Wege.' },

@@ -1,6 +1,40 @@
 import { useEffect } from 'react';
 import TopicPage from '../components/topic/TopicPage';
 import PensionGapChart from '../components/topic/PensionGapChart';
+import ParttimeCalculator from '../components/topic/ParttimeCalculator';
+
+// FAQ auf Suchintention optimiert ("rentenlücke berechnen", "teilzeit rente",
+// "elternzeit rente") — Feinschliff in dedizierter SEO-Session.
+const FAQ = {
+  title: 'Häufige Fragen zur Rentenlücke',
+  items: [
+    {
+      q: 'Wie kann ich meine Rentenlücke berechnen?',
+      a: 'Der schnellste Weg: unser Rechner oben auf dieser Seite — Stunden, Jahre und Gehalt einstellen, fertig. Für die genaue Zahl brauchst du deine jährliche Renteninformation der Deutschen Rentenversicherung: Dort steht deine bisher erreichte Anwartschaft. Die Lücke ist die Differenz zwischen dieser Zahl (nach Abzug von Inflation und Abgaben) und dem, was du im Alter monatlich brauchst.',
+    },
+    {
+      q: 'Wie stark reduziert Teilzeit meine Rente?',
+      a: 'Die gesetzliche Rente rechnet in Entgeltpunkten: Wer die Hälfte arbeitet, sammelt die Hälfte der Punkte. Zehn Jahre halbe Stelle bei Durchschnittsgehalt kosten rund 200 Euro Monatsrente — lebenslang. Jede Stunde weniger wirkt also doppelt: heute weniger Gehalt, später weniger Rente.',
+    },
+    {
+      q: 'Zählt Elternzeit für die Rente?',
+      a: 'Ja. Pro Kind werden bis zu drei Jahre Kindererziehungszeit angerechnet — ungefähr so, als hättest du durchschnittlich verdient. Die eigentliche Lücke entsteht meist danach: durch den Wiedereinstieg in Teilzeit und die langsamere Gehaltsentwicklung. Genau diese Folgejahre gleicht der Staat nicht aus.',
+    },
+    {
+      q: 'Werden Pflegezeiten bei der Rente angerechnet?',
+      a: 'Unter Bedingungen ja: Wer eine Person mit mindestens Pflegegrad 2 wenigstens zehn Stunden pro Woche an mindestens zwei Tagen pflegt und selbst nicht mehr als 30 Stunden arbeitet, bekommt Rentenbeiträge von der Pflegekasse — aber nur, wenn es gemeldet wird. Viele verschenken diese Punkte, weil niemand ihnen davon erzählt hat.',
+    },
+    {
+      q: 'Wann sollte ich anfangen, meine Rentenlücke zu schließen?',
+      a: 'So früh wie möglich — nicht, weil das dramatischer klingt, sondern wegen des Zinseszinses: Wer mit 30 anfängt, braucht für dieselbe Zusatzrente ungefähr die Hälfte des Monatsbeitrags wie jemand, der mit 45 startet. Aber auch mit 50 ist mehr möglich, als die meisten denken.',
+    },
+    {
+      q: 'Was ist der Gender Pension Gap?',
+      a: 'Der geschlechtsspezifische Unterschied bei den Alterseinkünften. In Deutschland erhalten Frauen aus eigenen Ansprüchen im Schnitt 39,4 Prozent weniger Alterssicherung als Männer (Statistisches Bundesamt, 2023, ohne Hinterbliebenenrenten). Hauptursachen: Teilzeit, Care-Arbeit, Erwerbspausen und der Gender Pay Gap.',
+    },
+  ],
+  note: 'Vereinfachte Antworten für den ersten Überblick — keine Steuer- oder Rechtsberatung. Deine konkrete Situation klären wir im Gespräch.',
+};
 
 // ⚠️ Zahlen/Quellen sind Platzhalter in plausibler Größenordnung —
 // vor Live-Schaltung mit Julia validieren und exakte Quellen (Destatis, DRV) einsetzen.
@@ -19,7 +53,13 @@ export default function Rentenluecke() {
 
   return (
     <TopicPage
-      afterHero={<PensionGapChart />}
+      afterHero={
+        <>
+          <PensionGapChart />
+          <ParttimeCalculator />
+        </>
+      }
+      faq={FAQ}
       eyebrow="Themenseite · Teilzeit / Care-Arbeit"
       titleLines={[
         { text: 'Die Rentenlücke' },

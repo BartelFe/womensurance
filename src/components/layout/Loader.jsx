@@ -4,8 +4,7 @@ import { gsap } from 'gsap';
 export default function Loader({ onComplete }) {
   const root = useRef(null);
   const counterRef = useRef(null);
-  const thinRef = useRef(null);
-  const heavyRef = useRef(null);
+  const lineRef = useRef(null);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -29,11 +28,25 @@ export default function Loader({ onComplete }) {
       },
     });
 
-    if (thinRef.current && heavyRef.current) {
-      // "Dicker werden": Lato ist statisch, deshalb Crossfade zwischen
-      // zwei exakt überlagerten Schnitten (Light 300 → Black 900).
-      tl.to(thinRef.current, { opacity: 0, duration: 2.4, ease: 'power2.inOut' }, '<');
-      tl.to(heavyRef.current, { opacity: 1, duration: 2.4, ease: 'power2.inOut' }, '<');
+    if (lineRef.current) {
+      // Lineares Dickerwerden wie mit der alten Variable Font:
+      // Lato ist statisch, deshalb wächst eine Text-Kontur (text-stroke)
+      // kontinuierlich von 0 auf ~0.035em — die Buchstaben legen
+      // gleichmäßig an Gewicht zu, ohne Sprünge und ohne Reflow.
+      const line = lineRef.current;
+      const stroke = { v: 0 };
+      tl.to(
+        stroke,
+        {
+          v: 0.035,
+          duration: 2.4,
+          ease: 'none',
+          onUpdate: () => {
+            line.style.webkitTextStroke = `${stroke.v.toFixed(4)}em var(--color-paper)`;
+          },
+        },
+        '<'
+      );
     }
 
     tl.to({}, { duration: 0.6 });
@@ -51,28 +64,20 @@ export default function Loader({ onComplete }) {
     >
       <div className="eyebrow text-paper/40 mb-8">Womensurance · Lade Wahrheit</div>
 
-      {/* Zwei überlagerte Schnitte für den Dünn→Dick-Effekt */}
+      {/* Dünn→Dick: Lato Light + linear wachsende Text-Kontur */}
       <div
-        className="relative text-paper text-center px-4"
+        ref={lineRef}
+        className="text-paper text-center px-4"
         style={{
           fontFamily: "'Lato', system-ui, sans-serif",
+          fontWeight: 300,
           fontSize: 'clamp(1.6rem, 5.5vw, 5.5rem)',
-          letterSpacing: '-0.02em',
+          letterSpacing: '-0.015em',
           lineHeight: 1.05,
           whiteSpace: 'nowrap',
         }}
       >
-        <div ref={thinRef} style={{ fontWeight: 300 }}>
-          Wie sicher bist du wirklich?
-        </div>
-        <div
-          ref={heavyRef}
-          className="absolute inset-0"
-          style={{ fontWeight: 900, opacity: 0 }}
-          aria-hidden="true"
-        >
-          Wie sicher bist du wirklich?
-        </div>
+        Wie sicher bist du wirklich?
       </div>
 
       <div className="mt-12 flex items-baseline gap-3 font-mono text-paper/60">
