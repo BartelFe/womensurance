@@ -47,7 +47,7 @@ export const lifePhases = [
     body: '49 % aller erwerbstätigen Frauen arbeiten Teilzeit — oft zusätzlich zu unbezahlter Sorgearbeit. Jede Stunde weniger ist auch ein Euro weniger Rente, multipliziert über Jahre.',
     insurance: 'BU-Höhe an reduziertes Einkommen anpassen. Vorsorgelücke aktiv ausgleichen.',
     subpage: '/rentenluecke',
-    subpageLabel: 'Zur Themenseite: Die Rentenlücke',
+    subpageLabel: 'Deine Rentenlücke verstehen & schließen',
   },
   {
     id: 'divorce',
@@ -56,16 +56,11 @@ export const lifePhases = [
     body: 'Jede dritte Ehe wird geschieden. Im Versorgungsausgleich entscheidet sich, was von deinen Rentenansprüchen bleibt — und hier verlieren Frauen am häufigsten, ohne es zu merken.',
     insurance: 'Versorgungsausgleich verstehen. Eigene Policen sichern. Ansprüche prüfen lassen.',
     subpage: '/scheidung',
-    subpageLabel: 'Zur Themenseite: Scheidung & Versorgungsausgleich',
-  },
-  {
-    id: 'retirement',
-    age: '67+',
-    title: 'Rente',
-    body: 'Die Lücke wird zur Realität. Was über vier Jahrzehnte unsichtbar war, steht plötzlich auf dem Rentenbescheid. Aber sie ist kein Schicksal.',
-    insurance: 'Private Rente, Wohneigentum, ETF-Sparplan, Witwenrente verstehen.',
+    subpageLabel: 'Was du jetzt tun kannst',
   },
 ];
+// Hinweis: Die frühere 7. Kachel "Rente" ist bewusst entfernt —
+// das Rententhema lebt in der Unterseite /rentenluecke (Teilzeit/Care-Arbeit).
 
 export const lifeToggles = [
   { id: 'parttime', label: 'Teilzeit gearbeitet', impact: '+12 %' },

@@ -174,11 +174,14 @@ export default function YourLife() {
                     <Link
                       to={phase.subpage}
                       data-cursor="link"
-                      className="mt-5 inline-flex items-center gap-2 eyebrow text-pink hover:text-pink-deep transition-colors"
+                      className="mt-6 group flex w-full items-center justify-between gap-3 rounded-full bg-pink text-ink px-6 py-4 text-sm font-bold hover:bg-pink-deep hover:text-paper transition-colors shadow-[0_14px_36px_-10px_rgb(var(--pink-rgb)/0.65)]"
                     >
-                      {phase.subpageLabel || 'Zur Themenseite'}
-                      <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <span className="inline-flex items-center gap-2.5">
+                        <span className="h-2 w-2 rounded-full bg-ink animate-pulse group-hover:bg-paper" />
+                        {phase.subpageLabel || 'Zur Themenseite'}
+                      </span>
+                      <svg width="15" height="15" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
+                        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </Link>
                   )}

@@ -25,8 +25,8 @@ export default {
         green: v('green'),
       },
       fontFamily: {
-        display: ['Fraunces', 'serif'],
-        body: ['Geist', 'system-ui', 'sans-serif'],
+        display: ['Lato', 'system-ui', 'sans-serif'],
+        body: ['Lato', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {

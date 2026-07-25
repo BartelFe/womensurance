@@ -4,7 +4,7 @@ export default function Footer() {
       {/* Top: Big brand statement */}
       <div className="px-6 md:px-12 py-24">
         <div className="display-italic text-paper text-balance" style={{ fontSize: 'clamp(2.4rem, 7vw, 6.5rem)', lineHeight: 0.95 }}>
-          Sicherheit ist <em className="text-pink not-italic font-display font-light">Freiheit.</em>
+          Sicherheit ist <em className="text-pink not-italic font-display font-black">Freiheit.</em>
         </div>
         <div className="mt-8 max-w-xl body-lead text-paper/50">
           Wenn du wissen willst, wo deine Lücke liegt — schreib mir. 30 Minuten, kostenlos, kein Druck.

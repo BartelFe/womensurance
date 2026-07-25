@@ -15,11 +15,13 @@ export default function Loader({ onComplete }) {
       },
     });
 
+    // Gesamt-Anzeigedauer 3.0s (2.0s Original +50 %):
+    // Counter & Headline-Animation füllen 2.4s, danach 0.6s Halten.
     const counter = counterRef.current;
     const obj = { v: 0 };
     tl.to(obj, {
       v: 39.4,
-      duration: 1.6,
+      duration: 2.4,
       ease: 'power2.inOut',
       onUpdate: () => {
         if (counter) counter.textContent = obj.v.toFixed(1);
@@ -27,16 +29,17 @@ export default function Loader({ onComplete }) {
     });
 
     if (lineRef.current) {
+      // Lato ist statisch (kein Variable-Font-Tween) — stattdessen
+      // "Scharfstellen": Opazität + Scale + Letter-Spacing ziehen sich zu.
       tl.fromTo(
         lineRef.current,
-        { fontVariationSettings: '"opsz" 96, "wght" 200, "SOFT" 100' },
-        { fontVariationSettings: '"opsz" 144, "wght" 700, "SOFT" 0', duration: 1.6, ease: 'power2.inOut' },
+        { opacity: 0.12, scale: 0.94, letterSpacing: '0.04em' },
+        { opacity: 1, scale: 1, letterSpacing: '-0.03em', duration: 2.4, ease: 'power2.inOut' },
         '<'
       );
     }
 
-    // Haltezeit: Gesamt-Anzeigedauer (1.6s Counter + Hold) um 50 % verlängert (2.0s → 3.0s)
-    tl.to({}, { duration: 1.4 });
+    tl.to({}, { duration: 0.6 });
     tl.to(root.current, { y: '-100%', duration: 1.0, ease: 'expo.inOut' });
 
     return () => tl.kill();
@@ -51,18 +54,10 @@ export default function Loader({ onComplete }) {
     >
       <div className="eyebrow text-paper/40 mb-8">Womensurance · Lade Wahrheit</div>
 
-      {/*
-        white-space: nowrap prevents line-break reflow as font weight increases.
-        The height stays stable (determined by font-size, not text width).
-      */}
       <div
         ref={lineRef}
-        className="display-xl text-paper text-center"
-        style={{
-          fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
-          fontVariationSettings: '"opsz" 96, "wght" 200, "SOFT" 100',
-          whiteSpace: 'nowrap',
-        }}
+        className="display-xl text-paper text-center text-balance px-6"
+        style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)' }}
       >
         Wie sicher bist du wirklich?
       </div>

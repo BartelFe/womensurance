@@ -110,7 +110,7 @@ export default function MeetJulia() {
                 style={{ aspectRatio: '3/4' }}
               >
                 <img
-                  src="/images/julia-blazer.jpg"
+                  src="/images/julia-portrait.jpg"
                   alt="Julia Pashchenko"
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
@@ -125,7 +125,7 @@ export default function MeetJulia() {
                   className="relative overflow-hidden rounded-sm aspect-square"
                 >
                   <img
-                    src="/images/julia-headshot.jpg"
+                    src="/images/julia-laptop.jpg"
                     alt="Julia Pashchenko"
                     className="absolute inset-0 w-full h-full object-cover object-center"
                   />
