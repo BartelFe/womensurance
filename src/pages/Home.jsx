@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { scrollToSection } from '../lib/scrollTo';
 
 import Loader from '../components/layout/Loader';
 import OpeningStatement from '../components/sections/OpeningStatement';
@@ -49,11 +50,7 @@ export default function Home() {
       if (hash.startsWith('#phase-')) {
         window.__scrollToPhase?.(hash.slice('#phase-'.length));
       } else {
-        const el = document.querySelector(hash);
-        if (el) {
-          if (window.__lenis) window.__lenis.scrollTo(el, { offset: -40, duration: 1.4 });
-          else el.scrollIntoView({ behavior: 'smooth' });
-        }
+        scrollToSection(hash.slice(1));
       }
     }, showLoader ? 4400 : 500);
     return () => clearTimeout(t);

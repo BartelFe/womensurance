@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { lifePhases } from '../../data/lifePhases';
 import { BOOKING_URL } from '../../config/site';
+import { scrollToSection } from '../../lib/scrollTo';
 
 const LINKS = [
   { id: 'gap', label: 'Die Lücke' },
@@ -57,10 +58,7 @@ export default function Nav() {
       navigate(`/#${id}`);
       return;
     }
-    const el = document.getElementById(id);
-    if (!el) return;
-    if (window.__lenis) window.__lenis.scrollTo(el, { offset: -40, duration: 1.4 });
-    else el.scrollIntoView({ behavior: 'smooth' });
+    scrollToSection(id);
   };
 
   /** Zu einer bestimmten Kachel in der Horizontal-Section scrollen */

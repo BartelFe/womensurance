@@ -66,7 +66,7 @@ export default function CookieConsent() {
           zeigen, die zu dir passen. Statistik und Marketing laden{' '}
           <strong className="text-paper font-medium">erst nach deiner Einwilligung</strong>.
           Details in der{' '}
-          <a href="/#impressum" className="underline hover:text-pink transition-colors">
+          <a href="/datenschutz" className="underline hover:text-pink transition-colors">
             Datenschutzerklärung
           </a>
           .

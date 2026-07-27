@@ -14,6 +14,8 @@ import CookieConsent from './components/layout/CookieConsent';
 import Home from './pages/Home';
 import Rentenluecke from './pages/Rentenluecke';
 import Scheidung from './pages/Scheidung';
+import Impressum from './pages/Impressum';
+import Datenschutz from './pages/Datenschutz';
 
 /** Scrollt bei Seitenwechsel nach oben und aktualisiert ScrollTrigger */
 function ScrollManager() {
@@ -45,6 +47,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/rentenluecke" element={<Rentenluecke />} />
         <Route path="/scheidung" element={<Scheidung />} />
+        <Route path="/impressum" element={<Impressum />} />
+        <Route path="/datenschutz" element={<Datenschutz />} />
       </Routes>
 
       <Footer />

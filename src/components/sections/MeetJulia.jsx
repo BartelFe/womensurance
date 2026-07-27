@@ -83,7 +83,7 @@ export default function MeetJulia() {
               </div>
 
               <div className="eyebrow text-ink/40 mt-4 mb-10 md:mb-16">
-                Kauffrau für Versicherungen · DVM Ingolstadt
+                Fachwirtin für Versicherungen und Finanzen · DVM Ingolstadt
               </div>
             </div>
 
@@ -195,7 +195,7 @@ export default function MeetJulia() {
               {/* Credentials */}
               <div className="pt-6 border-t border-paper/10 grid grid-cols-2 gap-4">
                 {[
-                  { n: '10+', label: 'Jahre Erfahrung' },
+                  { n: '5+', label: 'Jahre Erfahrung' },
                   { n: '100%', label: 'Unabhängig' },
                   { n: '∅ 30', label: 'Min. Erstgespräch' },
                   { n: 'IHK', label: 'Zertifiziert' },

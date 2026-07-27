@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <footer className="bg-ink text-paper/60 border-t border-paper/10">
@@ -37,10 +39,10 @@ export default function Footer() {
         <div>
           <div className="eyebrow text-paper/50 mb-4">Themen</div>
           <ul className="space-y-2 text-sm">
-            <li><a href="#gap" className="hover:text-pink">Die Lücke</a></li>
-            <li><a href="#life" className="hover:text-pink">Dein Leben</a></li>
-            <li><a href="#method" className="hover:text-pink">Mein Weg</a></li>
-            <li><a href="#voices" className="hover:text-pink">Stimmen</a></li>
+            <li><a href="/#gap" className="hover:text-pink">Die Lücke</a></li>
+            <li><a href="/#life" className="hover:text-pink">Dein Leben</a></li>
+            <li><Link to="/rentenluecke" className="hover:text-pink">Teilzeit &amp; Care-Arbeit</Link></li>
+            <li><Link to="/scheidung" className="hover:text-pink">Scheidung</Link></li>
           </ul>
         </div>
 
@@ -49,39 +51,17 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li><a href="mailto:julia@womensurance.de" className="hover:text-pink">julia@womensurance.de</a></li>
             <li><a href="https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled" target="_blank" rel="noreferrer" className="hover:text-pink">Termin buchen</a></li>
-            <li><a href="#impressum" className="hover:text-pink">Impressum</a></li>
           </ul>
         </div>
       </div>
 
-      {/* Impressum */}
-      <div id="impressum" className="border-t border-paper/10 bg-ink/80 px-6 md:px-12 py-12">
-        <div className="eyebrow text-paper/40 mb-6">Impressum &middot; Platzhalter</div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-xs text-paper/40 leading-relaxed">
-          <div>
-            <div className="text-paper/60 font-medium mb-2">Angaben gemäß § 5 TMG</div>
-            Deutsche Versicherungsmakler GmbH &amp; Co. KG<br />
-            Markenname: Womensurance<br />
-            Ansprechpartnerin: Julia Pashchenko<br />
-            [Straße + Nr.]<br />
-            85049 Ingolstadt
-          </div>
-          <div>
-            <div className="text-paper/60 font-medium mb-2">Aufsichtsbehörde</div>
-            IHK München und Oberbayern<br />
-            Erlaubnis gemäß § 34d GewO<br />
-            Vermittlerregister-Nr.: [einfügen]
-          </div>
-          <div>
-            <div className="text-paper/60 font-medium mb-2">Haftung</div>
-            Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für externe Links. Verantwortlich sind ausschließlich deren Betreiber.
-          </div>
-        </div>
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 text-xs text-paper/30">
-          <span>© 2026 Womensurance — Eine Marke der DVM</span>
+      {/* Legal bar */}
+      <div className="border-t border-paper/10 bg-ink/80 px-6 md:px-12 py-8">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-paper/30">
+          <span>© 2026 Womensurance — Eine Marke der Deutschen Versicherungsmakler GmbH &amp; Co. KG</span>
           <div className="flex gap-6">
-            <a href="#impressum" className="hover:text-pink">Datenschutz</a>
-            <a href="#impressum" className="hover:text-pink">Impressum</a>
+            <Link to="/impressum" className="hover:text-pink">Impressum</Link>
+            <Link to="/datenschutz" className="hover:text-pink">Datenschutz</Link>
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('wmns-open-consent'))}
               className="hover:text-pink"
