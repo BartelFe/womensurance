@@ -70,7 +70,7 @@ export const TOGGLE_META = [
 
 export const BASE_GAP = 39.4; // % — Gender Pension Gap (Destatis 2023, ohne Hinterbliebene)
 export const BASE_EURO = 450; // €/Monat — Ø Rentendifferenz Frau/Mann (DRV 2024)
-export const RETIREMENT_YEARS = 20; // für die Lebenssumme auf dem Kassenzettel
+export const RETIREMENT_YEARS = 20; // für die Lebenssumme auf dem Rentenbescheid
 
 const GapContext = createContext(null);
 

@@ -5,7 +5,7 @@ import { scrollToSection } from '../lib/scrollTo';
 
 import Loader from '../components/layout/Loader';
 import OpeningStatement from '../components/sections/OpeningStatement';
-import TheReceipt from '../components/sections/TheReceipt';
+import TheNotice from '../components/sections/TheNotice';
 import YourLife from '../components/sections/YourLife';
 import TheTruth from '../components/sections/TheTruth';
 import MeetJulia from '../components/sections/MeetJulia';
@@ -61,7 +61,7 @@ export default function Home() {
       {showLoader && <Loader onComplete={markIntroSeen} />}
       <main className="relative">
         <OpeningStatement />
-        <TheReceipt />
+        <TheNotice />
         <YourLife />
         <TheTruth />
         <MeetJulia />
