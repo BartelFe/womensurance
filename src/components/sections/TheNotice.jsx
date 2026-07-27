@@ -55,6 +55,7 @@ export default function TheNotice() {
       const card = root.current.querySelector('[data-doc-card]');
       const rows = root.current.querySelectorAll('[data-row]');
       const sumBlock = root.current.querySelector('[data-sum]');
+      const multLine = root.current.querySelector('[data-mult]');
       const lifeBlock = root.current.querySelector('[data-life]');
       const stamp = root.current.querySelector('[data-stamp]');
       const outro = root.current.querySelector('[data-outro]');
@@ -105,7 +106,8 @@ export default function TheNotice() {
         afterRows
       );
 
-      // Lebenssumme
+      // × Monate × Jahre → Lebenssumme
+      tl.fromTo(multLine, { opacity: 0 }, { opacity: 1, duration: 0.3 }, afterRows + 0.7);
       tl.fromTo(
         lifeBlock,
         { opacity: 0, scale: 1.15 },
@@ -152,6 +154,12 @@ export default function TheNotice() {
     };
   }, []); // ← bewusst leer: Timeline wird nie neu gebaut
 
+  const today = new Date().toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
   return (
     <section ref={root} id="gap" className="relative bg-ink text-paper">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden flex items-center">
@@ -178,33 +186,57 @@ export default function TheNotice() {
           </div>
 
           {/* ── Rechts: der Rentenbescheid ──
-              Basis-Schriftgröße hängt an der Viewport-Höhe → das ganze
-              Dokument skaliert mit dem sichtbaren Fenster. */}
+              Basis-Schriftgröße hängt an der Viewport-Höhe (.notice-doc in
+              globals.css), alle inneren Maße in em → das Dokument füllt die
+              verfügbare Höhe und wird nie abgeschnitten. */}
           <div className="flex justify-center md:justify-end">
             <div
               data-doc-card
-              className="relative w-full max-w-[344px] md:max-w-[430px] bg-bone text-ink shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
-              style={{ fontSize: 'clamp(9px, 1.5vh, 13px)', lineHeight: 1.5 }}
+              className="notice-doc relative w-full max-w-[360px] md:max-w-none md:w-[33em] bg-bone text-ink shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
             >
-              <div className="px-[1.5em] py-[1.3em] md:px-[2em] md:py-[1.6em]">
+              <div className="px-[1.5em] py-[1.3em] md:px-[2.2em] md:py-[1.7em]">
 
                 {/* ── Briefkopf ── */}
-                <div className="flex items-baseline justify-between gap-[1em]">
-                  <div className="font-bold tracking-[0.2em] text-[1.05em]">WOMENSURANCE</div>
-                  <div className="font-bold tracking-[0.12em] text-[0.85em] text-ink/70">RENTENINFORMATION</div>
+                <div className="flex items-start justify-between gap-[1em]">
+                  <div>
+                    <div className="font-bold tracking-[0.2em] text-[1.05em]">WOMENSURANCE</div>
+                    <div className="text-ink/45 text-[0.78em] tracking-[0.05em] mt-[0.1em] whitespace-nowrap">
+                      Eine Marke der DVM · Ingolstadt
+                    </div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <div className="font-bold tracking-[0.12em] text-[0.85em]">RENTENINFORMATION</div>
+                    <div className="font-mono text-[0.75em] text-ink/45 mt-[0.15em]">Stand: {today}</div>
+                  </div>
                 </div>
 
-                <div className="border-b-2 border-ink/70 mt-[0.7em]" />
+                <div className="border-b-2 border-ink/70 mt-[0.8em]" />
+
+                {/* ── Anschriftfeld ── */}
+                <div className="mt-[1em]">
+                  <div className="font-bold">Für dich.</div>
+                  <div className="font-mono text-[0.78em] text-ink/45">
+                    Versichertennummer 39 400394 W 001
+                  </div>
+                </div>
 
                 {/* ── Betreff ── */}
-                <div className="mt-[0.9em] font-bold text-[1.15em]">
+                <div className="mt-[1em] font-bold text-[1.15em]">
                   Deine voraussichtliche Altersrente
                 </div>
 
-                {/* ── Posten ── */}
-                <div className="mt-[0.5em]">
-                  <div data-row className="flex items-baseline justify-between gap-[1em] border-b border-ink/10 py-[0.45em]">
-                    <div className="truncate">Gender Pension Gap · Basis</div>
+                {/* ── Tabelle: Berechnungsgrundlagen ── */}
+                <div className="mt-[0.8em]">
+                  <div className="flex justify-between text-ink/45 text-[0.75em] tracking-[0.12em] uppercase border-b border-ink/25 pb-[0.3em]">
+                    <span>Berechnungsgrundlagen</span>
+                    <span>€ / Monat</span>
+                  </div>
+
+                  <div data-row className="flex items-baseline justify-between gap-[1em] border-b border-ink/10 py-[0.5em]">
+                    <div className="min-w-0">
+                      <div className="truncate">Gender Pension Gap · Basis</div>
+                      <div className="hidden md:block text-ink/40 text-[0.8em] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
+                    </div>
                     <div className="shrink-0 font-mono font-bold">−{fmt(BASE_EURO)} €</div>
                   </div>
 
@@ -212,23 +244,31 @@ export default function TheNotice() {
                     <div
                       key={m.id}
                       data-row
-                      className={`flex items-baseline justify-between gap-[1em] border-b border-ink/10 py-[0.45em] ${toggles[m.id] ? '' : 'invisible'}`}
+                      className={`flex items-baseline justify-between gap-[1em] border-b border-ink/10 py-[0.5em] ${toggles[m.id] ? '' : 'invisible'}`}
                     >
-                      <div className="truncate">{m.receiptLabel}</div>
+                      <div className="min-w-0">
+                        <div className="truncate">{m.receiptLabel}</div>
+                        <div className="hidden md:block text-ink/40 text-[0.8em] truncate">{m.receiptSub}</div>
+                      </div>
                       <div className="shrink-0 font-mono font-bold">−{fmt(m.euro)} €</div>
                     </div>
                   ))}
                 </div>
 
                 {/* ── Kennzahlen-Boxen ── */}
-                <div data-sum className="mt-[0.9em] border border-ink/60 px-[1em] py-[0.55em] flex items-baseline justify-between gap-[1em]">
-                  <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">Monatlich</span>
-                  <span ref={monthlyRef} className="font-mono font-bold text-[1.3em] text-pink-deep whitespace-nowrap">−0 €</span>
+                <div data-sum className="mt-[1em] border border-ink/60 px-[1em] py-[0.6em]">
+                  <div className="flex items-baseline justify-between gap-[1em]">
+                    <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">Monatliche Minderung</span>
+                    <span ref={monthlyRef} className="font-mono font-bold text-[1.3em] text-pink-deep whitespace-nowrap">−0 €</span>
+                  </div>
+                  <div data-mult className="font-mono text-ink/45 text-[0.72em] text-right mt-[0.15em]">
+                    × 12 Monate × {RETIREMENT_YEARS} Jahre Rente
+                  </div>
                 </div>
 
                 <div data-life className="relative mt-[0.7em] border-2 border-ink px-[1em] py-[0.65em] bg-ink/[0.03] flex items-baseline justify-between gap-[1em]">
                   <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">
-                    {RETIREMENT_YEARS} Rentenjahre
+                    Über {RETIREMENT_YEARS} Rentenjahre
                   </span>
                   <span
                     ref={lifetimeRef}
@@ -247,23 +287,30 @@ export default function TheNotice() {
                   </div>
                 </div>
 
-                {/* ── Widerspruch + CTA ── */}
-                <div data-outro className="mt-[0.9em] border-t border-ink/25 pt-[0.8em] text-center">
-                  <p className="text-ink/70">
+                {/* ── Rechtsbehelfsbelehrung + CTA ── */}
+                <div data-outro className="mt-[1em] border-t border-ink/25 pt-[0.9em]">
+                  <div className="text-[0.75em] font-bold tracking-[0.12em] uppercase text-ink/55">
+                    Rechtsbehelfsbelehrung
+                  </div>
+                  <p className="mt-[0.3em] text-ink/70">
                     Gegen diesen Bescheid kannst du{' '}
-                    <span className="font-bold text-ink">Widerspruch einlegen</span>.
+                    <span className="font-bold text-ink">Widerspruch einlegen</span> — am
+                    wirksamsten, bevor er rechtskräftig wird.
                   </p>
-                  <a
-                    href={BOOKING_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    data-cursor="link"
-                    className="mt-[0.7em] inline-flex items-center rounded-full bg-ink text-paper px-[1.6em] py-[0.75em] text-[0.88em] font-bold tracking-[0.08em] whitespace-nowrap hover:bg-pink hover:text-ink transition-colors"
-                  >
-                    WIDERSPRUCH EINLEGEN — 30 MIN, KOSTENLOS
-                  </a>
-                  <div className="text-ink/35 text-[0.72em] mt-[0.8em] leading-snug">
-                    * Beispielrechnung mit Durchschnittswerten — kein amtliches Dokument.
+                  <div className="mt-[0.8em] text-center">
+                    <a
+                      href={BOOKING_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-cursor="link"
+                      className="inline-flex items-center rounded-full bg-ink text-paper px-[1.6em] py-[0.75em] text-[0.88em] font-bold tracking-[0.08em] whitespace-nowrap hover:bg-pink hover:text-ink transition-colors"
+                    >
+                      WIDERSPRUCH EINLEGEN — 30 MIN, KOSTENLOS
+                    </a>
+                    <div className="text-ink/35 text-[0.72em] mt-[0.7em] leading-snug">
+                      * Beispielrechnung mit Durchschnittswerten — kein amtliches Dokument.
+                      Deine echten Zahlen klären wir gemeinsam.
+                    </div>
                   </div>
                 </div>
               </div>
