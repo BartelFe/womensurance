@@ -80,7 +80,6 @@ export default function ParttimeCalculator() {
   return (
     <section id="rechner" className="bg-paper text-ink px-6 md:px-12 py-24 md:py-32">
       <div className="max-w-6xl mx-auto">
-        <div className="eyebrow text-clay mb-4">Rechner</div>
         <h2 className="display-lg text-ink text-balance mb-4" style={{ fontSize: 'clamp(1.9rem, 4vw, 3.8rem)' }}>
           Rentenlücke berechnen: Was kostet dich{' '}
           <span className="display-italic text-pink">Teilzeit?</span>

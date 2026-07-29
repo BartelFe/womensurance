@@ -38,7 +38,6 @@ export default function Voices() {
   return (
     <section ref={root} id="voices" className="bg-paper text-ink relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-12">
-        <div className="eyebrow text-clay mb-6">Akt 06 · Stimmen</div>
         <h2 className="display-lg text-ink text-balance" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4.5rem)' }}>
           Drei Frauen. Drei <span className="display-italic text-pink">Geschichten.</span>
         </h2>

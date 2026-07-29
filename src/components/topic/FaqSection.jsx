@@ -24,7 +24,6 @@ export default function FaqSection({ title, items, note }) {
   return (
     <section className="bg-ink text-paper px-6 md:px-12 py-24 md:py-32 border-t border-paper/10">
       <div className="max-w-4xl mx-auto">
-        <div className="eyebrow text-paper/40 mb-4">Häufige Fragen</div>
         <h2 className="display-lg text-paper text-balance mb-12" style={{ fontSize: 'clamp(1.8rem, 3.6vw, 3.4rem)' }}>
           {title}
         </h2>

@@ -61,7 +61,7 @@ export default function Scheidung() {
       afterHero={<SplitAccounts />}
       afterQuote={<MistakesStack />}
       faq={FAQ}
-      eyebrow="Themenseite · Scheidung"
+      eyebrow="Scheidung"
       titleLines={[
         { text: 'Getrennte Wege.' },
         { text: 'Geteilte Rente.', italic: true },

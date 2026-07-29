@@ -169,7 +169,6 @@ export default function TheNotice() {
 
           {/* ── Links: die These (mobil nur die Überschrift) ── */}
           <div data-doc-intro>
-            <div className="eyebrow text-paper/40 mb-2 md:mb-6">Die Rechnung</div>
             <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 4.2rem)' }}>
               Was die Prozente in{' '}
               <span className="display-italic text-pink">Euros</span> bedeuten.

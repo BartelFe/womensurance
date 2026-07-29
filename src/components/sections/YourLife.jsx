@@ -194,7 +194,7 @@ export default function YourLife() {
                 </p>
 
                 <div className="mt-auto pt-4 md:pt-6 border-t border-clay-light/60">
-                  <div className="eyebrow text-clay mb-1.5 md:mb-2">Was zählt jetzt</div>
+                  <div className="eyebrow text-pink mb-1.5 md:mb-2">Was zählt jetzt</div>
                   <p
                     className="text-ink/65 leading-relaxed"
                     style={{ fontSize: 'clamp(0.8rem, 0.85vw, 1.05rem)' }}
@@ -207,7 +207,7 @@ export default function YourLife() {
                     <button
                       onClick={() => setExpandedId(phase.id)}
                       data-cursor="link"
-                      className="mt-5 inline-flex items-center gap-2 eyebrow text-clay hover:text-pink transition-colors"
+                      className="mt-5 inline-flex items-center gap-2 eyebrow text-pink hover:text-ink transition-colors"
                     >
                       <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none">+</span>
                       Mehr erfahren

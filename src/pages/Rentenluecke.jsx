@@ -64,7 +64,7 @@ export default function Rentenluecke() {
         </>
       }
       faq={FAQ}
-      eyebrow="Themenseite · Teilzeit / Care-Arbeit"
+      eyebrow="Teilzeit / Care-Arbeit"
       titleLines={[
         { text: 'Die Rentenlücke' },
         { text: 'wächst leise.', italic: true },

@@ -51,7 +51,6 @@ export default function TheMethod() {
   return (
     <section ref={root} id="method" className="bg-ink text-paper py-32 md:py-48 px-6 md:px-12 relative">
       <div className="max-w-6xl mx-auto">
-        <div className="eyebrow text-paper/40 mb-6">Akt 05 · Mein Weg</div>
         <h2 className="display-lg text-paper text-balance mb-20" style={{ fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}>
           4 Schritte. <span className="display-italic text-pink">Ein Konzept.</span>
         </h2>

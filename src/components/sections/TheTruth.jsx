@@ -58,8 +58,6 @@ export default function TheTruth() {
   return (
     <section ref={root} className="bg-ink text-paper py-32 md:py-48 px-6 md:px-12 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="eyebrow text-paper/40 mb-10">Akt 03 · Die Wahrheit</div>
-
         <div ref={headRef} className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.6rem, 9vw, 10rem)' }}>
           <span className="block line-mask"><span data-line>Deine Lücke:</span></span>
           <span className="block line-mask">

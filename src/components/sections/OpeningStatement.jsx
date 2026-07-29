@@ -349,8 +349,11 @@ export default function OpeningStatement() {
                     >
                       {age}
                     </span>
+                    {/* Mobil nur ausgewählte Labels sichtbar — aber `invisible`
+                        statt `hidden`, damit der Platz reserviert bleibt und
+                        alle Rasterlinien gleich hoch beginnen. */}
                     <span
-                      className={mobileLabel ? '' : 'hidden md:block'}
+                      className={mobileLabel ? '' : 'invisible md:visible'}
                       style={{ fontSize: '9px', letterSpacing: '0.12em', color: 'rgb(var(--paper-rgb) / 0.4)', whiteSpace: 'nowrap' }}
                     >
                       {label}

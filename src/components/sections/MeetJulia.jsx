@@ -73,8 +73,6 @@ export default function MeetJulia() {
           {/* Left: Giant name + quote */}
           <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-between md:pb-0">
             <div>
-              <div className="eyebrow text-clay mb-8">Akt 04 · Die Antwort</div>
-
               <div
                 className="display-italic text-pink leading-none"
                 style={{ fontSize: 'clamp(6rem, 14vw, 16rem)', letterSpacing: '-0.03em' }}
@@ -116,8 +114,9 @@ export default function MeetJulia() {
                 />
               </div>
 
-              {/* Side column */}
-              <div className="flex flex-col gap-4 mt-16" style={{ width: '42%' }}>
+              {/* Side column — mobil breiter, sonst passt "Versicherungs-
+                  schwester" nicht in den Infokasten */}
+              <div className="flex flex-col gap-4 mt-10 md:mt-16 w-[52%] md:w-[42%]">
                 {/* Headshot — pink bg */}
                 <div
                   data-image
@@ -132,9 +131,9 @@ export default function MeetJulia() {
                 </div>
 
                 {/* Info card */}
-                <div className="bg-ink text-paper p-5 rounded-sm">
-                  <div className="eyebrow text-pink mb-3">Womensurance</div>
-                  <p className="text-xs text-paper/70 leading-relaxed font-light">
+                <div className="bg-ink text-paper p-4 md:p-5 rounded-sm">
+                  <div className="eyebrow text-pink mb-2 md:mb-3">Womensurance</div>
+                  <p className="text-xs text-paper/70 leading-relaxed font-light hyphens-auto break-words">
                     Julia, deine Versicherungsschwester. Sie redet Klartext,
                     hört zu und bleibt an deiner Seite.
                   </p>

@@ -182,9 +182,9 @@
    abgeschnitten werden. Divisor ≈ Dokumenthöhe in em, Abzug = Platz für
    Überschrift/Ränder (headless kalibriert, siehe verify-notice.js). */
 .notice-doc {
-  /* mobil: Abzug = Überschrift über dem Bescheid (~91px, gemessen) + Puffer */
-  font-size: clamp(8px, calc((100vh - 122px) / 48), 15px);
-  font-size: clamp(8px, calc((100svh - 122px) / 48), 15px);
+  /* mobil: Abzug = Überschrift über dem Bescheid (~66px, gemessen) + Puffer */
+  font-size: clamp(8px, calc((100vh - 98px) / 48), 15px);
+  font-size: clamp(8px, calc((100svh - 98px) / 48), 15px);
   line-height: 1.5;
 }
 @media (min-width: 768px) {

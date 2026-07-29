@@ -163,7 +163,6 @@ export default function TopicPage({
       <section className="bg-paper text-ink px-6 md:px-12 py-24 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div data-reveal>
-            <div className="eyebrow text-clay mb-4">Konkret</div>
             <h2 className="display-lg text-ink mb-14" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
               Was du <span className="display-italic text-pink">jetzt</span> tun kannst.
             </h2>

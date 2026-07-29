@@ -87,7 +87,6 @@ export default function MistakesStack() {
   return (
     <section ref={root} className="bg-paper text-ink py-24 md:py-32 px-6 md:px-12">
       <div className="max-w-6xl mx-auto">
-        <div className="eyebrow text-clay mb-4">Aus der Praxis</div>
         <h2 className="display-lg text-ink text-balance mb-16 md:mb-20" style={{ fontSize: 'clamp(1.9rem, 4.2vw, 4.2rem)' }}>
           Die 5 teuersten Fehler im{' '}
           <span className="display-italic text-pink">Versorgungsausgleich.</span>
@@ -110,7 +109,7 @@ export default function MistakesStack() {
                   <h3 className="display-lg text-ink mb-2 text-balance" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
                     {m.title}
                   </h3>
-                  <div className="eyebrow text-pink-deep mb-4">{m.cost}</div>
+                  <div className="eyebrow text-pink mb-4">{m.cost}</div>
                   <p className="body-lead text-ink/65 max-w-2xl">{m.body}</p>
                 </div>
               </div>
