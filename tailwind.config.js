@@ -25,11 +25,13 @@ export default {
         green: v('green'),
       },
       fontFamily: {
-        // sans überschreibt Tailwinds Default-Stack — sonst rendert `font-sans` Segoe UI statt Lato
+        // Eine Schriftfamilie für alles (Wunsch Julia 07/2026: keine "Computerschrift"
+        // mehr für Zahlen/Datenfakten) — Hierarchie entsteht über Font-Weights.
+        // `mono` bleibt als Alias gemappt, damit keine Restklasse Segoe UI rendert.
         sans: ['Lato', 'system-ui', 'sans-serif'],
         display: ['Lato', 'system-ui', 'sans-serif'],
         body: ['Lato', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+        mono: ['Lato', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.04em',

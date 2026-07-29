@@ -126,7 +126,7 @@ export default function Nav() {
                       onClick={goToPhase(phase.id)}
                       className="flex items-baseline gap-3 px-5 py-2 text-paper/60 hover:text-pink hover:bg-white/[0.04] transition-colors"
                     >
-                      <span className="font-mono text-[9px] text-paper/30">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="tnum text-[10px] font-bold text-paper/30">{String(i + 1).padStart(2, '0')}</span>
                       <span className="normal-case tracking-normal font-body text-[13px] font-normal">{phase.title}</span>
                     </a>
                   ))}

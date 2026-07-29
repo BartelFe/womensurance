@@ -6,7 +6,11 @@ import ParttimeCalculator from '../components/topic/ParttimeCalculator';
 // FAQ auf Suchintention optimiert ("rentenlücke berechnen", "teilzeit rente",
 // "elternzeit rente") — Feinschliff in dedizierter SEO-Session.
 const FAQ = {
-  title: 'Häufige Fragen zur Rentenlücke',
+  title: (
+    <>
+      Häufige Fragen zur <span className="display-italic text-pink">Rentenlücke.</span>
+    </>
+  ),
   items: [
     {
       q: 'Wie kann ich meine Rentenlücke berechnen?',
@@ -135,8 +139,12 @@ export default function Rentenluecke() {
           body: 'Wenn Teilzeit eine gemeinsame Familienentscheidung ist, kann auch die Vorsorge gemeinsam getragen werden — z. B. über Ausgleichszahlungen des Partners.',
         },
       ]}
-      ctaHeadline="Wie groß ist deine Lücke?"
-      ctaBody="Bis hierhin war alles Statistik. Deine Zahl hängt von deinem Leben ab — Stunden, Jahren, Verträgen. In 30 Minuten schauen wir gemeinsam drauf: kostenlos, ehrlich, ohne dass dir etwas verkauft wird."
+      ctaHeadline={
+        <>
+          Wie groß ist <span className="display-italic text-pink">deine Lücke?</span>
+        </>
+      }
+      ctaBody="Bis hierhin war alles Statistik. Deine Zahl hängt von deinem Leben ab — Stunden, Jahren, Verträgen. In 60 Minuten schauen wir gemeinsam drauf: kostenlos, ehrlich und in deinem Tempo."
     />
   );
 }

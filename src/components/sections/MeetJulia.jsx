@@ -79,7 +79,7 @@ export default function MeetJulia() {
                 className="display-italic text-pink leading-none"
                 style={{ fontSize: 'clamp(6rem, 14vw, 16rem)', letterSpacing: '-0.03em' }}
               >
-                Julia.
+                Julia
               </div>
 
               <div className="eyebrow text-ink/40 mt-4 mb-10 md:mb-16">
@@ -135,7 +135,8 @@ export default function MeetJulia() {
                 <div className="bg-ink text-paper p-5 rounded-sm">
                   <div className="eyebrow text-pink mb-3">Womensurance</div>
                   <p className="text-xs text-paper/70 leading-relaxed font-light">
-                    Unabhängige Beratung. Versicherung von Frau zu Frau: Für alle Lebenslagen.
+                    Julia, deine Versicherungsschwester. Sie redet Klartext,
+                    hört zu und bleibt an deiner Seite.
                   </p>
                 </div>
               </div>
@@ -182,7 +183,12 @@ export default function MeetJulia() {
               data-bio
               className="md:col-span-6 md:col-start-7 space-y-6"
             >
-              <div className="eyebrow text-clay mb-6">Die Geschichte</div>
+              <h2
+                className="display-lg text-pink mb-8"
+                style={{ fontSize: 'clamp(2.2rem, 4.4vw, 4rem)' }}
+              >
+                Die Geschichte
+              </h2>
 
               <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
                 Als Fachwirtin und erfahrene Beraterin unterstütze ich Frauen dabei, ihre Versicherungen selbstbewusst und informiert zu gestalten. Ich kenne die Stolpersteine und Unsicherheiten, die viele Frauen beim Thema Versicherung erleben und helfe, diese zu überwinden.
@@ -197,7 +203,7 @@ export default function MeetJulia() {
                 {[
                   { n: '5+', label: 'Jahre Erfahrung' },
                   { n: '100%', label: 'Unabhängig' },
-                  { n: '∅ 30', label: 'Min. Erstgespräch' },
+                  { n: '∅ 60', label: 'Min. Erstgespräch' },
                   { n: 'IHK', label: 'Zertifiziert' },
                 ].map(({ n, label }) => (
                   <div key={label} className="flex flex-col">

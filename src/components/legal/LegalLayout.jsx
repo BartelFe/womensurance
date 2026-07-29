@@ -87,7 +87,7 @@ export default function LegalLayout({ title, subtitle, stand, children }) {
           {children}
 
           <div className="mt-16 pt-8 border-t border-ink/10 flex flex-wrap items-center justify-between gap-4">
-            {stand && <div className="font-mono text-[11px] text-ink/40">Stand: {stand}</div>}
+            {stand && <div className="text-[12px] text-ink/40">Stand: {stand}</div>}
             <Link to="/" className="eyebrow text-ink/50 hover:text-pink transition-colors">
               ← Zurück zur Startseite
             </Link>

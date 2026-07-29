@@ -522,7 +522,7 @@ export default function Datenschutz() {
       <H2>6. Soziale Medien</H2>
       <P>
         Auf dieser Website verlinken wir auf unsere Profile in sozialen Netzwerken
-        (Instagram, TikTok, LinkedIn). Es handelt sich dabei um einfache Verlinkungen —
+        (Instagram, LinkedIn). Es handelt sich dabei um einfache Verlinkungen —
         es sind keine Social-Media-Plugins eingebunden. Beim Besuch dieser Website werden
         daher keine Daten an die Betreiber der sozialen Netzwerke übertragen. Erst wenn Sie
         einem Link folgen, gelten die Datenschutzbestimmungen des jeweiligen Anbieters.

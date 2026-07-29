@@ -2,27 +2,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../ui/MagneticButton';
-import { BOOKING_URL, SOCIALS } from '../../config/site';
-
-const SOCIAL_ICONS = {
-  instagram: (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4.2" />
-      <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none" />
-    </svg>
-  ),
-  tiktok: (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M16.6 3c.4 2.1 1.8 3.7 3.9 4v3c-1.5 0-2.9-.5-3.9-1.3v6.6c0 3.4-2.7 6.2-6.1 6.2S4.4 18.7 4.4 15.3c0-3.3 2.6-6 5.9-6.2v3.1c-1.6.2-2.8 1.5-2.8 3.1 0 1.7 1.4 3.1 3 3.1s3-1.4 3-3.1V3h3.1z" />
-    </svg>
-  ),
-  linkedin: (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8.25h4.56V23H.22V8.25zM8.34 8.25h4.37v2.02h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 7v8.1h-4.55v-7.18c0-1.71-.03-3.91-2.38-3.91-2.39 0-2.75 1.86-2.75 3.78V23H8.34V8.25z" />
-    </svg>
-  ),
-};
+import { SOCIAL_ICONS } from '../ui/SocialIcons';
+import { BOOKING_URL, SOCIALS, CALL_MINUTES } from '../../config/site';
 
 export default function TheStep() {
   const root = useRef(null);
@@ -84,7 +65,7 @@ export default function TheStep() {
 
       <div className="relative max-w-6xl mx-auto text-center">
         <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.6rem, 9vw, 10rem)' }}>
-          <span className="block line-mask"><span data-line>30 Minuten.</span></span>
+          <span className="block line-mask"><span data-line>{CALL_MINUTES} Minuten.</span></span>
           <span className="block line-mask"><span data-line>Kostenlos.</span></span>
           <span className="block line-mask"><span data-line className="display-italic text-pink">Auf Augenhöhe.</span></span>
         </h2>

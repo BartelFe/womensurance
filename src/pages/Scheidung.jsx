@@ -6,7 +6,12 @@ import MistakesStack from '../components/topic/MistakesStack';
 // FAQ auf "versorgungsausgleich"-Suchintention optimiert (~23.500 Suchen/Monat)
 // — Feinschliff in dedizierter SEO-Session.
 const FAQ = {
-  title: 'Häufige Fragen zum Versorgungsausgleich',
+  title: (
+    <>
+      Häufige Fragen zum{' '}
+      <span className="display-italic text-pink">Versorgungsausgleich.</span>
+    </>
+  ),
   items: [
     {
       q: 'Was ist der Versorgungsausgleich?',
@@ -92,11 +97,11 @@ export default function Scheidung() {
           ],
         },
         {
-          kicker: 'Die Falle',
-          title: 'Warum ausgerechnet Frauen hier verlieren',
+          kicker: 'Die Rechnung danach',
+          title: 'Warum hälftig noch lange nicht ausreichend heißt',
           paragraphs: [
-            'Eigentlich ist der Versorgungsausgleich für den wirtschaftlich schwächeren Partner gedacht — meistens die Frau, die für Familie und Care-Arbeit zurückgesteckt hat. Doch genau hier passieren die teuersten Fehler: falsch bewertete Verträge, vergessene Anrechte, unüberprüfte Auskünfte, nachteilige Vereinbarungen im Ehevertrag oder in der Scheidungsfolgenvereinbarung.',
-            'Ein einziger übersehener Vertrag oder eine ungeprüfte Bewertung kann im Alter hunderte Euro im Monat kosten — über zwanzig Rentenjahre gerechnet ein sechsstelliger Betrag. Und anders als beim Haus merkt man den Verlust erst Jahrzehnte später, wenn nichts mehr zu korrigieren ist.',
+            'Der Versorgungsausgleich gleicht aus, was in der Ehe entstanden ist — aber er ersetzt nicht, was in den Jahren davor und danach fehlt. Wer für Familie und Care-Arbeit zurückgesteckt hat, startet auch nach einer sauberen Teilung mit weniger eigenen Ansprüchen ins zweite Kapitel.',
+            'Dazu kommt: Was das Gericht teilt, ist eine Momentaufnahme in Aktenform. Wie viel davon im Alter tatsächlich auf deinem Konto landet, welche Verträge nach der Scheidung noch zu dir passen und wo eine Lücke bleibt — das steht in keinem Beschluss. Genau diese Rechnung machen wir gemeinsam.',
           ],
         },
         {
@@ -115,7 +120,7 @@ export default function Scheidung() {
       actions={[
         {
           title: 'Alle Anrechte auflisten',
-          body: 'Gesetzliche Rente, Betriebsrenten, private Verträge, Versorgungswerke — erst die vollständige Liste zeigt, was überhaupt geteilt wird. Vergessene Verträge sind der häufigste Fehler.',
+          body: 'Gesetzliche Rente, Betriebsrenten, private Verträge, Versorgungswerke — erst die vollständige Liste zeigt, worüber im Verfahren überhaupt entschieden wird. Und was danach von deiner eigenen Vorsorge übrig bleibt.',
         },
         {
           title: 'Auskünfte prüfen lassen',
@@ -130,8 +135,13 @@ export default function Scheidung() {
           body: 'Nach der Scheidung: Begünstigte ändern, Absicherung anpassen, eigene Altersvorsorge aufbauen — als Fundament für das nächste Kapitel.',
         },
       ]}
-      ctaHeadline="Bevor unterschrieben wird: reden wir."
-      ctaBody="Ob du mitten im Verfahren steckst, es vor dir liegt oder schon hinter dir — deine Ansprüche verdienen einen zweiten Blick. 30 Minuten, kostenlos, vertraulich. Keine Rechtsberatung, sondern Klarheit über deine Vorsorge."
+      ctaHeadline={
+        <>
+          Bevor der Scheidungsantrag eingelegt wird:{' '}
+          <span className="display-italic text-pink">reden wir.</span>
+        </>
+      }
+      ctaBody="Ob das Verfahren vor dir liegt, gerade läuft oder schon hinter dir ist — die entscheidende Frage ist, wie deine Vorsorge danach aussieht. 60 Minuten, kostenlos, vertraulich. Keine Rechtsberatung, sondern Klarheit über deine Zahlen."
     />
   );
 }

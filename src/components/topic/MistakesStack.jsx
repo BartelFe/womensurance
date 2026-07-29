@@ -11,9 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 const MISTAKES = [
   {
     n: '01',
-    title: 'Verträge vergessen',
-    cost: 'bis zu −200 €/Monat',
-    body: 'Die alte Betriebsrente aus dem Job vor zehn Jahren, die kleine private Police aus den Zwanzigern — was in der Aufstellung fehlt, wird nicht geteilt. Vergessene Anrechte sind der häufigste und stillste Fehler.',
+    title: 'Die eigenen Anrechte nicht kennen',
+    cost: 'Klarheit fehlt genau dann, wenn sie zählt',
+    body: 'Die alte Betriebsrente aus dem Job vor zehn Jahren, die kleine private Police aus den Zwanzigern: Wer die eigene Aufstellung nicht kennt, kann auch nicht einschätzen, was der Ausgleich für sie bedeutet — und was danach an eigener Vorsorge übrig bleibt.',
   },
   {
     n: '02',
@@ -118,7 +118,7 @@ export default function MistakesStack() {
           ))}
         </div>
 
-        <p className="mt-10 font-mono text-[10px] text-ink/35 leading-relaxed max-w-2xl">
+        <p className="mt-10 text-[12px] text-ink/35 leading-relaxed max-w-2xl">
           * Größenordnungen aus typischen Fallkonstellationen — dein Fall ist individuell.
           Keine Rechtsberatung; wir schauen auf die Vorsorge-Seite.
         </p>

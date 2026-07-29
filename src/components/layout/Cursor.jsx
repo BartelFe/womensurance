@@ -94,7 +94,7 @@ export default function Cursor() {
         className="pointer-events-none fixed left-0 top-0 z-[9999] flex h-7 w-7 items-center justify-center rounded-full border border-paper/40 mix-blend-difference"
         style={{ willChange: 'transform, width, height' }}
       >
-        <span ref={labelRef} className="text-[10px] uppercase tracking-[0.2em] opacity-0 font-mono text-paper">view</span>
+        <span ref={labelRef} className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-0 text-paper">view</span>
       </div>
       <div
         ref={dotRef}

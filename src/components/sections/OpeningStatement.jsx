@@ -5,11 +5,12 @@ import { splitChars } from '../../utils/splitText';
 import { BOOKING_URL } from '../../config/site';
 import { useGap, TOGGLE_META } from '../../hooks/useGapState';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { de1 } from '../../utils/format';
 
 // ── Chart-Geometrie (viewBox 0 0 600 400) ─────────────────────
 // Lebensphasen-Raster (Spaltenköpfe)
 const LIFE_PHASES = [
-  { age: '25', label: 'AUSBILDUNG',   pos: 4,  mobileLabel: false },
+  { age: '25', label: 'AUSBILDUNG',   pos: 7,  mobileLabel: false },
   { age: '28', label: 'ERSTER JOB',  pos: 18, mobileLabel: true  },
   { age: '32', label: 'BEZIEHUNG',   pos: 34, mobileLabel: false },
   { age: '35', label: 'KIND',        pos: 50, mobileLabel: true  },
@@ -328,7 +329,7 @@ export default function OpeningStatement() {
 
             {/* Left fade — desktop only */}
             <div
-              className="hidden md:block absolute inset-y-0 left-0 w-20 z-20 pointer-events-none"
+              className="hidden md:block absolute inset-y-0 left-0 w-12 z-20 pointer-events-none"
               style={{ background: 'linear-gradient(to right, var(--color-ink), transparent)' }}
             />
 
@@ -343,14 +344,14 @@ export default function OpeningStatement() {
                 >
                   <div className="pt-2 md:pt-10 flex flex-col items-center gap-[4px]">
                     <span
-                      className="font-mono"
-                      style={{ fontSize: '8px', letterSpacing: '0.2em', color: 'rgb(var(--paper-rgb) / 0.6)' }}
+                      className="tnum font-bold"
+                      style={{ fontSize: '12px', letterSpacing: '0.06em', color: 'rgb(var(--paper-rgb) / 0.7)' }}
                     >
                       {age}
                     </span>
                     <span
-                      className={`font-mono${mobileLabel ? '' : ' hidden md:block'}`}
-                      style={{ fontSize: '7px', letterSpacing: '0.15em', color: 'rgb(var(--paper-rgb) / 0.38)', whiteSpace: 'nowrap' }}
+                      className={mobileLabel ? '' : 'hidden md:block'}
+                      style={{ fontSize: '9px', letterSpacing: '0.12em', color: 'rgb(var(--paper-rgb) / 0.4)', whiteSpace: 'nowrap' }}
                     >
                       {label}
                     </span>
@@ -423,32 +424,33 @@ export default function OpeningStatement() {
               ))}
             </svg>
 
-            {/* Label am Lücken-Konnektor */}
+            {/* Label am Lücken-Konnektor — Größe wie der Hero-Paragraph */}
             <div
               ref={gapLabelRef}
-              className="absolute z-[15] font-mono text-pink pointer-events-none text-right"
+              className="absolute z-[15] text-pink font-bold pointer-events-none text-right"
               style={{
                 left: `${(576 / 600) * 100}%`,
                 top: `${(((MALE_Y[XS.indexOf(576)] + FEMALE_Y[XS.indexOf(576)]) / 2) / VIEW_H) * 100}%`,
-                transform: 'translate(-112%, -50%)',
-                fontSize: '9px',
-                letterSpacing: '0.2em',
+                transform: 'translate(-106%, -50%)',
+                fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)',
+                letterSpacing: '0.04em',
+                whiteSpace: 'nowrap',
               }}
             >
-              DIE LÜCKE
+              Die Lücke
             </div>
 
             {/* Marker-Labels (HTML, unverzerrt) */}
             {markers.map((m) => (
               <div
                 key={m.id}
-                className="absolute z-[15] font-mono text-pink pointer-events-none"
+                className="absolute z-[15] text-pink font-bold tnum pointer-events-none"
                 style={{
                   left: `${(m.x / 600) * 100}%`,
                   top: `${(m.y / VIEW_H) * 100}%`,
                   transform: 'translate(-50%, -190%)',
-                  fontSize: '8px',
-                  letterSpacing: '0.18em',
+                  fontSize: '11px',
+                  letterSpacing: '0.04em',
                 }}
               >
                 −{m.euro} €
@@ -460,14 +462,20 @@ export default function OpeningStatement() {
               ref={counterBoxRef}
               className="absolute left-0 bottom-1 md:bottom-3 z-20 pointer-events-none"
             >
-              <div className="eyebrow text-paper/40 mb-1">Deine Rentenlücke</div>
+              {/* Größe bewusst gleich dem Hero-Paragraph */}
+              <div
+                className="font-bold text-paper/75 mb-1"
+                style={{ fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)', letterSpacing: '0.01em' }}
+              >
+                Deine Rentenlücke
+              </div>
               <div className="flex items-baseline gap-1">
                 <span className="data-num text-pink" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4.5rem)' }}>
                   −<span ref={euroRef}>0</span> €
                 </span>
               </div>
-              <div className="font-mono text-[10px] text-paper/45 mt-1">
-                pro Monat Rente · {gap.toFixed(1)} % weniger als Männer
+              <div className="text-[11px] text-paper/45 mt-1">
+                pro Monat Rente · {de1(gap)} % weniger als Männer
               </div>
             </div>
         </div>
@@ -486,7 +494,7 @@ export default function OpeningStatement() {
         </a>
 
         <div ref={chipsRef} className="w-full md:w-auto">
-          <div className="hidden md:block eyebrow text-paper/50 mb-2 md:text-right">
+          <div className="hidden md:block eyebrow text-paper/50 mb-2 text-center">
             Und bei dir? Tippe an, was zutrifft
           </div>
           {/* Immer 2×2 oder 4×1 — nie 3+1 */}
@@ -510,7 +518,7 @@ export default function OpeningStatement() {
                       {on ? '✓' : '+'}
                     </span>
                     <span className="whitespace-nowrap">{m.label}</span>
-                    <span className="font-mono opacity-60 whitespace-nowrap hidden sm:inline">−{m.euro} €</span>
+                    <span className="tnum font-bold opacity-60 whitespace-nowrap hidden sm:inline">−{m.euro} €</span>
                   </button>
                 );
               })}

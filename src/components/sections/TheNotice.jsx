@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGap, TOGGLE_META, BASE_EURO, RETIREMENT_YEARS } from '../../hooks/useGapState';
-import { BOOKING_URL } from '../../config/site';
+import { BOOKING_URL, CALL_MINUTES } from '../../config/site';
+import { de1 } from '../../utils/format';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,7 +75,8 @@ export default function TheNotice() {
 
       // Früh sichtbar werden — sonst wirkt der Pin-Einstieg wie ein schwarzer Screen
       tl.fromTo(intro, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2 }, 0);
-      tl.fromTo(card, { opacity: 0, yPercent: 8, rotate: 0 }, { opacity: 1, yPercent: 0, rotate: -0.8, duration: 0.45 }, 0.1);
+      // Karte kommt gerade herein (kein Kippwinkel — Wunsch Julia 07/2026)
+      tl.fromTo(card, { opacity: 0, yPercent: 8 }, { opacity: 1, yPercent: 0, duration: 0.45 }, 0.1);
 
       // Posten stempeln sich ein (alle 5 immer in der Timeline)
       rows.forEach((row, i) => {
@@ -131,11 +133,11 @@ export default function TheNotice() {
         afterRows + 1.0
       );
 
-      // Stempel knallt drauf
+      // Stempel knallt quer über den ganzen Bescheid
       tl.fromTo(
         stamp,
-        { opacity: 0, scale: 2.4, rotate: 4 },
-        { opacity: 1, scale: 1, rotate: -8, duration: 0.3, ease: 'power4.in' },
+        { opacity: 0, scale: 2.6, rotate: -2 },
+        { opacity: 1, scale: 1, rotate: -13, duration: 0.3, ease: 'power4.in' },
         afterRows + 2.1
       );
 
@@ -163,7 +165,7 @@ export default function TheNotice() {
   return (
     <section ref={root} id="gap" className="relative bg-ink text-paper">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden flex items-center">
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-4 md:gap-16 items-center">
+        <div className="w-full max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-4 md:gap-10 items-center">
 
           {/* ── Links: die These (mobil nur die Überschrift) ── */}
           <div data-doc-intro>
@@ -173,12 +175,12 @@ export default function TheNotice() {
               <span className="display-italic text-pink">Euros</span> bedeuten.
             </h2>
             <p className="hidden md:block mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
-              {gap.toFixed(1)} % klingen abstrakt. Aber die Lücke hat einen
+              {de1(gap)} % klingen abstrakt. Aber die Lücke hat einen
               Preis — jeden Monat, zwanzig Rentenjahre lang. Das hier ist
               dein Bescheid.
             </p>
             <p
-              className={`hidden md:block mt-6 max-w-md font-mono text-xs text-paper/35 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
+              className={`hidden md:block mt-6 max-w-md text-sm text-paper/40 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
             >
               Tipp: Wähl oben im Diagramm an, was auf dich zutrifft — der
               Bescheid rechnet live mit.
@@ -189,11 +191,23 @@ export default function TheNotice() {
               Basis-Schriftgröße hängt an der Viewport-Höhe (.notice-doc in
               globals.css), alle inneren Maße in em → das Dokument füllt die
               verfügbare Höhe und wird nie abgeschnitten. */}
-          <div className="flex justify-center md:justify-end">
+          <div className="flex justify-center">
             <div
               data-doc-card
               className="notice-doc relative w-full max-w-[360px] md:max-w-none md:w-[33em] bg-bone text-ink shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"
             >
+              {/* VERMEIDBAR — quer über den ganzen Bescheid gestempelt.
+                  Eigener Positions-Wrapper, damit die GSAP-Transforms
+                  (scale/rotate) das Zentrieren nicht überschreiben. */}
+              <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none overflow-hidden">
+                <div
+                  data-stamp
+                  className="border-[0.1em] border-pink/85 text-pink/85 font-black tracking-[0.14em] text-[2.7em] md:text-[3.15em] leading-none px-[0.42em] py-[0.16em] select-none whitespace-nowrap"
+                >
+                  VERMEIDBAR
+                </div>
+              </div>
+
               <div className="px-[1.5em] py-[1.3em] md:px-[2.2em] md:py-[1.7em]">
 
                 {/* ── Briefkopf ── */}
@@ -206,7 +220,7 @@ export default function TheNotice() {
                   </div>
                   <div className="text-right shrink-0">
                     <div className="font-bold tracking-[0.12em] text-[0.85em]">RENTENINFORMATION</div>
-                    <div className="font-mono text-[0.75em] text-ink/45 mt-[0.15em]">Stand: {today}</div>
+                    <div className="tnum text-[0.8em] text-ink/45 mt-[0.15em]">Stand: {today}</div>
                   </div>
                 </div>
 
@@ -215,7 +229,7 @@ export default function TheNotice() {
                 {/* ── Anschriftfeld ── */}
                 <div className="mt-[1em]">
                   <div className="font-bold">Für dich.</div>
-                  <div className="font-mono text-[0.78em] text-ink/45">
+                  <div className="tnum text-[0.82em] text-ink/45">
                     Versichertennummer 39 400394 W 001
                   </div>
                 </div>
@@ -237,7 +251,7 @@ export default function TheNotice() {
                       <div className="truncate">Gender Pension Gap · Basis</div>
                       <div className="hidden md:block text-ink/40 text-[0.8em] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
                     </div>
-                    <div className="shrink-0 font-mono font-bold">−{fmt(BASE_EURO)} €</div>
+                    <div className="shrink-0 tnum font-bold">−{fmt(BASE_EURO)} €</div>
                   </div>
 
                   {TOGGLE_META.map((m) => (
@@ -250,7 +264,7 @@ export default function TheNotice() {
                         <div className="truncate">{m.receiptLabel}</div>
                         <div className="hidden md:block text-ink/40 text-[0.8em] truncate">{m.receiptSub}</div>
                       </div>
-                      <div className="shrink-0 font-mono font-bold">−{fmt(m.euro)} €</div>
+                      <div className="shrink-0 tnum font-bold">−{fmt(m.euro)} €</div>
                     </div>
                   ))}
                 </div>
@@ -259,9 +273,9 @@ export default function TheNotice() {
                 <div data-sum className="mt-[1em] border border-ink/60 px-[1em] py-[0.6em]">
                   <div className="flex items-baseline justify-between gap-[1em]">
                     <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">Monatliche Minderung</span>
-                    <span ref={monthlyRef} className="font-mono font-bold text-[1.3em] text-pink-deep whitespace-nowrap">−0 €</span>
+                    <span ref={monthlyRef} className="tnum font-black text-[1.35em] text-pink-deep whitespace-nowrap">−0 €</span>
                   </div>
-                  <div data-mult className="font-mono text-ink/45 text-[0.72em] text-right mt-[0.15em]">
+                  <div data-mult className="tnum text-ink/45 text-[0.78em] text-right mt-[0.15em]">
                     × 12 Monate × {RETIREMENT_YEARS} Jahre Rente
                   </div>
                 </div>
@@ -272,45 +286,33 @@ export default function TheNotice() {
                   </span>
                   <span
                     ref={lifetimeRef}
-                    className="data-num text-pink-deep whitespace-nowrap text-[1.9em]"
+                    className="data-num text-pink-deep whitespace-nowrap text-[2em]"
                   >
                     −0 €
                   </span>
-                  {/* Stempel — eigener Positions-Wrapper, damit GSAP-Transforms das Zentrieren nicht überschreiben */}
-                  <div className="absolute -top-[0.9em] left-1/2 -translate-x-1/2 pointer-events-none">
-                    <div
-                      data-stamp
-                      className="border-[0.22em] border-pink text-pink font-bold tracking-[0.25em] text-[0.95em] px-[0.9em] py-[0.2em] select-none bg-bone/70 whitespace-nowrap"
-                    >
-                      VERMEIDBAR
-                    </div>
-                  </div>
                 </div>
 
-                {/* ── Rechtsbehelfsbelehrung + CTA ── */}
-                <div data-outro className="mt-[1em] border-t border-ink/25 pt-[0.9em]">
-                  <div className="text-[0.75em] font-bold tracking-[0.12em] uppercase text-ink/55">
-                    Rechtsbehelfsbelehrung
+                {/* ── CTA ── (die Rechtsbehelfsbelehrung ist bewusst raus:
+                    schafft Platz für einen Button in Standardgröße) */}
+                <div data-outro className="mt-[1em] border-t border-ink/25 pt-[1em] text-center">
+                  <a
+                    href={BOOKING_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-cursor="link"
+                    className="group inline-flex items-center gap-[0.7em] rounded-full bg-ink text-paper px-[2em] py-[1.05em] text-[1em] font-bold whitespace-nowrap hover:bg-pink hover:text-ink transition-colors"
+                  >
+                    Widerspruch einlegen
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
+                      <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                  <div className="text-ink/50 text-[0.8em] mt-[0.6em]">
+                    {CALL_MINUTES} Minuten · kostenlos · unverbindlich
                   </div>
-                  <p className="mt-[0.3em] text-ink/70">
-                    Gegen diesen Bescheid kannst du{' '}
-                    <span className="font-bold text-ink">Widerspruch einlegen</span> — am
-                    wirksamsten, bevor er rechtskräftig wird.
-                  </p>
-                  <div className="mt-[0.8em] text-center">
-                    <a
-                      href={BOOKING_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                      data-cursor="link"
-                      className="inline-flex items-center rounded-full bg-ink text-paper px-[1.6em] py-[0.75em] text-[0.88em] font-bold tracking-[0.08em] whitespace-nowrap hover:bg-pink hover:text-ink transition-colors"
-                    >
-                      WIDERSPRUCH EINLEGEN — 30 MIN, KOSTENLOS
-                    </a>
-                    <div className="text-ink/35 text-[0.72em] mt-[0.7em] leading-snug">
-                      * Beispielrechnung mit Durchschnittswerten — kein amtliches Dokument.
-                      Deine echten Zahlen klären wir gemeinsam.
-                    </div>
+                  <div className="text-ink/35 text-[0.75em] mt-[0.5em] leading-snug">
+                    * Beispielrechnung mit Durchschnittswerten — kein amtliches Dokument.
+                    Deine echten Zahlen klären wir gemeinsam.
                   </div>
                 </div>
               </div>

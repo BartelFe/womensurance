@@ -1,36 +1,27 @@
 import { Link } from 'react-router-dom';
+import { SOCIALS } from '../../config/site';
 
 export default function Footer() {
   return (
     <footer className="bg-ink text-paper/60 border-t border-paper/10">
-      {/* Top: Big brand statement */}
-      <div className="px-6 md:px-12 py-24">
-        <div className="display-italic text-paper text-balance" style={{ fontSize: 'clamp(2.4rem, 7vw, 6.5rem)', lineHeight: 0.95 }}>
-          Sicherheit ist <em className="text-pink not-italic font-display font-black">Freiheit.</em>
-        </div>
-      </div>
-
       {/* Footer grid */}
-      <div className="border-t border-paper/10 px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="px-6 md:px-12 py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div className="md:col-span-2">
           <div className="display-italic text-paper text-2xl">womensurance</div>
           <div className="mt-3 text-sm text-paper/40 max-w-sm">
             Eine Marke der Deutschen Versicherungsmakler GmbH &amp; Co. KG. Versicherungsberatung für Frauen — auf Augenhöhe, entlang deines Lebens.
           </div>
           <div className="mt-6 flex gap-2">
-            {[
-              ['IG', 'https://www.instagram.com/womensurance/'],
-              ['TT', 'https://www.tiktok.com/@womensurance'],
-              ['in', 'https://www.linkedin.com/in/julia-pashchenko/'],
-            ].map(([label, url]) => (
+            {SOCIALS.map((s) => (
               <a
-                key={label}
-                href={url}
+                key={s.id}
+                href={s.url}
                 target="_blank"
                 rel="noreferrer"
+                aria-label={s.label}
                 className="w-10 h-10 rounded-full border border-paper/20 hover:border-pink hover:text-pink transition-colors flex items-center justify-center text-xs font-medium"
               >
-                {label}
+                {s.short}
               </a>
             ))}
           </div>

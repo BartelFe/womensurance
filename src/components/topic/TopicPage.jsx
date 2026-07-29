@@ -4,8 +4,9 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../ui/MagneticButton';
 import DataNumber from '../ui/DataNumber';
+import { SOCIAL_ICONS } from '../ui/SocialIcons';
 import FaqSection from './FaqSection';
-import { BOOKING_URL } from '../../config/site';
+import { BOOKING_URL, SOCIALS, CALL_MINUTES } from '../../config/site';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,6 +46,32 @@ export default function TopicPage({
             scrollTrigger: { trigger: el, start: 'top 82%', toggleActions: 'play none none reverse' },
           }
         );
+      });
+
+      // Handlungskarten stapeln sich wie die 4-Schritte-Methode
+      const cards = root.current.querySelectorAll('[data-action-card]');
+      cards.forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { y: 80, opacity: 0, rotate: i % 2 === 0 ? -1.5 : 1.5 },
+          {
+            y: 0,
+            opacity: 1,
+            rotate: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: card, start: 'top 78%', toggleActions: 'play none none reverse' },
+          }
+        );
+
+        if (i > 0) {
+          const prevCards = Array.from(cards).slice(0, i);
+          gsap.to(prevCards, {
+            scale: (idx) => 1 - (i - idx) * 0.02,
+            yPercent: (idx) => -(i - idx) * 4,
+            scrollTrigger: { trigger: card, start: 'top 70%', end: 'top 30%', scrub: 0.6 },
+          });
+        }
       });
     }, root);
     return () => ctx.revert();
@@ -88,7 +115,7 @@ export default function TopicPage({
                 <DataNumber value={s.value} decimals={s.decimals ?? 0} suffix={s.unit} />
               </div>
               <div className="mt-2 text-sm text-paper/55 leading-snug max-w-[26ch]">{s.label}</div>
-              {s.source && <div className="mt-1 font-mono text-[10px] text-paper/30">{s.source}</div>}
+              {s.source && <div className="mt-1 text-[11px] text-paper/30">{s.source}</div>}
             </div>
           ))}
         </div>
@@ -141,17 +168,29 @@ export default function TopicPage({
               Was du <span className="display-italic text-pink">jetzt</span> tun kannst.
             </h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Gestapelte Karten — gleiches Layout wie die 4-Schritte-Methode
+              auf der Startseite (Wunsch Julia 07/2026). */}
+          <div className="space-y-6 md:space-y-8 max-w-4xl">
             {actions.map((a, i) => (
-              <div key={a.title} data-reveal className="bg-bone border border-clay-light/60 rounded-sm p-7 md:p-9">
-                <div className="eyebrow text-clay mb-3">{String(i + 1).padStart(2, '0')}</div>
-                <h3 className="display-lg text-ink mb-3" style={{ fontSize: 'clamp(1.25rem, 1.7vw, 1.7rem)' }}>
-                  {a.title}
-                </h3>
-                <p className="text-ink/65 leading-relaxed" style={{ fontSize: 'clamp(0.9rem, 1vw, 1.05rem)' }}>
-                  {a.body}
-                </p>
-              </div>
+              <article
+                key={a.title}
+                data-action-card
+                className="relative bg-bone text-ink rounded-sm p-6 md:p-12 border border-clay-light shadow-[0_30px_80px_-30px_rgba(0,0,0,0.35)]"
+              >
+                <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
+                  <div className="col-span-12 md:col-span-2">
+                    <div className="display-italic text-pink" style={{ fontSize: 'clamp(2.2rem, 5vw, 5rem)', lineHeight: 0.9 }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </div>
+                  </div>
+                  <div className="col-span-12 md:col-span-10">
+                    <h3 className="display-lg text-ink mb-3 text-balance" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
+                      {a.title}
+                    </h3>
+                    <p className="body-lead text-ink/65 max-w-2xl">{a.body}</p>
+                  </div>
+                </div>
+              </article>
             ))}
           </div>
         </div>
@@ -178,7 +217,27 @@ export default function TopicPage({
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </MagneticButton>
-            <div className="eyebrow text-paper/30">30 Minuten · Kostenlos · Kein Verkauf</div>
+            <div className="eyebrow text-paper/30">{CALL_MINUTES} Minuten · Kostenlos · Vertraulich</div>
+
+            {/* Social Media — wie auf der Startseite */}
+            <div className="mt-6 flex flex-col items-center gap-4">
+              <div className="eyebrow text-paper/40">Oder folge mir</div>
+              <div className="flex items-center justify-center gap-3">
+                {SOCIALS.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={s.label}
+                    className="w-12 h-12 rounded-full border border-paper/25 text-paper/70 hover:border-pink hover:text-pink transition-colors flex items-center justify-center"
+                  >
+                    {SOCIAL_ICONS[s.id]}
+                  </a>
+                ))}
+              </div>
+            </div>
+
             <Link to="/#life" className="eyebrow text-paper/50 hover:text-pink transition-colors mt-4">
               ← Zurück zu allen Lebensphasen
             </Link>

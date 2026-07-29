@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { de1 } from '../../utils/format';
 
 export default function Loader({ onComplete }) {
   const root = useRef(null);
@@ -24,7 +25,7 @@ export default function Loader({ onComplete }) {
       duration: 2.4,
       ease: 'power2.inOut',
       onUpdate: () => {
-        if (counter) counter.textContent = obj.v.toFixed(1);
+        if (counter) counter.textContent = de1(obj.v);
       },
     });
 
@@ -80,7 +81,7 @@ export default function Loader({ onComplete }) {
         Wie sicher bist du wirklich?
       </div>
 
-      <div className="mt-12 flex items-baseline gap-3 font-mono text-paper/60">
+      <div className="mt-12 flex items-baseline gap-3 text-paper/60">
         <span className="text-xs uppercase tracking-[0.2em]">Gender Pension Gap</span>
         <span ref={counterRef} className="data-num text-paper text-3xl">0.0</span>
         <span className="text-paper/60">%</span>

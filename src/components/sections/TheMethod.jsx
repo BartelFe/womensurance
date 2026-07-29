@@ -53,11 +53,11 @@ export default function TheMethod() {
       <div className="max-w-6xl mx-auto">
         <div className="eyebrow text-paper/40 mb-6">Akt 05 · Mein Weg</div>
         <h2 className="display-lg text-paper text-balance mb-20" style={{ fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}>
-          Vier Schritte. <span className="display-italic text-pink">Kein Verkauf.</span>
+          4 Schritte. <span className="display-italic text-pink">Ein Konzept.</span>
         </h2>
 
         <div className="space-y-6 md:space-y-8 max-w-4xl">
-          {methodSteps.map((step, i) => (
+          {methodSteps.map((step) => (
             <article
               key={step.n}
               data-method-card
@@ -82,10 +82,6 @@ export default function TheMethod() {
                   </h3>
                   <p className="body-lead text-ink/65 max-w-2xl">{step.body}</p>
                 </div>
-              </div>
-              {/* Tick mark — mobil ausgeblendet (überlappte mit den Titeln) */}
-              <div className="hidden md:block absolute top-6 right-6 eyebrow text-clay opacity-50">
-                {String(i + 1).padStart(2, '0')} / {String(methodSteps.length).padStart(2, '0')}
               </div>
             </article>
           ))}

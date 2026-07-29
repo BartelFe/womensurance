@@ -51,7 +51,7 @@ export default function FaqSection({ title, items, note }) {
         </div>
 
         {note && (
-          <p className="mt-8 font-mono text-[10px] text-paper/35 leading-relaxed max-w-2xl">{note}</p>
+          <p className="mt-8 text-[12px] text-paper/35 leading-relaxed max-w-2xl">{note}</p>
         )}
       </div>
     </section>

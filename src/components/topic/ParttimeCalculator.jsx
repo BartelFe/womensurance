@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import MagneticButton from '../ui/MagneticButton';
-import { BOOKING_URL } from '../../config/site';
+import { BOOKING_URL, CALL_MINUTES } from '../../config/site';
 import { RETIREMENT_YEARS } from '../../hooks/useGapState';
 
 // Offizielle Entgeltpunkt-Logik (vereinfacht):
@@ -20,7 +20,7 @@ function Slider({ label, value, display, min, max, step, onChange }) {
     <label className="block">
       <div className="flex items-baseline justify-between mb-2">
         <span className="eyebrow text-clay">{label}</span>
-        <span className="font-mono text-sm text-ink font-bold">{display}</span>
+        <span className="tnum text-sm text-ink font-bold">{display}</span>
       </div>
       <input
         type="range"
@@ -91,8 +91,9 @@ export default function ParttimeCalculator() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-14 items-stretch">
-          {/* Eingaben */}
-          <div className="bg-bone border border-clay-light/60 rounded-sm p-7 md:p-10 space-y-8">
+          {/* Eingaben — auf großen Screens verteilen sich die Regler über die
+              volle Höhe der Ergebnis-Karte (gap = Mindestabstand). */}
+          <div className="bg-bone border border-clay-light/60 rounded-sm p-7 md:p-10 flex flex-col gap-8 md:justify-between">
             <Slider
               label="Stunden pro Woche"
               value={hours}
@@ -120,7 +121,7 @@ export default function ParttimeCalculator() {
               step={100}
               onChange={setSalary}
             />
-            <p className="font-mono text-[10px] text-ink/35 leading-relaxed pt-2">
+            <p className="text-[12px] text-ink/35 leading-relaxed">
               Vereinfachte Beispielrechnung · Rentenwert {RENTENWERT.toFixed(2).replace('.', ',')} €
               (Stand 07/2025) · Vollzeit = 40 Std. · ohne Lohnentwicklung &amp; Ausgleichszeiten.
             </p>
@@ -137,7 +138,7 @@ export default function ParttimeCalculator() {
               <div ref={monthlyRef} className="data-num text-pink" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
                 −0 €
               </div>
-              <div className="font-mono text-xs text-paper/50 mt-2">Rente · jeden Monat · lebenslang</div>
+              <div className="text-xs text-paper/50 mt-2">Rente · jeden Monat · lebenslang</div>
 
               <div className="mt-8 pt-6 border-t border-paper/10">
                 <div className="eyebrow text-paper/40 mb-2">Über {RETIREMENT_YEARS} Rentenjahre</div>
@@ -156,7 +157,7 @@ export default function ParttimeCalculator() {
               </MagneticButton>
               <p className="mt-4 text-[11px] text-paper/40 leading-relaxed max-w-sm">
                 Die echte Zahl hängt an deinem Rentenkonto — Ausgleichszeiten,
-                Kindererziehung, Verträge. In 30 Minuten rechnen wir sie gemeinsam.
+                Kindererziehung, Verträge. In {CALL_MINUTES} Minuten rechnen wir sie gemeinsam.
               </p>
             </div>
           </div>

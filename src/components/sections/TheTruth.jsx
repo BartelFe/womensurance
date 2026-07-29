@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGap } from '../../hooks/useGapState';
+import { de1 } from '../../utils/format';
 
 export default function TheTruth() {
   const root = useRef(null);
@@ -12,7 +13,7 @@ export default function TheTruth() {
 
   useEffect(() => {
     if (!numRef.current) return;
-    numRef.current.textContent = gap.toFixed(1);
+    numRef.current.textContent = de1(gap);
   }, [gap]);
 
   useEffect(() => {
@@ -63,12 +64,12 @@ export default function TheTruth() {
           <span className="block line-mask"><span data-line>Deine Lücke:</span></span>
           <span className="block line-mask">
             <span data-line>
-              <span ref={numRef} className="display-italic text-pink">{gap.toFixed(1)}</span>
+              <span ref={numRef} className="display-italic text-pink">{de1(gap)}</span>
               <span className="display-italic text-pink">&nbsp;%</span>
             </span>
           </span>
           <span className="block line-mask">
-            <span data-line className="text-paper/60">Aber sie ist kein Schicksal.</span>
+            <span data-line className="text-paper">Aber sie ist kein Schicksal.</span>
           </span>
         </div>
 

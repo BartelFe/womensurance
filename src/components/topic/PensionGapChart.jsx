@@ -126,11 +126,11 @@ export default function PensionGapChart() {
           </svg>
 
           {/* Linien-Labels (HTML, unverzerrt) */}
-          <div className="absolute font-mono text-[11px] text-paper/60 pointer-events-none"
+          <div className="absolute text-[13px] font-bold text-paper/60 pointer-events-none"
                style={{ left: '90.8%', top: '18%', transform: 'translateX(-50%)' }}>
             Männer
           </div>
-          <div className="absolute font-mono text-[11px] text-pink pointer-events-none"
+          <div className="absolute text-[13px] font-bold text-pink pointer-events-none"
                style={{ left: '90.8%', top: '88%', transform: 'translateX(-50%)' }}>
             Frauen
           </div>
@@ -139,7 +139,7 @@ export default function PensionGapChart() {
           {AXIS_LABELS.map(({ age, left }) => (
             <div
               key={age}
-              className="absolute bottom-2 font-mono text-[10px] text-paper/40 pointer-events-none"
+              className="absolute bottom-2 tnum text-[12px] font-bold text-paper/40 pointer-events-none"
               style={{ left, transform: 'translateX(-50%)' }}
             >
               {age}
@@ -166,15 +166,12 @@ export default function PensionGapChart() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <div className="eyebrow text-paper/40 mb-2">Die Rentenlücke</div>
-              <div className="flex items-baseline gap-2">
-                <div
-                  ref={numRef}
-                  className="data-num text-pink leading-none"
-                  style={{ fontSize: 'clamp(3.4rem, 10vw, 9rem)' }}
-                >
+              {/* €-Zeichen bewusst gleich groß wie die Zahl (Wunsch Julia 07/2026) */}
+              <div className="flex items-baseline gap-2" style={{ fontSize: 'clamp(3.4rem, 10vw, 9rem)' }}>
+                <div ref={numRef} className="data-num text-pink leading-none">
                   −0
                 </div>
-                <div className="data-num text-pink" style={{ fontSize: 'clamp(1.8rem, 4vw, 3.5rem)' }}>€</div>
+                <div className="data-num text-pink leading-none">€</div>
               </div>
               <div
                 ref={labelRef}

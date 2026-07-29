@@ -4,9 +4,18 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { lifePhases } from '../../data/lifePhases';
 import { useGap } from '../../hooks/useGapState';
+import { de1 } from '../../utils/format';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * "Dein Leben" — die Lebensphasen-Kacheln.
+ *
+ * Zwei Modi (gsap.matchMedia):
+ *  - ab md: gepinnte Horizontal-Section wie gehabt.
+ *  - mobil: KEIN Horizontal-Scroll (Wunsch Julia 07/2026) — die Kacheln
+ *    stehen schlicht untereinander und faden beim Scrollen ein.
+ */
 export default function YourLife() {
   const root = useRef(null);
   const pinRef = useRef(null);
@@ -27,7 +36,7 @@ export default function YourLife() {
       ease: 'power3.out',
       onUpdate: () => {
         if (counterRef.current) {
-          counterRef.current.textContent = obj.v.toFixed(1);
+          counterRef.current.textContent = de1(obj.v);
           counterRef.current.dataset.current = obj.v;
         }
       },
@@ -38,38 +47,39 @@ export default function YourLife() {
   // Set initial number on mount
   useEffect(() => {
     if (counterRef.current) {
-      counterRef.current.textContent = baseGap.toFixed(1);
+      counterRef.current.textContent = de1(baseGap);
       counterRef.current.dataset.current = baseGap;
     }
   }, [baseGap]);
 
-  // Horizontal scroll pin
   useEffect(() => {
     const root_ = root.current;
     const pin = pinRef.current;
     const track = trackRef.current;
     if (!root_ || !pin || !track) return;
 
-    const scrollDistance = () => track.scrollWidth - window.innerWidth + 200;
+    const mm = gsap.matchMedia();
 
-    const mainTween = gsap.to(track, {
-      x: () => -scrollDistance(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: root_,
-        start: 'top top',
-        end: () => `+=${scrollDistance() + window.innerHeight}`,
-        scrub: 1,
-        pin,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
+    // ── Desktop / Tablet: gepinnter Horizontal-Scroll ──
+    mm.add('(min-width: 768px)', () => {
+      const scrollDistance = () => track.scrollWidth - window.innerWidth + 200;
 
-    const cardTweens = [];
-    const cards = track.querySelectorAll('[data-phase-card]');
-    cards.forEach((card) => {
-      cardTweens.push(
+      const mainTween = gsap.to(track, {
+        x: () => -scrollDistance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: root_,
+          start: 'top top',
+          end: () => `+=${scrollDistance() + window.innerHeight}`,
+          scrub: 1,
+          pin,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      const cards = track.querySelectorAll('[data-phase-card]');
+      cards.forEach((card) => {
         gsap.fromTo(
           card,
           { opacity: 0.3, scale: 0.94 },
@@ -85,55 +95,88 @@ export default function YourLife() {
               containerAnimation: mainTween,
             },
           }
-        )
-      );
+        );
+      });
+
+      // Nav-Dropdown kann gezielt zu einer Kachel springen
+      window.__scrollToPhase = (phaseId) => {
+        const st = mainTween.scrollTrigger;
+        const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
+        if (!st || !card) return;
+        const ratio = Math.max(0, Math.min(1, (card.offsetLeft - 48) / scrollDistance()));
+        const y = st.start + ratio * (st.end - st.start);
+        if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.6 });
+        else window.scrollTo({ top: y, behavior: 'smooth' });
+      };
+
+      return () => {
+        gsap.set(track, { clearProps: 'transform' });
+      };
     });
 
-    // Nav-Dropdown kann gezielt zu einer Kachel springen
-    window.__scrollToPhase = (phaseId) => {
-      const st = mainTween.scrollTrigger;
-      const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
-      if (!st || !card) return;
-      const ratio = Math.max(0, Math.min(1, (card.offsetLeft - 48) / scrollDistance()));
-      const y = st.start + ratio * (st.end - st.start);
-      if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.6 });
-      else window.scrollTo({ top: y, behavior: 'smooth' });
-    };
+    // ── Mobil: gestapelt, kein Pin, kein Horizontal-Scroll ──
+    mm.add('(max-width: 767px)', () => {
+      const cards = track.querySelectorAll('[data-phase-card]');
+      cards.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 36 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none reverse' },
+          }
+        );
+      });
+
+      // Nav-Dropdown: schlicht zur Kachel scrollen
+      window.__scrollToPhase = (phaseId) => {
+        const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
+        if (!card) return;
+        const y = card.getBoundingClientRect().top + window.scrollY - 80;
+        if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.2 });
+        else window.scrollTo({ top: y, behavior: 'smooth' });
+      };
+    });
 
     return () => {
       delete window.__scrollToPhase;
-      cardTweens.forEach((t) => t.scrollTrigger?.kill());
-      mainTween.scrollTrigger?.kill();
-      mainTween.kill();
+      mm.revert();
     };
   }, []);
 
   return (
     <section ref={root} id="life" className="relative bg-paper text-ink">
-      <div ref={pinRef} className="relative h-[100svh] overflow-hidden">
-        {/* Top bar — counter sits where the navbar was on mobile (navbar gone when in this section) */}
-        <div className="absolute top-0 right-0 z-30 pt-5 pr-6 pb-4 md:pt-24 md:pr-10 pointer-events-none">
+      <div ref={pinRef} className="relative md:h-[100svh] md:overflow-hidden pt-20 pb-20 md:py-0">
+        {/* Zähler — mobil im Fluss, ab md oben rechts über den Karten.
+            Der Desktop-Abstand nach oben ist bewusst großzügig, damit die
+            Zahl nie über den Kacheln liegt. */}
+        <div className="relative md:absolute md:top-0 md:right-0 z-30 px-6 md:px-0 md:pt-20 md:pr-10 pb-8 md:pb-0 pointer-events-none">
           <div className="flex items-baseline justify-end gap-1">
             <span className="data-num text-ink text-4xl md:text-6xl">−</span>
-            <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{baseGap.toFixed(1)}</span>
+            <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{de1(baseGap)}</span>
             <span className="data-num text-ink text-4xl md:text-6xl">%</span>
           </div>
-          <div className="text-xs font-mono text-ink/50 mt-1 text-right">der Männer-Rente</div>
+          <div className="text-xs text-ink/50 mt-1 text-right">der Männer-Rente</div>
         </div>
 
-        {/* Horizontal track — Karten füllen die Höhe (Pills sind weg) */}
-        <div className="absolute inset-0 flex items-stretch pt-28 pb-8 md:pt-32 md:pb-12">
-          <div ref={trackRef} className="flex h-full items-stretch gap-6 md:gap-8 pl-6 md:pl-12 will-change-transform">
+        {/* Track: ab md horizontal + volle Höhe, mobil einfach untereinander */}
+        <div className="md:absolute md:inset-0 md:flex md:items-stretch md:pt-52 md:pb-12">
+          <div
+            ref={trackRef}
+            className="flex flex-col md:flex-row gap-6 md:gap-8 px-6 md:px-0 md:pl-12 md:h-full md:items-stretch md:will-change-transform"
+          >
             {lifePhases.map((phase, i) => (
               <article
                 key={phase.id}
                 data-phase-card
                 data-phase-id={phase.id}
-                className="shrink-0 h-full w-[80vw] md:w-[440px] xl:w-[520px] 2xl:w-[580px] bg-bone border border-clay-light/60 p-5 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
+                className="shrink-0 w-full md:w-[440px] xl:w-[520px] 2xl:w-[580px] md:h-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
               >
-                <div className="flex items-baseline justify-between mb-4 md:mb-6">
-                  <span className="eyebrow text-clay">{String(i + 1).padStart(2, '0')} / {String(lifePhases.length).padStart(2, '0')}</span>
-                  <span className="font-mono text-xs text-ink/50">Alter {phase.age}</span>
+                <div className="mb-4 md:mb-6">
+                  <span className="text-xs text-ink/50">Alter {phase.age}</span>
                 </div>
 
                 <h3
@@ -174,13 +217,10 @@ export default function YourLife() {
                     <Link
                       to={phase.subpage}
                       data-cursor="link"
-                      className="mt-4 md:mt-5 group inline-flex w-full md:w-auto items-center justify-between md:justify-start gap-3 rounded-full bg-pink text-ink px-4 py-2.5 md:px-5 md:py-3 text-xs md:text-sm font-bold whitespace-nowrap hover:bg-pink-deep hover:text-paper transition-colors shadow-[0_14px_36px_-10px_rgb(var(--pink-rgb)/0.65)]"
+                      className="mt-4 md:mt-5 group relative z-10 inline-flex items-center gap-3 rounded-full bg-ink text-paper px-5 py-3 md:px-6 md:py-3.5 text-xs md:text-sm font-bold whitespace-nowrap hover:bg-pink hover:text-ink transition-colors"
                     >
-                      <span className="inline-flex items-center gap-2.5">
-                        <span className="h-2 w-2 shrink-0 rounded-full bg-ink animate-pulse group-hover:bg-paper" />
-                        <span className="md:hidden">{phase.subpageShort || phase.subpageLabel}</span>
-                        <span className="hidden md:inline">{phase.subpageLabel}</span>
-                      </span>
+                      <span className="md:hidden">{phase.subpageShort || phase.subpageLabel}</span>
+                      <span className="hidden md:inline">{phase.subpageLabel}</span>
                       <svg width="15" height="15" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
                         <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
@@ -188,17 +228,18 @@ export default function YourLife() {
                   )}
                 </div>
 
-                {/* Decorative number — mobil weg (nahm den Buttons Platz) */}
+                {/* Deko-Ziffer — auch mobil sichtbar (kleiner, damit sie die
+                    Buttons nur leicht überlagert) */}
                 <div
-                  className="hidden md:block absolute -bottom-6 -right-2 display-italic text-clay-light/40 select-none pointer-events-none"
-                  style={{ fontSize: '8rem', lineHeight: 1 }}
+                  className="absolute -bottom-5 -right-1 md:-bottom-6 md:-right-2 display-italic text-clay-light/40 select-none pointer-events-none"
+                  style={{ fontSize: 'clamp(4.5rem, 15vw, 8rem)', lineHeight: 1 }}
                 >
                   {String(i + 1).padStart(2, '0')}
                 </div>
 
                 {/* Aufklapp-Overlay: legt sich über die Kachel, kein Layout-Shift im Pin */}
                 <div
-                  className={`absolute inset-0 z-10 bg-ink text-paper p-8 md:p-10 flex flex-col transition-all duration-500 ${
+                  className={`absolute inset-0 z-20 bg-ink text-paper p-8 md:p-10 flex flex-col transition-all duration-500 ${
                     expandedId === phase.id ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
                   }`}
                 >
@@ -225,8 +266,8 @@ export default function YourLife() {
               </article>
             ))}
 
-            {/* End spacer */}
-            <div className="shrink-0 w-[20vw]" />
+            {/* End spacer — nur im Horizontal-Modus nötig */}
+            <div className="hidden md:block shrink-0 w-[20vw]" />
           </div>
         </div>
       </div>
