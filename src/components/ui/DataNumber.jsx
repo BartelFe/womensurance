@@ -33,10 +33,18 @@ export default function DataNumber({ value, decimals = 1, suffix = '%', triggerO
     };
   }, [value, decimals, triggerOn, start, end]);
 
+  // Der Zähler wird per GSAP hochgezählt; ein Screenreader würde den
+  // Zwischenstand (meist "0.0") vorlesen. Deshalb steht der Endwert einmal
+  // statisch als sr-only da, die Animation ist ausgeblendet.
+  const spoken = `${value.toFixed(decimals).replace('.', ',')}${suffix || ''}`;
+
   return (
     <span className={`inline-flex items-baseline ${className}`}>
-      <span ref={ref} className="data-num">0.0</span>
-      {suffix && <span className="data-num">{suffix}</span>}
+      <span className="sr-only">{spoken}</span>
+      <span aria-hidden="true" className="inline-flex items-baseline">
+        <span ref={ref} className="data-num">0.0</span>
+        {suffix && <span className="data-num">{suffix}</span>}
+      </span>
     </span>
   );
 }

@@ -69,7 +69,7 @@ export default function LegalLayout({ title, subtitle, stand, children }) {
   }, [title]);
 
   return (
-    <main className="relative">
+    <main id="main" tabIndex={-1} className="relative">
       {/* Kopf im Site-Look */}
       <section className="bg-ink text-paper px-6 md:px-12 pt-36 md:pt-44 pb-14 md:pb-20">
         <div className="max-w-3xl mx-auto">
@@ -87,8 +87,8 @@ export default function LegalLayout({ title, subtitle, stand, children }) {
           {children}
 
           <div className="mt-16 pt-8 border-t border-ink/10 flex flex-wrap items-center justify-between gap-4">
-            {stand && <div className="text-[12px] text-ink/40">Stand: {stand}</div>}
-            <Link to="/" className="eyebrow text-ink/50 hover:text-pink transition-colors">
+            {stand && <div className="text-[12px] text-ink/60">Stand: {stand}</div>}
+            <Link to="/" className="eyebrow text-ink/60 hover:text-pink transition-colors">
               ← Zurück zur Startseite
             </Link>
           </div>

@@ -107,6 +107,48 @@
     color: var(--color-ink);
   }
 
+  /* ── Fokus (WCAG 2.4.7) ───────────────────────────────────────
+     Doppelring: Pink außen, Paper innen. Dadurch bleibt der Fokus auf
+     jedem Untergrund sichtbar — auch auf pinken Flächen, wo der äußere
+     Ring verschwindet. Nur für Tastaturnutzer (:focus-visible), Mausklicks
+     zeigen weiterhin nichts an. */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-pink);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-paper);
+    border-radius: 2px;
+  }
+
+  /* Auf hellen Flächen ist der Paper-Ring unsichtbar → Ink als Gegenfarbe */
+  .bg-paper :focus-visible,
+  .bg-bone :focus-visible,
+  .bg-pink :focus-visible {
+    box-shadow: 0 0 0 2px var(--color-ink);
+  }
+
+  /* Skip-Link (WCAG 2.4.1): unsichtbar, bis er fokussiert wird */
+  .skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 400;
+    background: var(--color-pink);
+    color: var(--color-ink);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 0.25rem 0.25rem;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+
+  .skip-link:focus {
+    transform: translate(-50%, 0);
+  }
+
   /* Hide scrollbar but keep functionality */
   ::-webkit-scrollbar {
     width: 0;
@@ -203,8 +245,33 @@
 .chip-pulse {
   animation: chipPulse 2.4s ease-in-out infinite;
 }
+/* ── Bewegung reduzieren (WCAG 2.3.3 / vestibuläre Beschwerden) ──────
+   CSS-Animationen und Übergänge werden praktisch abgeschaltet, der
+   Systemcursor kommt zurück und die Scrollleiste wird wieder sichtbar.
+   Smooth-Scroll (Lenis) und die GSAP-Einblendungen hängen zusätzlich am
+   useReducedMotion-Hook (siehe App.jsx). */
 @media (prefers-reduced-motion: reduce) {
-  .chip-pulse { animation: none; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    cursor: auto !important;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    background: rgb(var(--paper-rgb) / 0.08);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--paper-rgb) / 0.35);
+  }
 }
 
 /* GSAP / SplitText helpers */

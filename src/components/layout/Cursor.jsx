@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export default function Cursor() {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const labelRef = useRef(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
+    if (reduced) return undefined;
+
     const dot = dotRef.current;
     const ring = ringRef.current;
     const label = labelRef.current;
@@ -85,7 +89,11 @@ export default function Cursor() {
       window.removeEventListener('mousemove', move);
       document.removeEventListener('mouseover', handleOver);
     };
-  }, []);
+  }, [reduced]);
+
+  // Wer „Bewegung reduzieren" aktiviert hat, bekommt den Systemcursor zurück —
+  // inklusive der eigenen Vergrößerungs-/Kontrasteinstellungen.
+  if (reduced) return null;
 
   return (
     <>

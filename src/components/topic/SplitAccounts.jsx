@@ -143,7 +143,7 @@ export default function SplitAccounts() {
 
           {/* Intro */}
           <div data-sa-intro className="text-center mb-5 md:mb-8">
-            <div className="eyebrow text-paper/40 mb-3">So funktioniert der Versorgungsausgleich</div>
+            <div className="eyebrow text-paper/55 mb-3">So funktioniert der Versorgungsausgleich</div>
             <h2 className="display-lg text-paper text-balance" style={{ fontSize: 'clamp(1.7rem, 3.6vw, 3.4rem)' }}>
               Alles aus der Ehezeit wird{' '}
               <span className="display-italic text-pink">hälftig</span> geteilt.
@@ -163,7 +163,7 @@ export default function SplitAccounts() {
                 <div className="eyebrow text-pink">Dein Rentenkonto</div>
               </div>
               <div className="absolute right-0 top-3 w-[42%] md:w-[38%] text-center">
-                <div className="eyebrow text-paper/50">Sein Rentenkonto</div>
+                <div className="eyebrow text-paper/55">Sein Rentenkonto</div>
               </div>
 
               {/* Ihre Punkte */}
@@ -225,7 +225,7 @@ export default function SplitAccounts() {
 
           {/* Was im Versorgungsausgleich landet */}
           <div className="mt-5 md:mt-7 text-center">
-            <div data-sa-list-label className="eyebrow text-paper/40 mb-3">
+            <div data-sa-list-label className="eyebrow text-paper/55 mb-3">
               Geteilt wird alles davon
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2">

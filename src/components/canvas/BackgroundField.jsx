@@ -77,7 +77,9 @@ function ParticleField() {
 
 export default function BackgroundField() {
   return (
-    <div className="absolute inset-0 -z-10 pointer-events-none">
+    // Rein dekoratives Partikelfeld — trägt keine Information und wird
+    // deshalb von assistiven Technologien übersprungen.
+    <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 55 }}
         dpr={[1, 1.5]}

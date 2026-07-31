@@ -5,8 +5,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function useLenis() {
+/**
+ * Smooth-Scroll. Bei `prefers-reduced-motion: reduce` wird Lenis gar nicht
+ * erst gestartet — Scroll-Hijacking ist der stärkste Auslöser für
+ * Schwindel/Übelkeit. Die scrollTo-Helfer haben einen nativen Fallback.
+ */
+export function useLenis(reduced = false) {
   useEffect(() => {
+    if (reduced) return undefined;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -32,5 +39,5 @@ export function useLenis() {
       lenis.destroy();
       delete window.__lenis;
     };
-  }, []);
+  }, [reduced]);
 }

@@ -77,14 +77,14 @@ export default function TheStep() {
         <div data-cta className="mt-12 flex flex-col items-center gap-6">
           <MagneticButton href={BOOKING_URL} target="_blank" variant="pink">
             <span className="font-medium tracking-wide">Erstgespräch buchen</span>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </MagneticButton>
 
           {/* Social Media — sichtbar unter dem CTA */}
           <div className="mt-6 flex flex-col items-center gap-4">
-            <div className="eyebrow text-paper/40">Oder folge mir</div>
+            <div className="eyebrow text-paper/55">Oder folge mir</div>
             <div className="flex items-center gap-3">
               {SOCIALS.map((s) => (
                 <a

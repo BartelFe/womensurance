@@ -70,7 +70,7 @@ export default function Voices() {
                 <div className="font-medium text-ink mb-1">{v.name}</div>
                 <div className="text-sm text-ink/60 mb-4">{v.role} · {v.age}, {v.location}</div>
                 <div className="eyebrow text-clay mb-2">Kontext</div>
-                <div className="text-xs text-ink/55 leading-relaxed">{v.context}</div>
+                <div className="text-xs text-ink/60 leading-relaxed">{v.context}</div>
               </div>
             </div>
           </article>

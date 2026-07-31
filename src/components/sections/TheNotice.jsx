@@ -35,6 +35,10 @@ export default function TheNotice() {
 
   const { toggles, euroGap, activeMeta, gap } = useGap();
 
+  // Textfassung der beiden animierten Kennzahlen für die Live-Region
+  const spokenSummary = `Monatliche Minderung ${fmt(euroGap)} Euro. `
+    + `Über ${RETIREMENT_YEARS} Rentenjahre ${fmt(euroGap * 12 * RETIREMENT_YEARS)} Euro.`;
+
   // Live-Werte für die Scrub-Tweens (Timeline bleibt statisch)
   const euroLive = useRef(euroGap);
   const tMonthly = useRef(0);
@@ -179,7 +183,7 @@ export default function TheNotice() {
               dein Bescheid.
             </p>
             <p
-              className={`hidden md:block mt-6 max-w-md text-sm text-paper/40 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
+              className={`hidden md:block mt-6 max-w-md text-sm text-paper/55 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
             >
               Tipp: Wähl oben im Diagramm an, was auf dich zutrifft — der
               Bescheid rechnet live mit.
@@ -213,13 +217,13 @@ export default function TheNotice() {
                 <div className="flex items-start justify-between gap-[1em]">
                   <div>
                     <div className="font-bold tracking-[0.2em] text-[1.05em]">WOMENSURANCE</div>
-                    <div className="text-ink/45 text-[0.78em] tracking-[0.05em] mt-[0.1em] whitespace-nowrap">
+                    <div className="text-ink/60 text-[0.78em] tracking-[0.05em] mt-[0.1em] whitespace-nowrap">
                       Eine Marke der DVM · Ingolstadt
                     </div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="font-bold tracking-[0.12em] text-[0.85em]">RENTENINFORMATION</div>
-                    <div className="tnum text-[0.8em] text-ink/45 mt-[0.15em]">Stand: {today}</div>
+                    <div className="tnum text-[0.8em] text-ink/60 mt-[0.15em]">Stand: {today}</div>
                   </div>
                 </div>
 
@@ -228,7 +232,7 @@ export default function TheNotice() {
                 {/* ── Anschriftfeld ── */}
                 <div className="mt-[1em]">
                   <div className="font-bold">Für dich.</div>
-                  <div className="tnum text-[0.82em] text-ink/45">
+                  <div className="tnum text-[0.82em] text-ink/60">
                     Versichertennummer 39 400394 W 001
                   </div>
                 </div>
@@ -240,7 +244,7 @@ export default function TheNotice() {
 
                 {/* ── Tabelle: Berechnungsgrundlagen ── */}
                 <div className="mt-[0.8em]">
-                  <div className="flex justify-between text-ink/45 text-[0.75em] tracking-[0.12em] uppercase border-b border-ink/25 pb-[0.3em]">
+                  <div className="flex justify-between text-ink/60 text-[0.75em] tracking-[0.12em] uppercase border-b border-ink/25 pb-[0.3em]">
                     <span>Berechnungsgrundlagen</span>
                     <span>€ / Monat</span>
                   </div>
@@ -248,7 +252,7 @@ export default function TheNotice() {
                   <div data-row className="flex items-baseline justify-between gap-[1em] border-b border-ink/10 py-[0.5em]">
                     <div className="min-w-0">
                       <div className="truncate">Gender Pension Gap · Basis</div>
-                      <div className="hidden md:block text-ink/40 text-[0.8em] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
+                      <div className="hidden md:block text-ink/60 text-[0.8em] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
                     </div>
                     <div className="shrink-0 tnum font-bold">−{fmt(BASE_EURO)} €</div>
                   </div>
@@ -261,7 +265,7 @@ export default function TheNotice() {
                     >
                       <div className="min-w-0">
                         <div className="truncate">{m.receiptLabel}</div>
-                        <div className="hidden md:block text-ink/40 text-[0.8em] truncate">{m.receiptSub}</div>
+                        <div className="hidden md:block text-ink/60 text-[0.8em] truncate">{m.receiptSub}</div>
                       </div>
                       <div className="shrink-0 tnum font-bold">−{fmt(m.euro)} €</div>
                     </div>
@@ -269,12 +273,17 @@ export default function TheNotice() {
                 </div>
 
                 {/* ── Kennzahlen-Boxen ── */}
+                {/* Beide Zahlen werden per GSAP hochgezählt und sind deshalb für
+                    Screenreader ausgeblendet; die Live-Region unten sagt das
+                    Ergebnis einmal an, wenn es sich geändert hat. */}
+                <p className="sr-only" aria-live="polite">{spokenSummary}</p>
+
                 <div data-sum className="mt-[1em] border border-ink/60 px-[1em] py-[0.6em]">
                   <div className="flex items-baseline justify-between gap-[1em]">
                     <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">Monatliche Minderung</span>
-                    <span ref={monthlyRef} className="tnum font-black text-[1.35em] text-pink-deep whitespace-nowrap">−0 €</span>
+                    <span ref={monthlyRef} aria-hidden="true" className="tnum font-black text-[1.35em] text-pink-deep whitespace-nowrap">−0 €</span>
                   </div>
-                  <div data-mult className="tnum text-ink/45 text-[0.78em] text-right mt-[0.15em]">
+                  <div data-mult className="tnum text-ink/60 text-[0.78em] text-right mt-[0.15em]">
                     × 12 Monate × {RETIREMENT_YEARS} Jahre Rente
                   </div>
                 </div>
@@ -285,6 +294,7 @@ export default function TheNotice() {
                   </span>
                   <span
                     ref={lifetimeRef}
+                    aria-hidden="true"
                     className="data-num text-pink-deep whitespace-nowrap text-[2em]"
                   >
                     −0 €
@@ -302,14 +312,14 @@ export default function TheNotice() {
                     className="group inline-flex items-center gap-[0.7em] rounded-full bg-ink text-paper px-[2em] py-[1.05em] text-[1em] font-bold whitespace-nowrap hover:bg-pink hover:text-ink transition-colors"
                   >
                     Widerspruch einlegen
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
                       <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </a>
-                  <div className="text-ink/50 text-[0.8em] mt-[0.6em]">
+                  <div className="text-ink/60 text-[0.8em] mt-[0.6em]">
                     {CALL_MINUTES} Minuten · kostenlos · unverbindlich
                   </div>
-                  <div className="text-ink/35 text-[0.75em] mt-[0.5em] leading-snug">
+                  <div className="text-ink/60 text-[0.75em] mt-[0.5em] leading-snug">
                     * Beispielrechnung mit Durchschnittswerten — kein amtliches Dokument.
                     Deine echten Zahlen klären wir gemeinsam.
                   </div>

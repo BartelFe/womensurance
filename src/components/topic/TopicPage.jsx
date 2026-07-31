@@ -78,7 +78,7 @@ export default function TopicPage({
   }, []);
 
   return (
-    <main ref={root} className="relative">
+    <main id="main" tabIndex={-1} ref={root} className="relative">
       {/* ── Hero ── */}
       <section className="bg-ink text-paper px-6 md:px-12 pt-40 md:pt-48 pb-20 md:pb-28 relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
@@ -115,7 +115,7 @@ export default function TopicPage({
                 <DataNumber value={s.value} decimals={s.decimals ?? 0} suffix={s.unit} />
               </div>
               <div className="mt-2 text-sm text-paper/55 leading-snug max-w-[26ch]">{s.label}</div>
-              {s.source && <div className="mt-1 text-[11px] text-paper/30">{s.source}</div>}
+              {s.source && <div className="mt-1 text-[11px] text-paper/55">{s.source}</div>}
             </div>
           ))}
         </div>
@@ -151,7 +151,7 @@ export default function TopicPage({
         <div className="max-w-5xl mx-auto" data-reveal>
           <blockquote className="display-lg text-paper text-balance" style={{ fontSize: 'clamp(1.6rem, 3.2vw, 3.2rem)', lineHeight: 1.15 }}>
             &ldquo;{quote.text}&rdquo;
-            <footer className="mt-6 eyebrow text-paper/50 not-italic">— {quote.author}</footer>
+            <footer className="mt-6 eyebrow text-paper/55 not-italic">— {quote.author}</footer>
           </blockquote>
         </div>
       </section>
@@ -212,15 +212,15 @@ export default function TopicPage({
           <div className="mt-10 flex flex-col items-center gap-5">
             <MagneticButton href={BOOKING_URL} target="_blank" variant="pink">
               <span className="font-medium tracking-wide">Erstgespräch buchen</span>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </MagneticButton>
-            <div className="eyebrow text-paper/30">{CALL_MINUTES} Minuten · Kostenlos · Vertraulich</div>
+            <div className="eyebrow text-paper/55">{CALL_MINUTES} Minuten · Kostenlos · Vertraulich</div>
 
             {/* Social Media — wie auf der Startseite */}
             <div className="mt-6 flex flex-col items-center gap-4">
-              <div className="eyebrow text-paper/40">Oder folge mir</div>
+              <div className="eyebrow text-paper/55">Oder folge mir</div>
               <div className="flex items-center justify-center gap-3">
                 {SOCIALS.map((s) => (
                   <a
@@ -237,7 +237,7 @@ export default function TopicPage({
               </div>
             </div>
 
-            <Link to="/#life" className="eyebrow text-paper/50 hover:text-pink transition-colors mt-4">
+            <Link to="/#life" className="eyebrow text-paper/55 hover:text-pink transition-colors mt-4">
               ← Zurück zu allen Lebensphasen
             </Link>
           </div>

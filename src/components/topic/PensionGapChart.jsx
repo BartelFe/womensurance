@@ -97,6 +97,9 @@ export default function PensionGapChart() {
             viewBox="0 0 1200 540"
             className="absolute inset-0 w-full h-full"
             preserveAspectRatio="none"
+            // Die Aussage der Grafik steht als Text daneben (Überschrift +
+            // Zahl + Erläuterung) — die Kurven selbst sind Illustration.
+            aria-hidden="true"
           >
             <g opacity="0.08" stroke="var(--color-paper)" strokeWidth="1">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -139,7 +142,7 @@ export default function PensionGapChart() {
           {AXIS_LABELS.map(({ age, left }) => (
             <div
               key={age}
-              className="absolute bottom-2 tnum text-[12px] font-bold text-paper/40 pointer-events-none"
+              className="absolute bottom-2 tnum text-[12px] font-bold text-paper/55 pointer-events-none"
               style={{ left, transform: 'translateX(-50%)' }}
             >
               {age}
@@ -165,9 +168,12 @@ export default function PensionGapChart() {
         <div className="relative z-10 shrink-0 border-t border-paper/10 bg-ink/80 backdrop-blur-sm px-6 md:px-12 py-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <div className="eyebrow text-paper/40 mb-2">Die Rentenlücke</div>
+              <div className="eyebrow text-paper/55 mb-2">Die Rentenlücke</div>
               {/* €-Zeichen bewusst gleich groß wie die Zahl (Wunsch Julia 07/2026) */}
-              <div className="flex items-baseline gap-2" style={{ fontSize: 'clamp(3.4rem, 10vw, 9rem)' }}>
+              {/* Endwert einmal statisch für Screenreader — der Zähler darunter
+                  wird beim Scrollen per GSAP hochgezählt. */}
+              <span className="sr-only">Minus {Math.round(BASE_EURO)} Euro</span>
+              <div className="flex items-baseline gap-2" aria-hidden="true" style={{ fontSize: 'clamp(3.4rem, 10vw, 9rem)' }}>
                 <div ref={numRef} className="data-num text-pink leading-none">
                   −0
                 </div>

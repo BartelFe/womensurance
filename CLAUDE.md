@@ -66,8 +66,23 @@ Das CMS-Thema kam vor Finalisierung hoch (DVMs Personalerin fragte „welches CM
 - [ ] Sanity-Projekt-Region in Sanity Manage gegenprüfen; Sanity-DPF-Status auf dataprivacyframework.gov checken (nur falls DPF statt nur SCC behauptet werden soll — aktuell bewusst SCC).
 - [ ] Von Julia: About-me-Text, Testimonials + Einverständnisse, Kennzahlen + Quellen.
 - [ ] Wartungsrechnung-Datum (s. A.4) ggf. angleichen.
-- [ ] Nach Unterschrift: `Verträge/_backup_pre_dsb/` löschen.
+- [ ] Nach Unterschrift: `Verträge/_backup_pre_dsb/` löschen (und `_backup_pre_bfsg/`).
+- [ ] E-Mail-Adresse für Barriere-Meldungen in `pages/Barrierefreiheit.jsx` einsetzen (aktuell Platzhalter `info@dvm.de`).
+- [ ] Klären: geht das `ThemePanel` („Farben testen") live mit oder wird es vor Go-Live per Env-Flag entfernt?
+- [ ] Manuell gegenprüfen: `prefers-reduced-motion` (Windows → Barrierefreiheit → Visuelle Effekte → Animationseffekte aus). Der Preview-Browser kann die Media Query nicht emulieren.
 - **🚫 Außenkommunikation (Mails/Rechnungen an DVM) verschickt IMMER Felix selbst — nie eigenständig senden.** (Regel aus `Business/CLAUDE.md`.)
+
+## A.9 · Barrierefreiheit (BFSG) — umgesetzt 31.07.2026
+DVMs IT-Prüfer (Thomas Gessert) hat am 30.07. Barrierefreiheit angemahnt; Doris Hampe wollte einen Zusatz im Werkvertrag. **Maßstab: WCAG 2.1 Level AA** (technische Grundlage der EN 301 549). Rechtsrahmen ist das **BFSG** (seit 28.06.2025), *nicht* die BITV 2.0 — die gilt nur für öffentliche Stellen. Ob womensurance.de überhaupt in den Anwendungsbereich fällt, ist ein Grenzfall (§ 2 Nr. 26 BFSG verlangt Ausrichtung auf einen Verbrauchervertragsschluss; die Buchung läuft aber auf DVMs eigenem System) — umgesetzt wurde es trotzdem, als Kundenwunsch.
+
+- **Werkvertrag v5 (31.07.):** neuer **§ 2 Abs. 7** (WCAG 2.1 AA, Stichtag Abnahme, Ausnahmen a–c: externe Systeme / später eingepflegte Inhalte / dekorative Elemente, keine dauerhafte Vollkonformität geschuldet); **§ 2 Abs. 6** um die Informationen nach § 14 BFSG erweitert (Text macht Maisel, Felix liefert technische Angaben zu); **§ 3** um Mitwirkungspflicht des AG (Alt-Texte, Untertitel, barrierefreie PDFs). Backup: `Verträge/_backup_pre_bfsg/`.
+- **Farb-Regel (wichtig für neue Komponenten):** Untergrenze **`text-paper/55`** auf dunklem, **`text-ink/60`** auf hellem Grund. **`text-pink` (#ff2e88) schafft auf hellem Grund nur 3,0:1** → für kleinen Text dort **`text-pink-deep` (#c91068, 4,8:1)** verwenden. Auf Ink ist Pink mit 5,7:1 in Ordnung.
+- **Muster für animierte Zahlen:** GSAP schreibt per `textContent` — der animierte Knoten bekommt `aria-hidden`, daneben steht der Endwert als `.sr-only` (statisch) bzw. bei Nutzereingaben eine entprellte `aria-live="polite"`-Region. Betrifft `DataNumber`, `PensionGapChart`, `ParttimeCalculator`, `TheNotice`.
+- **`splitChars()`** zerlegt Headlines in Buchstaben-Spans → der animierte Block ist `aria-hidden`, der Satz steht einmal als `.sr-only` daneben (siehe `OpeningStatement`).
+- **Reduced Motion:** `useReducedMotion` hängt jetzt an App, Lenis und Cursor; `gsap.globalTimeline.timeScale(100)` + CSS-Block in `globals.css`. Die **gepinnten Sektionen bleiben** — sie sind Layout, keine Deko.
+- **Neue Seite** `/barrierefreiheit` (`pages/Barrierefreiheit.jsx`, im Footer verlinkt). Technische Angaben sind belastbar, die rechtliche Endfassung macht Maisel.
+- **Kontrast-Auditor** `contrast-audit.js` (Projektwurzel): misst jedes gerenderte Textelement gegen WCAG 1.4.3, inklusive Alpha-Blending durch die Ancestor-Kette. Inhalt in die Browser-Konsole einfügen → Liste der Verstöße. Bei Design-Änderungen erneut laufen lassen.
+- **Messstand 31.07.:** 0 Kontrastfehler auf allen 5 Routen · 40 tabbare Elemente, alle mit Fokusring und Accessible Name · keine Überschriften-Sprünge, keine doppelten IDs, keine Bilder ohne alt.
 
 ---
 

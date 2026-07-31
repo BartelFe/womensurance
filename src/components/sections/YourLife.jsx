@@ -26,6 +26,20 @@ export default function YourLife() {
   // Toggles leben jetzt ausschließlich im Hero — hier nur noch die Anzeige
   const { gap, baseGap } = useGap();
 
+  /**
+   * Der Horizontal-Scroll hängt am vertikalen Scroll — wer per Tastatur durch
+   * die Kacheln tabbt, würde sonst auf Elementen landen, die links oder rechts
+   * außerhalb des Bildschirms liegen. Bekommt eine Kachel den Fokus und steht
+   * nicht im sichtbaren Bereich, scrollen wir sie heran (WCAG 2.4.3/2.4.7).
+   * React' onFocus blubbert, der Handler greift also auch für Buttons/Links
+   * innerhalb der Kachel.
+   */
+  const focusCard = (phaseId) => (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const offscreen = r.left < 8 || r.right > window.innerWidth - 8;
+    if (offscreen) window.__scrollToPhase?.(phaseId, { duration: 0.35 });
+  };
+
   // Animate counter on gap change
   useEffect(() => {
     if (!counterRef.current) return;
@@ -98,15 +112,19 @@ export default function YourLife() {
         );
       });
 
-      // Nav-Dropdown kann gezielt zu einer Kachel springen
-      window.__scrollToPhase = (phaseId) => {
+      // Nav-Dropdown und Tastatur-Fokus springen gezielt zu einer Kachel
+      window.__scrollToPhase = (phaseId, { duration = 1.6 } = {}) => {
         const st = mainTween.scrollTrigger;
         const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
         if (!st || !card) return;
         const ratio = Math.max(0, Math.min(1, (card.offsetLeft - 48) / scrollDistance()));
         const y = st.start + ratio * (st.end - st.start);
-        if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.6 });
-        else window.scrollTo({ top: y, behavior: 'smooth' });
+        const reduced = document.documentElement.dataset.reducedMotion === 'true';
+        if (window.__lenis) {
+          window.__lenis.scrollTo(y, { duration: reduced ? 0 : duration });
+        } else {
+          window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+        }
       };
 
       return () => {
@@ -159,7 +177,7 @@ export default function YourLife() {
             <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{de1(baseGap)}</span>
             <span className="data-num text-ink text-4xl md:text-6xl">%</span>
           </div>
-          <div className="text-xs text-ink/50 mt-1 text-right">der Männer-Rente</div>
+          <div className="text-xs text-ink/60 mt-1 text-right">der Männer-Rente</div>
         </div>
 
         {/* Track: ab md horizontal + volle Höhe, mobil einfach untereinander */}
@@ -173,10 +191,11 @@ export default function YourLife() {
                 key={phase.id}
                 data-phase-card
                 data-phase-id={phase.id}
+                onFocus={focusCard(phase.id)}
                 className="shrink-0 w-full md:w-[440px] xl:w-[520px] 2xl:w-[580px] md:h-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
               >
                 <div className="mb-4 md:mb-6">
-                  <span className="text-xs text-ink/50">Alter {phase.age}</span>
+                  <span className="text-xs text-ink/60">Alter {phase.age}</span>
                 </div>
 
                 <h3
@@ -194,7 +213,9 @@ export default function YourLife() {
                 </p>
 
                 <div className="mt-auto pt-4 md:pt-6 border-t border-clay-light/60">
-                  <div className="eyebrow text-pink mb-1.5 md:mb-2">Was zählt jetzt</div>
+                  {/* pink-deep statt pink: Auf der hellen Kachel schafft #ff2e88 in
+                      Eyebrow-Größe nur 3,0:1 — zu wenig für AA (WCAG 1.4.3). */}
+                  <div className="eyebrow text-pink-deep mb-1.5 md:mb-2">Was zählt jetzt</div>
                   <p
                     className="text-ink/65 leading-relaxed"
                     style={{ fontSize: 'clamp(0.8rem, 0.85vw, 1.05rem)' }}
@@ -207,7 +228,7 @@ export default function YourLife() {
                     <button
                       onClick={() => setExpandedId(phase.id)}
                       data-cursor="link"
-                      className="mt-5 inline-flex items-center gap-2 eyebrow text-pink hover:text-ink transition-colors"
+                      className="mt-5 inline-flex items-center gap-2 eyebrow text-pink-deep hover:text-ink transition-colors"
                     >
                       <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none">+</span>
                       Mehr erfahren
@@ -221,7 +242,7 @@ export default function YourLife() {
                     >
                       <span className="md:hidden">{phase.subpageShort || phase.subpageLabel}</span>
                       <span className="hidden md:inline">{phase.subpageLabel}</span>
-                      <svg width="15" height="15" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
+                      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 14 14" fill="none" className="shrink-0 transition-transform duration-300 group-hover:translate-x-1">
                         <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </Link>
@@ -231,6 +252,7 @@ export default function YourLife() {
                 {/* Deko-Ziffer — auch mobil sichtbar (kleiner, damit sie die
                     Buttons nur leicht überlagert) */}
                 <div
+                  aria-hidden="true"
                   className="absolute -bottom-5 -right-1 md:-bottom-6 md:-right-2 display-italic text-clay-light/40 select-none pointer-events-none"
                   style={{ fontSize: 'clamp(4.5rem, 15vw, 8rem)', lineHeight: 1 }}
                 >
@@ -239,6 +261,7 @@ export default function YourLife() {
 
                 {/* Aufklapp-Overlay: legt sich über die Kachel, kein Layout-Shift im Pin */}
                 <div
+                  inert={expandedId === phase.id ? undefined : ''}
                   className={`absolute inset-0 z-20 bg-ink text-paper p-8 md:p-10 flex flex-col transition-all duration-500 ${
                     expandedId === phase.id ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
                   }`}
@@ -254,7 +277,7 @@ export default function YourLife() {
                       onClick={() => setExpandedId(null)}
                       aria-label="Schließen"
                       data-cursor="link"
-                      className="text-paper/50 hover:text-pink text-2xl leading-none -mt-1"
+                      className="text-paper/55 hover:text-pink text-2xl leading-none -mt-1"
                     >
                       ×
                     </button>

@@ -83,6 +83,7 @@ export default function ThemePanel() {
 
       {/* Panel */}
       <div
+        inert={open ? undefined : ''}
         className={`fixed right-0 top-1/2 -translate-y-1/2 z-[401] w-72 max-h-[85vh] overflow-y-auto bg-ink text-paper border border-paper/15 rounded-l-lg shadow-2xl transition-transform duration-500 ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
@@ -93,7 +94,7 @@ export default function ThemePanel() {
             <button
               onClick={() => setOpen(false)}
               aria-label="Panel schließen"
-              className="text-paper/50 hover:text-pink text-lg leading-none"
+              className="text-paper/55 hover:text-pink text-lg leading-none"
             >
               ×
             </button>
@@ -126,13 +127,13 @@ export default function ThemePanel() {
           </div>
 
           {/* Einzelfarben */}
-          <div className="eyebrow text-paper/40 mb-3">Feintuning</div>
+          <div className="eyebrow text-paper/55 mb-3">Feintuning</div>
           <div className="space-y-3 mb-6">
             {PICKERS.map(({ key, label }) => (
               <label key={key} className="flex items-center justify-between gap-3 text-xs text-paper/70">
                 <span>{label}</span>
                 <span className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] text-paper/40">{base[key]}</span>
+                  <span className="font-mono text-[10px] text-paper/55">{base[key]}</span>
                   <input
                     type="color"
                     value={base[key]}
@@ -146,12 +147,12 @@ export default function ThemePanel() {
 
           <button
             onClick={reset}
-            className="w-full eyebrow text-paper/50 border border-paper/15 rounded-md py-2.5 hover:border-pink hover:text-pink transition-colors"
+            className="w-full eyebrow text-paper/55 border border-paper/15 rounded-md py-2.5 hover:border-pink hover:text-pink transition-colors"
           >
             Zurücksetzen
           </button>
 
-          <p className="mt-4 text-[10px] leading-relaxed text-paper/35">
+          <p className="mt-4 text-[10px] leading-relaxed text-paper/55">
             Die Auswahl wird nur auf diesem Gerät gespeichert — Besucher sehen
             immer die Standard-Farben.
           </p>

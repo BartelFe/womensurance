@@ -103,12 +103,12 @@ export default function CookieConsent() {
                     <span className="block text-sm font-medium text-paper">
                       {cat.label}
                       {cat.required && (
-                        <span className="ml-2 text-[10px] uppercase tracking-widest text-paper/40">
+                        <span className="ml-2 text-[10px] uppercase tracking-widest text-paper/55">
                           immer aktiv
                         </span>
                       )}
                     </span>
-                    <span className="block text-xs text-paper/50 leading-relaxed mt-0.5">
+                    <span className="block text-xs text-paper/55 leading-relaxed mt-0.5">
                       {cat.description}
                     </span>
                   </span>

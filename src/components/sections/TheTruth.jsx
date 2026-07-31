@@ -82,6 +82,7 @@ export default function TheTruth() {
 
       {/* Decorative oversized text */}
       <div
+        aria-hidden="true"
         className="absolute -bottom-8 -right-8 display-italic text-paper/[0.025] select-none pointer-events-none"
         style={{ fontSize: '32vw', lineHeight: 0.8 }}
       >

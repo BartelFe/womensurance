@@ -109,7 +109,8 @@ export default function MistakesStack() {
                   <h3 className="display-lg text-ink mb-2 text-balance" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
                     {m.title}
                   </h3>
-                  <div className="eyebrow text-pink mb-4">{m.cost}</div>
+                  {/* pink-deep: Eyebrow-Größe auf heller Karte braucht 4,5:1 */}
+                  <div className="eyebrow text-pink-deep mb-4">{m.cost}</div>
                   <p className="body-lead text-ink/65 max-w-2xl">{m.body}</p>
                 </div>
               </div>
@@ -117,7 +118,7 @@ export default function MistakesStack() {
           ))}
         </div>
 
-        <p className="mt-10 text-[12px] text-ink/35 leading-relaxed max-w-2xl">
+        <p className="mt-10 text-[12px] text-ink/60 leading-relaxed max-w-2xl">
           * Größenordnungen aus typischen Fallkonstellationen — dein Fall ist individuell.
           Keine Rechtsberatung; wir schauen auf die Vorsorge-Seite.
         </p>

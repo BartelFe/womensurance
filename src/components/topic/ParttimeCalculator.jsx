@@ -29,7 +29,9 @@ function Slider({ label, value, display, min, max, step, onChange }) {
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-1.5 cursor-pointer appearance-none rounded-full bg-clay-light outline-none
+        // Ohne aria-valuetext liest der Screenreader nur die nackte Zahl ("25")
+        aria-valuetext={display}
+        className="w-full h-1.5 cursor-pointer appearance-none rounded-full bg-clay-light
           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5
           [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-pink [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgb(var(--pink-rgb)/0.25)]
           [&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:border-0
@@ -51,6 +53,7 @@ export default function ParttimeCalculator() {
   const monthlyRef = useRef(null);
   const lifetimeRef = useRef(null);
   const displayed = useRef(0);
+  const [announced, setAnnounced] = useState('');
 
   const monthly = useMemo(() => {
     const epFull = Math.min((salary * 12) / AVG_INCOME_YEAR, EP_CAP);
@@ -76,6 +79,19 @@ export default function ParttimeCalculator() {
     });
     return () => tween.kill();
   }, [monthly]);
+
+  // Das Ergebnis wird per GSAP direkt ins DOM geschrieben — davon bekommt ein
+  // Screenreader nichts mit. Deshalb eine eigene Live-Region, die erst ansagt,
+  // wenn die Nutzerin den Regler losgelassen hat (sonst Dauerfeuer beim Ziehen).
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setAnnounced(
+        `${fmt(monthly)} Euro weniger Rente pro Monat. ` +
+          `Über ${RETIREMENT_YEARS} Rentenjahre ${fmt(lifetime)} Euro.`
+      );
+    }, 700);
+    return () => clearTimeout(t);
+  }, [monthly, lifetime]);
 
   return (
     <section id="rechner" className="bg-paper text-ink px-6 md:px-12 py-24 md:py-32">
@@ -120,7 +136,7 @@ export default function ParttimeCalculator() {
               step={100}
               onChange={setSalary}
             />
-            <p className="text-[12px] text-ink/35 leading-relaxed">
+            <p className="text-[12px] text-ink/60 leading-relaxed">
               Vereinfachte Beispielrechnung · Rentenwert {RENTENWERT.toFixed(2).replace('.', ',')} €
               (Stand 07/2025) · Vollzeit = 40 Std. · ohne Lohnentwicklung &amp; Ausgleichszeiten.
             </p>
@@ -133,15 +149,19 @@ export default function ParttimeCalculator() {
               style={{ background: 'radial-gradient(circle, rgb(var(--pink-rgb) / 0.2) 0%, transparent 70%)' }}
             />
             <div className="relative">
-              <div className="eyebrow text-paper/40 mb-3">Deine Teilzeit kostet dich</div>
-              <div ref={monthlyRef} className="data-num text-pink" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
+              {/* Live-Region für Screenreader — die animierten Zahlen darunter
+                  sind für sie ausgeblendet, weil GSAP sie 60×/s überschreibt. */}
+              <p className="sr-only" aria-live="polite">{announced}</p>
+
+              <div className="eyebrow text-paper/55 mb-3">Deine Teilzeit kostet dich</div>
+              <div ref={monthlyRef} aria-hidden="true" className="data-num text-pink" style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}>
                 −0 €
               </div>
-              <div className="text-xs text-paper/50 mt-2">Rente · jeden Monat · lebenslang</div>
+              <div className="text-xs text-paper/55 mt-2">Rente · jeden Monat · lebenslang</div>
 
               <div className="mt-8 pt-6 border-t border-paper/10">
-                <div className="eyebrow text-paper/40 mb-2">Über {RETIREMENT_YEARS} Rentenjahre</div>
-                <div ref={lifetimeRef} className="data-num text-paper" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.8rem)' }}>
+                <div className="eyebrow text-paper/55 mb-2">Über {RETIREMENT_YEARS} Rentenjahre</div>
+                <div ref={lifetimeRef} aria-hidden="true" className="data-num text-paper" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.8rem)' }}>
                   −0 €
                 </div>
               </div>
@@ -150,11 +170,11 @@ export default function ParttimeCalculator() {
             <div className="relative mt-10">
               <MagneticButton href={BOOKING_URL} target="_blank" variant="pink">
                 <span className="font-medium tracking-wide">Ergebnis besprechen — kostenlos</span>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </MagneticButton>
-              <p className="mt-4 text-[11px] text-paper/40 leading-relaxed max-w-sm">
+              <p className="mt-4 text-[11px] text-paper/55 leading-relaxed max-w-sm">
                 Die echte Zahl hängt an deinem Rentenkonto — Ausgleichszeiten,
                 Kindererziehung, Verträge. In {CALL_MINUTES} Minuten rechnen wir sie gemeinsam.
               </p>

@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <>
       {showLoader && <Loader onComplete={markIntroSeen} />}
-      <main className="relative">
+      <main id="main" tabIndex={-1} className="relative">
         <OpeningStatement />
         <TheNotice />
         <YourLife />

@@ -14,6 +14,7 @@ const LINKS = [
 
 export default function Nav() {
   const root = useRef(null);
+  const lifeToggleRef = useRef(null);
   const [hidden, setHidden] = useState(false);
   const [lifeOpen, setLifeOpen] = useState(false);
   const location = useLocation();
@@ -61,6 +62,19 @@ export default function Nav() {
     scrollToSection(id);
   };
 
+  /** Dropdown schließen, sobald der Fokus die Gruppe komplett verlässt */
+  const closeOnLeave = (e) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) setLifeOpen(false);
+  };
+
+  /** Escape schließt das Dropdown und gibt den Fokus an den Toggle zurück */
+  const closeOnEscape = (e) => {
+    if (e.key !== 'Escape' || !lifeOpen) return;
+    e.stopPropagation();
+    setLifeOpen(false);
+    lifeToggleRef.current?.focus();
+  };
+
   /** Zu einer bestimmten Kachel in der Horizontal-Section scrollen */
   const goToPhase = (phaseId) => (e) => {
     e.preventDefault();
@@ -83,7 +97,7 @@ export default function Nav() {
       {/* Logo wordmark */}
       <a href="/#hero" onClick={goToSection('hero')} className="flex items-baseline gap-2 group">
         <span className="display-italic text-paper text-2xl">womensurance</span>
-        <span className="eyebrow text-paper/40 hidden md:inline">— DVM</span>
+        <span className="eyebrow text-paper/55 hidden md:inline">— DVM</span>
       </a>
 
       {/* Center links */}
@@ -95,25 +109,46 @@ export default function Nav() {
               className="relative"
               onMouseEnter={() => setLifeOpen(true)}
               onMouseLeave={() => setLifeOpen(false)}
+              onBlur={closeOnLeave}
+              onKeyDown={closeOnEscape}
             >
-              <a
-                href={`/#${link.id}`}
-                onClick={goToSection(link.id)}
-                aria-haspopup="true"
-                aria-expanded={lifeOpen}
-                className={`inline-flex items-center gap-1.5 transition-colors ${lifeOpen ? 'text-pink' : 'hover:text-pink'}`}
-              >
-                {link.label}
-                <svg
-                  width="8" height="8" viewBox="0 0 8 8" fill="none"
-                  className={`transition-transform duration-300 ${lifeOpen ? 'rotate-180' : ''}`}
+              <span className={`inline-flex items-center gap-1.5 ${lifeOpen ? 'text-pink' : ''}`}>
+                <a
+                  href={`/#${link.id}`}
+                  onClick={goToSection(link.id)}
+                  className="transition-colors hover:text-pink"
                 >
-                  <path d="M1 2.5l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </a>
+                  {link.label}
+                </a>
 
-              {/* Dropdown: Kachel-Überschriften der Horizontal-Section */}
+                {/* Eigener Toggle für das Dropdown — der Link scrollt, dieser
+                    Button öffnet. Nur so ist das Menü auch per Tastatur
+                    erreichbar (WCAG 2.1.1). */}
+                <button
+                  ref={lifeToggleRef}
+                  type="button"
+                  onClick={() => setLifeOpen((o) => !o)}
+                  aria-haspopup="true"
+                  aria-expanded={lifeOpen}
+                  aria-controls="nav-lifephases"
+                  aria-label={lifeOpen ? 'Lebensphasen ausblenden' : 'Lebensphasen anzeigen'}
+                  className="inline-flex items-center p-1 -m-1 transition-colors hover:text-pink"
+                >
+                  <svg
+                    width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"
+                    className={`transition-transform duration-300 ${lifeOpen ? 'rotate-180' : ''}`}
+                  >
+                    <path d="M1 2.5l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </span>
+
+              {/* Dropdown: Kachel-Überschriften der Horizontal-Section.
+                  `inert` im geschlossenen Zustand — sonst tabt man in ein
+                  unsichtbares Panel. */}
               <div
+                id="nav-lifephases"
+                inert={lifeOpen ? undefined : ''}
                 className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 transition-all duration-300 ${
                   lifeOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-1 pointer-events-none'
                 }`}
@@ -126,7 +161,7 @@ export default function Nav() {
                       onClick={goToPhase(phase.id)}
                       className="flex items-baseline gap-3 px-5 py-2 text-paper/60 hover:text-pink hover:bg-white/[0.04] transition-colors"
                     >
-                      <span className="tnum text-[10px] font-bold text-paper/30">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="tnum text-[10px] font-bold text-paper/55">{String(i + 1).padStart(2, '0')}</span>
                       <span className="normal-case tracking-normal font-body text-[13px] font-normal">{phase.title}</span>
                     </a>
                   ))}

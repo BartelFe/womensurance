@@ -306,12 +306,19 @@ export default function OpeningStatement() {
             className="display-xl text-paper"
             style={{ fontSize: 'clamp(2.6rem, min(8vw, 11vh), 8.5rem)' }}
           >
-            <span className="block line-mask"><span data-line>Über deine</span></span>
-            <span className="block line-mask"><span data-line>Zukunft wird</span></span>
-            <span className="block line-mask">
-              <span data-line className="display-italic text-pink">im Stillen</span>
+            {/* splitChars() zerlegt die Zeilen unten in ein <span> je Buchstabe —
+                ein Screenreader würde die Headline buchstabieren. Deshalb steht
+                der Satz einmal als zusammenhängender Text hier und die animierte
+                Fassung ist für assistive Technologien ausgeblendet. */}
+            <span className="sr-only">Über deine Zukunft wird im Stillen entschieden.</span>
+            <span className="block" aria-hidden="true">
+              <span className="block line-mask"><span data-line>Über deine</span></span>
+              <span className="block line-mask"><span data-line>Zukunft wird</span></span>
+              <span className="block line-mask">
+                <span data-line className="display-italic text-pink">im Stillen</span>
+              </span>
+              <span className="block line-mask"><span data-line>entschieden.</span></span>
             </span>
-            <span className="block line-mask"><span data-line>entschieden.</span></span>
           </h1>
 
           {/* Subtitle — desktop only */}
@@ -477,7 +484,7 @@ export default function OpeningStatement() {
                   −<span ref={euroRef}>0</span> €
                 </span>
               </div>
-              <div className="text-[11px] text-paper/45 mt-1">
+              <div className="text-[11px] text-paper/55 mt-1">
                 pro Monat Rente · {de1(gap)} % weniger als Männer
               </div>
             </div>
@@ -497,7 +504,7 @@ export default function OpeningStatement() {
         </a>
 
         <div ref={chipsRef} className="w-full md:w-auto">
-          <div className="hidden md:block eyebrow text-paper/50 mb-2 text-center">
+          <div className="hidden md:block eyebrow text-paper/55 mb-2 text-center">
             Und bei dir? Tippe an, was zutrifft
           </div>
           {/* Immer 2×2 oder 4×1 — nie 3+1 */}
@@ -507,7 +514,11 @@ export default function OpeningStatement() {
                 return (
                   <button
                     key={m.id}
+                    type="button"
                     onClick={() => toggle(m.id)}
+                    // Umschalter statt Aktion — aria-pressed sagt dem Screenreader,
+                    // ob die Lebensphase gerade eingerechnet ist.
+                    aria-pressed={on}
                     data-cursor="toggle"
                     data-cursor-label={on ? '−' : '+'}
                     className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-3 py-2 text-xs font-medium transition-all duration-300 border ${
@@ -517,7 +528,7 @@ export default function OpeningStatement() {
                     }`}
                     style={on ? undefined : { animationDelay: `${i * 0.35}s` }}
                   >
-                    <span className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/15'}`}>
+                    <span aria-hidden="true" className={`inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full text-[10px] ${on ? 'bg-ink text-pink' : 'bg-paper/15'}`}>
                       {on ? '✓' : '+'}
                     </span>
                     <span className="whitespace-nowrap">{m.label}</span>

@@ -61,13 +61,18 @@ export default function Loader({ onComplete }) {
   return (
     <div
       ref={root}
+      // Intro-Animation ohne Informationswert — für assistive Technologien
+      // reicht der Ladehinweis; alles darunter wird übersprungen.
+      role="status"
+      aria-label="Die Seite wird geladen"
       className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-ink overflow-hidden"
     >
-      <div className="eyebrow text-paper/40 mb-8">Womensurance · Lade Wahrheit</div>
+      <div aria-hidden="true" className="eyebrow text-paper/55 mb-8">Womensurance · Lade Wahrheit</div>
 
       {/* Dünn→Dick: Lato Light + linear wachsende Text-Kontur */}
       <div
         ref={lineRef}
+        aria-hidden="true"
         className="text-paper text-center px-4"
         style={{
           fontFamily: "'Lato', system-ui, sans-serif",
@@ -81,7 +86,7 @@ export default function Loader({ onComplete }) {
         Wie sicher bist du wirklich?
       </div>
 
-      <div className="mt-12 flex items-baseline gap-3 text-paper/60">
+      <div aria-hidden="true" className="mt-12 flex items-baseline gap-3 text-paper/60">
         <span className="text-xs uppercase tracking-[0.2em]">Gender Pension Gap</span>
         <span ref={counterRef} className="data-num text-paper text-3xl">0.0</span>
         <span className="text-paper/60">%</span>
