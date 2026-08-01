@@ -64,6 +64,7 @@ Das CMS-Thema kam vor Finalisierung hoch (DVMs Personalerin fragte „welches CM
 - [x] ~~**Vercel-Bild-Proxy `api/image` bauen**~~ — **erledigt 01.08.2026** (s. A.10).
 - [ ] **Beim Sanity-Anschluss:** ausnahmslos `urlFor()` aus `src/lib/sanityImage.js` verwenden. Ein einziges direktes `cdn.sanity.io` im Frontend macht die Aussage in der Datenschutzerklärung („keine Verbindung zu Sanity") unwahr.
 - [ ] **Sanity-DPA im Sanity-Account akzeptieren** — die Datenschutzerklärung behauptet einen AVV mit Sanity. Muss vor Go-Live stimmen.
+- [ ] **`/barrierefreiheit` vor Abnahme final gegenprüfen.** Die Seite ist bewusst ein Zwischenstand (am 01.08. an Thomas Gessert/DVM-IT verlinkt), **nicht** die Endfassung. Zur Abnahme: (a) alle 8 Punkte unter „Stand der Umsetzung" gegen den dann aktuellen Code neu messen, insbesondere „Textalternativen für Bilder", sobald Julias Fotos drin sind; (b) rechtliche Endfassung von Maisel Consult einholen (Werkvertrag § 2 Abs. 6); (c) `stand=` auf das Abnahmedatum setzen.
 - [ ] `VITE_THEME_PANEL` in den Vercel-Env-Variablen setzen (jetzt `true` für Julia, zum Go-Live entfernen/`false`).
 - [ ] Vercel-DPA im Account akzeptieren; womensurance.de auf DVM registrieren.
 - [ ] Sanity-Projekt-Region in Sanity Manage gegenprüfen; Sanity-DPF-Status auf dataprivacyframework.gov checken (nur falls DPF statt nur SCC behauptet werden soll — aktuell bewusst SCC).
