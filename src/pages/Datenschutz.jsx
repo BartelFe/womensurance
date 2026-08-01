@@ -355,8 +355,8 @@ export default function Datenschutz() {
         „Cookie-Einstellungen" im Footer dieser Website ändern oder widerrufen.
       </P>
       <P>
-        Im Einzelnen setzen wir folgende technisch notwendigen Speichervorgänge ein — beide
-        ohne Personenbezug und ohne Übertragung an Dritte:
+        Im Einzelnen setzen wir folgende technisch notwendigen Speichervorgänge ein. Beide
+        haben keinen Personenbezug und werden nicht an Dritte übertragen:
       </P>
       <UL
         items={[
@@ -425,8 +425,8 @@ export default function Datenschutz() {
       <P>
         Auf dieser Website stellen wir Ihnen Rechner zur Verfügung, mit denen Sie die
         Auswirkungen von Teilzeit und Erwerbspausen auf Ihre spätere Rente abschätzen
-        können. Die Angaben, die Sie dort machen — etwa Arbeitszeit, Einkommen oder Anzahl
-        der Jahre —, werden <strong>ausschließlich in Ihrem eigenen Browser verarbeitet</strong>.
+        können. Die Angaben, die Sie dort machen (etwa Arbeitszeit, Einkommen oder Anzahl
+        der Jahre), werden <strong>ausschließlich in Ihrem eigenen Browser verarbeitet</strong>.
       </P>
       <P>
         Diese Eingaben werden nicht an uns und nicht an Dritte übertragen, nicht gespeichert

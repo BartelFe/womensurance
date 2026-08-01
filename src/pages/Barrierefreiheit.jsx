@@ -1,29 +1,32 @@
 import LegalLayout, { H2, H3, P, UL, Block, A } from '../components/legal/LegalLayout';
 
 /**
- * Informationen zur Barrierefreiheit — § 14 Abs. 1 Nr. 2 BFSG i. V. m. Anlage 3.
+ * Informationen zur Barrierefreiheit nach § 14 Abs. 1 Nr. 2 BFSG i. V. m. Anlage 3.
  *
  * ⚠️ WICHTIG: Das ist NICHT die „Erklärung zur Barrierefreiheit" nach BITV 2.0 /
- * § 12b BGG — die gilt nur für öffentliche Stellen. Für die DVM als Unternehmen
+ * § 12b BGG. Die gilt nur für öffentliche Stellen. Für die DVM als Unternehmen
  * greift das BFSG mit anderem Pflichtinhalt (Anlage 3).
  *
  * ⚠️ ENTWURF: Die technischen Angaben unten stammen vom Auftragnehmer und sind
  * belastbar (gemessen, siehe Abschlussbericht Barrierefreiheit). Die rechtliche
- * Endfassung des Textes macht DVM / Maisel Consult — genau wie bei Impressum
+ * Endfassung des Textes macht DVM / Maisel Consult, genau wie bei Impressum
  * und Datenschutzerklärung (Werkvertrag § 2 Abs. 6).
  *
- * Vor Go-Live noch einzusetzen: E-Mail-Adresse für Barriere-Meldungen.
+ * ⚠️ Der Punkt „Textalternativen für Bilder" wird erst wahr, wenn Julias Fotos
+ * mit Alt-Texten eingepflegt sind. Vor Go-Live gegenprüfen.
+ *
+ * ✏️ Keine Gedankenstriche in diesem Projekt (Wunsch Felix, 01.08.2026).
  */
 export default function Barrierefreiheit() {
   return (
     <LegalLayout
       title="Barrierefreiheit"
-      subtitle="Wie zugänglich diese Website ist — und wo sie es noch nicht ist."
-      stand="Juli 2026"
+      subtitle="Wie zugänglich diese Website ist, und wo sie es noch nicht ist."
+      stand="August 2026"
     >
       <P>
         Wir möchten, dass diese Website von möglichst vielen Menschen genutzt
-        werden kann — unabhängig davon, ob jemand eine Maus benutzt, gut sieht
+        werden kann, unabhängig davon, ob jemand eine Maus benutzt, gut sieht
         oder auf Hilfsmittel angewiesen ist. Diese Seite beschreibt, welchen
         Stand wir erreicht haben und wo es noch Einschränkungen gibt.
       </P>
@@ -81,7 +84,7 @@ export default function Barrierefreiheit() {
       <H2>Barriere melden</H2>
       <P>
         Ist Ihnen etwas aufgefallen, das Sie nicht nutzen können? Schreiben Sie
-        uns — wir kümmern uns darum und melden uns zurück.
+        uns. Wir kümmern uns darum und melden uns zurück.
       </P>
       <Block
         lines={[

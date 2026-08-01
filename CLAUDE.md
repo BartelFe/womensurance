@@ -75,6 +75,9 @@ Das CMS-Thema kam vor Finalisierung hoch (DVMs Personalerin fragte „welches CM
 - [ ] Manuell gegenprüfen: `prefers-reduced-motion` (Windows → Barrierefreiheit → Visuelle Effekte → Animationseffekte aus). Der Preview-Browser kann die Media Query nicht emulieren.
 - **🚫 Außenkommunikation (Mails/Rechnungen an DVM) verschickt IMMER Felix selbst — nie eigenständig senden.** (Regel aus `Business/CLAUDE.md`.)
 
+## A.8b · Schreibregel: keine Gedankenstriche (01.08.2026)
+Felix will in diesem Projekt **keine Gedankenstriche** („Spiegelstriche", — oder –) als Satzzeichen. Gilt für alle Texte, die ich schreibe: Website-Inhalte, Rechtstexte, Code-Kommentare, Commit-Messages, Dokumente. Stattdessen Komma, Punkt, Doppelpunkt oder Klammern. Nicht betroffen: Bindestriche in Wörtern, Zahlenspannen wie „§§ 59–68", sowie fremde Texte, die nur übernommen werden (eRecht24-Standardklauseln in `Datenschutz.jsx`, Zitate). Julias eigene Seitentexte pflegt sie selbst, die sind nicht meine Baustelle.
+
 ## A.9 · Barrierefreiheit (BFSG) — umgesetzt 31.07.2026
 DVMs IT-Prüfer (Thomas Gessert) hat am 30.07. Barrierefreiheit angemahnt; Doris Hampe wollte einen Zusatz im Werkvertrag. **Maßstab: WCAG 2.1 Level AA** (technische Grundlage der EN 301 549). Rechtsrahmen ist das **BFSG** (seit 28.06.2025), *nicht* die BITV 2.0 — die gilt nur für öffentliche Stellen. Ob womensurance.de überhaupt in den Anwendungsbereich fällt, ist ein Grenzfall (§ 2 Nr. 26 BFSG verlangt Ausrichtung auf einen Verbrauchervertragsschluss; die Buchung läuft aber auf DVMs eigenem System) — umgesetzt wurde es trotzdem, als Kundenwunsch.
 
