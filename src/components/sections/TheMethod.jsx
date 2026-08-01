@@ -79,7 +79,7 @@ export default function TheMethod() {
                   >
                     {step.title}
                   </h3>
-                  <p className="body-lead text-ink/65 max-w-2xl">{step.body}</p>
+                  <p className="body-lead text-ink/75 max-w-2xl">{step.body}</p>
                 </div>
               </div>
             </article>

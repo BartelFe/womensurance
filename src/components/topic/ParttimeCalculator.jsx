@@ -19,7 +19,7 @@ function Slider({ label, value, display, min, max, step, onChange }) {
   return (
     <label className="block">
       <div className="flex items-baseline justify-between mb-2">
-        <span className="eyebrow text-clay">{label}</span>
+        <span className="eyebrow text-clay-deep">{label}</span>
         <span className="tnum text-sm text-ink font-bold">{display}</span>
       </div>
       <input
@@ -100,7 +100,7 @@ export default function ParttimeCalculator() {
           Rentenlücke berechnen: Was kostet dich{' '}
           <span className="display-italic text-pink">Teilzeit?</span>
         </h2>
-        <p className="body-lead text-ink/60 max-w-2xl mb-12" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.15rem)' }}>
+        <p className="body-lead text-ink/75 max-w-2xl mb-12" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.15rem)' }}>
           Drei Regler, deine Zahl. Gerechnet mit der offiziellen
           Entgeltpunkt-Formel der gesetzlichen Rente.
         </p>
@@ -136,7 +136,7 @@ export default function ParttimeCalculator() {
               step={100}
               onChange={setSalary}
             />
-            <p className="text-[12px] text-ink/60 leading-relaxed">
+            <p className="text-[12px] text-ink/75 leading-relaxed">
               Vereinfachte Beispielrechnung · Rentenwert {RENTENWERT.toFixed(2).replace('.', ',')} €
               (Stand 07/2025) · Vollzeit = 40 Std. · ohne Lohnentwicklung &amp; Ausgleichszeiten.
             </p>

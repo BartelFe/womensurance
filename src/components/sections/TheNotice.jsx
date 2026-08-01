@@ -208,7 +208,7 @@ export default function TheNotice() {
               <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none overflow-hidden">
                 <div
                   data-stamp
-                  className="border-[0.1em] border-pink/85 text-pink/85 font-black tracking-[0.14em] text-[2.7em] md:text-[3.15em] leading-none px-[0.42em] py-[0.16em] select-none whitespace-nowrap"
+                  className="border-[0.1em] border-pink-deep text-pink-deep font-black tracking-[0.14em] text-[2.7em] md:text-[3.15em] leading-none px-[0.42em] py-[0.16em] select-none whitespace-nowrap"
                 >
                   VERMEIDBAR
                 </div>
@@ -220,13 +220,13 @@ export default function TheNotice() {
                 <div className="flex items-start justify-between gap-[1em]">
                   <div>
                     <div className="font-bold tracking-[0.2em] text-[1.05em]">WOMENSURANCE</div>
-                    <div className="text-ink/60 text-[0.78em] tracking-[0.05em] mt-[0.1em] whitespace-nowrap">
+                    <div className="text-ink/75 text-[0.78em] tracking-[0.05em] mt-[0.1em] whitespace-nowrap">
                       Eine Marke der DVM · Ingolstadt
                     </div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="font-bold tracking-[0.12em] text-[0.85em]">RENTENINFORMATION</div>
-                    <div className="tnum text-[0.8em] text-ink/60 mt-[0.15em]">Stand: {today}</div>
+                    <div className="tnum text-[0.8em] text-ink/75 mt-[0.15em]">Stand: {today}</div>
                   </div>
                 </div>
 
@@ -235,7 +235,7 @@ export default function TheNotice() {
                 {/* ── Anschriftfeld ── */}
                 <div className="mt-[1em]">
                   <div className="font-bold">Für dich.</div>
-                  <div className="tnum text-[0.82em] text-ink/60">
+                  <div className="tnum text-[0.82em] text-ink/75">
                     Versichertennummer 39 400394 W 001
                   </div>
                 </div>
@@ -247,7 +247,7 @@ export default function TheNotice() {
 
                 {/* ── Tabelle: Berechnungsgrundlagen ── */}
                 <div className="mt-[0.8em]">
-                  <div className="flex justify-between text-ink/60 text-[0.75em] tracking-[0.12em] uppercase border-b border-ink/25 pb-[0.3em]">
+                  <div className="flex justify-between text-ink/75 text-[0.75em] tracking-[0.12em] uppercase border-b border-ink/25 pb-[0.3em]">
                     <span>Berechnungsgrundlagen</span>
                     <span>€ / Monat</span>
                   </div>
@@ -255,7 +255,7 @@ export default function TheNotice() {
                   <div data-row className="flex items-baseline justify-between gap-[1em] border-b border-ink/10 py-[0.5em]">
                     <div className="min-w-0">
                       <div className="truncate">Gender Pension Gap · Basis</div>
-                      <div className="hidden md:block text-ink/60 text-[0.8em] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
+                      <div className="hidden md:block text-ink/75 text-[0.8em] truncate">Ø Rente Frau vs. Mann, Deutschland</div>
                     </div>
                     <div className="shrink-0 tnum font-bold">−{fmt(BASE_EURO)} €</div>
                   </div>
@@ -268,7 +268,7 @@ export default function TheNotice() {
                     >
                       <div className="min-w-0">
                         <div className="truncate">{m.receiptLabel}</div>
-                        <div className="hidden md:block text-ink/60 text-[0.8em] truncate">{m.receiptSub}</div>
+                        <div className="hidden md:block text-ink/75 text-[0.8em] truncate">{m.receiptSub}</div>
                       </div>
                       <div className="shrink-0 tnum font-bold">−{fmt(m.euro)} €</div>
                     </div>
@@ -286,7 +286,7 @@ export default function TheNotice() {
                     <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">Monatliche Minderung</span>
                     <span ref={monthlyRef} aria-hidden="true" className="tnum font-black text-[1.35em] text-pink-deep whitespace-nowrap">−0 €</span>
                   </div>
-                  <div data-mult className="tnum text-ink/60 text-[0.78em] text-right mt-[0.15em]">
+                  <div data-mult className="tnum text-ink/75 text-[0.78em] text-right mt-[0.15em]">
                     × 12 Monate × {RETIREMENT_YEARS} Jahre Rente
                   </div>
                 </div>
@@ -319,10 +319,10 @@ export default function TheNotice() {
                       <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </a>
-                  <div className="text-ink/60 text-[0.8em] mt-[0.6em]">
+                  <div className="text-ink/75 text-[0.8em] mt-[0.6em]">
                     {CALL_MINUTES} Minuten · kostenlos · unverbindlich
                   </div>
-                  <div className="text-ink/60 text-[0.75em] mt-[0.5em] leading-snug">
+                  <div className="text-ink/75 text-[0.75em] mt-[0.5em] leading-snug">
                     * Beispielrechnung mit Durchschnittswerten — kein amtliches Dokument.
                     Deine echten Zahlen klären wir gemeinsam.
                   </div>

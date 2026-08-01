@@ -127,7 +127,7 @@ export default function TopicPage({
           {chapters.map((ch, i) => (
             <article key={ch.kicker} data-reveal className="grid md:grid-cols-12 gap-6 md:gap-10">
               <div className="md:col-span-4">
-                <div className="eyebrow text-clay mb-3">
+                <div className="eyebrow text-clay-deep mb-3">
                   {String(i + 1).padStart(2, '0')} · {ch.kicker}
                 </div>
                 <h2 className="display-lg text-ink" style={{ fontSize: 'clamp(1.7rem, 2.6vw, 2.6rem)' }}>
@@ -186,7 +186,7 @@ export default function TopicPage({
                     <h3 className="display-lg text-ink mb-3 text-balance" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
                       {a.title}
                     </h3>
-                    <p className="body-lead text-ink/65 max-w-2xl">{a.body}</p>
+                    <p className="body-lead text-ink/75 max-w-2xl">{a.body}</p>
                   </div>
                 </div>
               </article>

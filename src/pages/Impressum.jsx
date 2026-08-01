@@ -64,8 +64,19 @@ export default function Impressum() {
       <P>
         Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
         <br />
-        DE-322410699
+        DE322410699
       </P>
+
+      <H2>Redaktionell verantwortlich</H2>
+      <P>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</P>
+      <Block
+        lines={[
+          'Julia Pashchenko',
+          'c/o Deutsche Versicherungsmakler GmbH & Co. KG',
+          'Gemmingerstr. 14',
+          '85051 Ingolstadt',
+        ]}
+      />
 
       <H2>Vermittlerregister</H2>
       <P>

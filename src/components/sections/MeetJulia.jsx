@@ -80,7 +80,7 @@ export default function MeetJulia() {
                 Julia
               </div>
 
-              <div className="eyebrow text-ink/60 mt-4 mb-10 md:mb-16">
+              <div className="eyebrow text-ink/75 mt-4 mb-10 md:mb-16">
                 Fachwirtin für Versicherungen und Finanzen · DVM Ingolstadt
               </div>
             </div>
@@ -90,7 +90,7 @@ export default function MeetJulia() {
               <span className="display-italic text-pink">abgesichert</span> sind.
               Ich will, dass sie{' '}
               <span className="display-italic">frei</span> sind.&rdquo;
-              <footer className="mt-5 eyebrow text-ink/60 not-italic">
+              <footer className="mt-5 eyebrow text-ink/75 not-italic">
                 — Julia Pashchenko, Gründerin
               </footer>
             </blockquote>

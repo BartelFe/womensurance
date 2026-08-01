@@ -68,9 +68,9 @@ export default function Voices() {
 
               <div data-voice-meta className="col-span-12 md:col-span-3 md:pl-6 md:border-l border-clay-light/80">
                 <div className="font-medium text-ink mb-1">{v.name}</div>
-                <div className="text-sm text-ink/60 mb-4">{v.role} · {v.age}, {v.location}</div>
-                <div className="eyebrow text-clay mb-2">Kontext</div>
-                <div className="text-xs text-ink/60 leading-relaxed">{v.context}</div>
+                <div className="text-sm text-ink/75 mb-4">{v.role} · {v.age}, {v.location}</div>
+                <div className="eyebrow text-clay-deep mb-2">Kontext</div>
+                <div className="text-xs text-ink/75 leading-relaxed">{v.context}</div>
               </div>
             </div>
           </article>

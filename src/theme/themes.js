@@ -32,6 +32,9 @@ export function deriveTokens({ ink, paper, pink, clay, green }) {
     bone: mix(paper, '#ffffff', 0.55),
     'pink-soft': mix(pink, '#ffffff', 0.72),
     'pink-deep': mix(pink, '#000000', 0.25),
+    // Für Text auf hellem Grund: hält WCAG 1.4.3 (4,5:1) auch dann ein,
+    // wenn im Farb-Panel ein helleres Braun gewählt wird.
+    'clay-deep': mix(clay, '#000000', 0.2),
     'clay-mid': mix(clay, '#ffffff', 0.3),
     'clay-light': mix(clay, paper, 0.78),
     muted: mix(clay, paper, 0.25),
@@ -52,6 +55,7 @@ export const PRESETS = [
       'pink-soft': '#ffd0e2',
       'pink-deep': '#c91068',
       clay: '#7a4a3a',
+      'clay-deep': '#623b2e',
       'clay-mid': '#a87864',
       'clay-light': '#e8d5ce',
       muted: '#7a5f58',

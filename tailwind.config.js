@@ -18,6 +18,7 @@ export default {
         },
         clay: {
           DEFAULT: v('clay'),
+          deep: v('clay-deep'),
           mid: v('clay-mid'),
           light: v('clay-light'),
         },

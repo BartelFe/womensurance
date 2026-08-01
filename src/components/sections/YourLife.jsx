@@ -177,7 +177,7 @@ export default function YourLife() {
             <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{de1(baseGap)}</span>
             <span className="data-num text-ink text-4xl md:text-6xl">%</span>
           </div>
-          <div className="text-xs text-ink/60 mt-1 text-right">der Männer-Rente</div>
+          <div className="text-xs text-ink/75 mt-1 text-right">der Männer-Rente</div>
         </div>
 
         {/* Track: ab md horizontal + volle Höhe, mobil einfach untereinander */}
@@ -195,7 +195,7 @@ export default function YourLife() {
                 className="shrink-0 w-full md:w-[440px] xl:w-[520px] 2xl:w-[580px] md:h-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
               >
                 <div className="mb-4 md:mb-6">
-                  <span className="text-xs text-ink/60">Alter {phase.age}</span>
+                  <span className="text-xs text-ink/75">Alter {phase.age}</span>
                 </div>
 
                 <h3
@@ -217,7 +217,7 @@ export default function YourLife() {
                       Eyebrow-Größe nur 3,0:1 — zu wenig für AA (WCAG 1.4.3). */}
                   <div className="eyebrow text-pink-deep mb-1.5 md:mb-2">Was zählt jetzt</div>
                   <p
-                    className="text-ink/65 leading-relaxed"
+                    className="text-ink/75 leading-relaxed"
                     style={{ fontSize: 'clamp(0.8rem, 0.85vw, 1.05rem)' }}
                   >
                     {phase.insurance}

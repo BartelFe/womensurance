@@ -168,7 +168,7 @@ export default function Datenschutz() {
       <Block
         lines={[
           'Maisel Consult',
-          'Oliver Maisel',
+          'Ronny Klotzenbücher',
           'Kämmereigasse 2',
           '95444 Bayreuth',
           'Telefon: +49 921 7930707',
@@ -354,6 +354,24 @@ export default function Datenschutz() {
         nachdem Sie eingewilligt haben. Sie können Ihre Auswahl jederzeit über den Link
         „Cookie-Einstellungen" im Footer dieser Website ändern oder widerrufen.
       </P>
+      <P>
+        Im Einzelnen setzen wir folgende technisch notwendigen Speichervorgänge ein — beide
+        ohne Personenbezug und ohne Übertragung an Dritte:
+      </P>
+      <UL
+        items={[
+          <>
+            <strong>wmns-consent-v1</strong> (Local Storage, dauerhaft): speichert Ihre
+            Auswahl im Einwilligungs-Banner, damit Sie nicht bei jedem Besuch erneut gefragt
+            werden.
+          </>,
+          <>
+            <strong>wmns-intro-seen</strong> (Session Storage, endet mit dem Schließen des
+            Browser-Tabs): merkt sich, dass die einleitende Animation dieser Website bereits
+            gezeigt wurde, damit sie beim Wechsel zwischen Unterseiten nicht erneut startet.
+          </>,
+        ]}
+      />
 
       <H3>Server-Log-Dateien</H3>
       <P>
@@ -403,16 +421,38 @@ export default function Datenschutz() {
         Aufbewahrungsfristen — bleiben unberührt.
       </P>
 
-      <H3>Microsoft Bookings (Terminbuchung)</H3>
+      <H3>Rechner auf dieser Website</H3>
       <P>
-        Auf unserer Website haben Sie die Möglichkeit, Termine mit uns zu vereinbaren. Für
-        die Terminbuchung nutzen wir Microsoft Bookings. Anbieter ist die Microsoft Ireland
-        Operations Limited, One Microsoft Place, South County Business Park, Leopardstown,
-        Dublin 18, Irland.
+        Auf dieser Website stellen wir Ihnen Rechner zur Verfügung, mit denen Sie die
+        Auswirkungen von Teilzeit und Erwerbspausen auf Ihre spätere Rente abschätzen
+        können. Die Angaben, die Sie dort machen — etwa Arbeitszeit, Einkommen oder Anzahl
+        der Jahre —, werden <strong>ausschließlich in Ihrem eigenen Browser verarbeitet</strong>.
       </P>
       <P>
-        Zum Zweck der Terminbuchung geben Sie die abgefragten Daten und den Wunschtermin in
-        die dafür vorgesehene Maske ein. Die eingegebenen Daten werden für die Planung,
+        Diese Eingaben werden nicht an uns und nicht an Dritte übertragen, nicht gespeichert
+        und nicht ausgewertet. Sie verlassen Ihr Endgerät zu keinem Zeitpunkt und sind
+        gelöscht, sobald Sie die Seite schließen. Eine Rechtsgrundlage nach Art. 6 DSGVO ist
+        insoweit nicht erforderlich, da keine personenbezogenen Daten durch uns verarbeitet
+        werden. Die Ergebnisse sind unverbindliche Beispielrechnungen auf Basis von
+        Durchschnittswerten und ersetzen keine individuelle Beratung.
+      </P>
+
+      <H3>Microsoft Bookings (Terminbuchung)</H3>
+      <P>
+        Für die Terminbuchung nutzen wir Microsoft Bookings. Anbieter ist die Microsoft
+        Ireland Operations Limited, One Microsoft Place, South County Business Park,
+        Leopardstown, Dublin 18, Irland.
+      </P>
+      <P>
+        Die Buchungsseite ist <strong>nicht in diese Website eingebettet</strong>. Wir
+        verlinken lediglich darauf. Beim bloßen Besuch dieser Website werden daher keine
+        Daten an Microsoft übermittelt. Erst wenn Sie den Buchungslink aktiv anklicken,
+        verlassen Sie diese Website und es wird eine Verbindung zu den Servern von Microsoft
+        aufgebaut, wobei Ihre IP-Adresse an Microsoft übertragen wird.
+      </P>
+      <P>
+        Zum Zweck der Terminbuchung geben Sie die abgefragten Daten und den Wunschtermin auf
+        der Buchungsseite von Microsoft ein. Die eingegebenen Daten werden für die Planung,
         Durchführung und ggf. für die Nachbereitung des Termins verwendet. Die Termindaten
         werden für uns auf den Servern von Microsoft Bookings gespeichert, dessen
         Datenschutzerklärung Sie hier einsehen können:{' '}

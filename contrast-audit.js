@@ -1,5 +1,14 @@
 // Kontrast-Auditor: läuft im Browser, prüft jedes sichtbare Textelement
 // gegen WCAG 1.4.3 (AA): 4,5:1 normal, 3:1 für großen Text (>=24px oder >=18.66px bold).
+//
+// SO MESSEN:
+//  1. Seite einmal komplett durchscrollen (bis zum Footer), damit alle
+//     eingeblendeten Abschnitte wirklich sichtbar sind.
+//  2. Skript einfügen, Enter.
+//  3. `ungeprueft` muss 0 sein — sonst waren Elemente noch ausgeblendet.
+//  4. `theme` zeigt, welche Palette gemessen wurde. Für den Live-Stand
+//     muss dort "Standardpalette" stehen; sonst liegt ein Farb-Panel-Theme
+//     im localStorage und du misst nicht das, was Besucherinnen sehen.
 (() => {
   const lum = (r, g, b) => {
     const f = (c) => {
@@ -45,16 +54,22 @@
 
   const fails = [];
   const seen = new Set();
+  let ungeprueft = 0;
   document.querySelectorAll('body *').forEach((el) => {
     // nur Elemente mit eigenem, sichtbarem Textknoten
     const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
     if (!own) return;
     const cs = getComputedStyle(el);
     if (cs.visibility === 'hidden' || cs.display === 'none') return;
-    if (parseFloat(cs.opacity) < 0.1) return;
+    // Noch nicht eingeblendete Elemente (GSAP-Startzustand) lassen sich nicht
+    // messen — sie werden gezählt, damit "0 Treffer" nicht über eine
+    // unvollständige Messung hinwegtäuscht.
+    if (parseFloat(cs.opacity) < 0.1) { ungeprueft++; return; }
     const rect = el.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    if (el.closest('[inert]')) return;
+    // Vor Screenreadern verstecktes und ausgeblendetes Beiwerk zählt nicht:
+    // WCAG 1.4.3 nimmt rein dekorativen Text ausdrücklich aus.
+    if (el.closest('[inert]') || el.closest('[aria-hidden="true"]')) return;
 
     const fg = parse(cs.color);
     if (!fg) return;
@@ -81,5 +96,11 @@
     });
   });
   fails.sort((a, b) => a.ratio - b.ratio);
-  return JSON.stringify({ path: location.pathname, count: fails.length, fails }, null, 1);
+  return JSON.stringify({
+    path: location.pathname,
+    theme: localStorage.getItem('wmns-theme-v1') || 'Standardpalette',
+    count: fails.length,
+    ungeprueft, // > 0 → erst durchscrollen, dann erneut messen
+    fails,
+  }, null, 1);
 })();
