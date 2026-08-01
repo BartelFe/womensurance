@@ -9,6 +9,12 @@
 //  4. `theme` zeigt, welche Palette gemessen wurde. Für den Live-Stand
 //     muss dort "Standardpalette" stehen; sonst liegt ein Farb-Panel-Theme
 //     im localStorage und du misst nicht das, was Besucherinnen sehen.
+//
+// ⚠️ Nach Änderungen an `tailwind.config.js` den Dev-Server NEU STARTEN.
+//    Tailwind liest seine Config beim Start; eine neu registrierte Farbe
+//    existiert sonst nicht als Klasse, das Element erbt die Elternfarbe und
+//    besteht die Prüfung fälschlich. Im Zweifel gegenprüfen:
+//    getComputedStyle(document.querySelector('.text-pink-display')).color
 (() => {
   const lum = (r, g, b) => {
     const f = (c) => {
@@ -61,15 +67,16 @@
     if (!own) return;
     const cs = getComputedStyle(el);
     if (cs.visibility === 'hidden' || cs.display === 'none') return;
+    // Vor Screenreadern verstecktes und ausgeblendetes Beiwerk zählt nicht:
+    // WCAG 1.4.3 nimmt rein dekorativen Text ausdrücklich aus. Muss VOR der
+    // opacity-Prüfung stehen, sonst blähen Deko-Elemente `ungeprueft` auf.
+    if (el.closest('[inert]') || el.closest('[aria-hidden="true"]')) return;
     // Noch nicht eingeblendete Elemente (GSAP-Startzustand) lassen sich nicht
     // messen — sie werden gezählt, damit "0 Treffer" nicht über eine
     // unvollständige Messung hinwegtäuscht.
     if (parseFloat(cs.opacity) < 0.1) { ungeprueft++; return; }
     const rect = el.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    // Vor Screenreadern verstecktes und ausgeblendetes Beiwerk zählt nicht:
-    // WCAG 1.4.3 nimmt rein dekorativen Text ausdrücklich aus.
-    if (el.closest('[inert]') || el.closest('[aria-hidden="true"]')) return;
 
     const fg = parse(cs.color);
     if (!fg) return;

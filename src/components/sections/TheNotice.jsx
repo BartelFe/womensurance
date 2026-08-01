@@ -208,7 +208,7 @@ export default function TheNotice() {
               <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none overflow-hidden">
                 <div
                   data-stamp
-                  className="border-[0.1em] border-pink-deep text-pink-deep font-black tracking-[0.14em] text-[2.7em] md:text-[3.15em] leading-none px-[0.42em] py-[0.16em] select-none whitespace-nowrap"
+                  className="border-[0.1em] border-pink-display text-pink-display font-black tracking-[0.14em] text-[2.7em] md:text-[3.15em] leading-none px-[0.42em] py-[0.16em] select-none whitespace-nowrap"
                 >
                   VERMEIDBAR
                 </div>
@@ -298,7 +298,7 @@ export default function TheNotice() {
                   <span
                     ref={lifetimeRef}
                     aria-hidden="true"
-                    className="data-num text-pink-deep whitespace-nowrap text-[2em]"
+                    className="data-num text-pink-display whitespace-nowrap text-[2em]"
                   >
                     −0 €
                   </span>

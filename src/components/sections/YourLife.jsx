@@ -213,8 +213,11 @@ export default function YourLife() {
                 </p>
 
                 <div className="mt-auto pt-4 md:pt-6 border-t border-clay-light/60">
-                  {/* pink-deep statt pink: Auf der hellen Kachel schafft #ff2e88 in
-                      Eyebrow-Größe nur 3,0:1 — zu wenig für AA (WCAG 1.4.3). */}
+                  {/* pink-deep ist hier unvermeidbar: #ff2e88 erreicht selbst auf
+                      REINWEISS nur 3,5:1, kleiner Text braucht nach WCAG 1.4.3
+                      aber 4,5:1. Kein heller Grund kann das lösen — die einzige
+                      Alternative wäre, das Label auf >=18,66px fett zu vergrößern
+                      (dann gilt die 3:1-Schwelle für großen Text). */}
                   <div className="eyebrow text-pink-deep mb-1.5 md:mb-2">Was zählt jetzt</div>
                   <p
                     className="text-ink/75 leading-relaxed"

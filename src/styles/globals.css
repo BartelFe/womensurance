@@ -51,34 +51,39 @@
 
 @layer base {
   :root {
+    /* ── Finale Palette „Julia — Dunkelbraun" (Freigabe 01.08.2026) ──────
+       Identisch mit DEFAULT_PRESET in `theme/themes.js`; wird von dort per
+       deriveTokens() erzeugt. Bei Änderungen BEIDE Stellen anfassen, sonst
+       springt die Farbe beim Laden. */
+
     /* Hex-Variablen (für Inline-Styles, SVG, Gradients) */
-    --color-ink: #0a0807;
-    --color-paper: #f4ede4;
-    --color-bone: #fffaf3;
+    --color-ink: #2a211b;
+    --color-paper: #e8e3e1;
+    --color-bone: #f5f2f2;
     --color-pink: #ff2e88;
-    --color-pink-soft: #ffd0e2;
-    --color-pink-deep: #c91068;
-    --color-pink-display: #ff2e88;
-    --color-clay: #7a4a3a;
-    --color-clay-deep: #623b2e;
-    --color-clay-mid: #a87864;
-    --color-clay-light: #e8d5ce;
-    --color-muted: #7a5f58;
+    --color-pink-soft: #ffc4de;
+    --color-pink-deep: #bd2265;
+    --color-pink-display: #f02b80;
+    --color-clay: #835f49;
+    --color-clay-deep: #805d48;
+    --color-clay-mid: #a88f80;
+    --color-clay-light: #d2c6c0;
+    --color-muted: #9c806f;
     --color-green: #a7a376;
 
     /* RGB-Triplets (für Tailwind-Opacity-Modifier: rgb(var(--x) / <alpha>)) */
-    --ink-rgb: 10 8 7;
-    --paper-rgb: 244 237 228;
-    --bone-rgb: 255 250 243;
+    --ink-rgb: 42 33 27;
+    --paper-rgb: 232 227 225;
+    --bone-rgb: 245 242 242;
     --pink-rgb: 255 46 136;
-    --pink-soft-rgb: 255 208 226;
-    --pink-deep-rgb: 201 16 104;
-    --pink-display-rgb: 255 46 136;
-    --clay-rgb: 122 74 58;
-    --clay-deep-rgb: 98 59 46;
-    --clay-mid-rgb: 168 120 100;
-    --clay-light-rgb: 232 213 206;
-    --muted-rgb: 122 95 88;
+    --pink-soft-rgb: 255 196 222;
+    --pink-deep-rgb: 189 34 101;
+    --pink-display-rgb: 240 43 128;
+    --clay-rgb: 131 95 73;
+    --clay-deep-rgb: 128 93 72;
+    --clay-mid-rgb: 168 143 128;
+    --clay-light-rgb: 210 198 192;
+    --muted-rgb: 156 128 111;
     --green-rgb: 167 163 118;
   }
 

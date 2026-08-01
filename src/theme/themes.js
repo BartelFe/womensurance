@@ -104,8 +104,10 @@ export const PRESETS = [
   {
     id: 'julia-braun',
     label: 'Julia — Dunkelbraun',
-    // "Schwarz zu hart" → tiefes Warmbraun als dunkler Grund, Julias Töne als Akzente
-    base: { ink: '#2a211b', paper: '#e8e3e1', pink: '#f35991', clay: '#835f49', green: '#a7a376' },
+    // ✅ FINALE PALETTE (Freigabe Julia via Felix, 01.08.2026) — siehe DEFAULT_PRESET.
+    // "Schwarz zu hart" → tiefes Warmbraun als dunkler Grund. Als Akzent bewusst
+    // das Marken-Pink #ff2e88, nicht Julias weicheres #f35991.
+    base: { ink: '#2a211b', paper: '#e8e3e1', pink: '#ff2e88', clay: '#835f49', green: '#a7a376' },
     tokens: null, // null = aus base ableiten
   },
   {
@@ -117,7 +119,9 @@ export const PRESETS = [
   },
 ];
 
-export const DEFAULT_PRESET = PRESETS[0];
+// Ausgelieferte Palette. Muss mit den :root-Fallbacks in `styles/globals.css`
+// übereinstimmen — die greifen, bevor React läuft (kein Farbsprung beim Laden).
+export const DEFAULT_PRESET = PRESETS.find((p) => p.id === 'julia-braun');
 export const STORAGE_KEY = 'wmns-theme-v1';
 
 /** Liefert das volle Token-Set eines Presets */

@@ -97,8 +97,13 @@ export default function Cursor() {
 
   return (
     <>
+      {/* Reine Maus-Dekoration: dupliziert nur Hinweise, die ohnehin sichtbar
+          sind. aria-hidden, damit Screenreader kein "view" aus dem Nichts
+          vorlesen. Der Kontrast entsteht über mix-blend-difference und ist
+          deshalb nicht statisch messbar (auch nicht für axe/Lighthouse). */}
       <div
         ref={ringRef}
+        aria-hidden="true"
         className="pointer-events-none fixed left-0 top-0 z-[9999] flex h-7 w-7 items-center justify-center rounded-full border border-paper/40 mix-blend-difference"
         style={{ willChange: 'transform, width, height' }}
       >
@@ -106,6 +111,7 @@ export default function Cursor() {
       </div>
       <div
         ref={dotRef}
+        aria-hidden="true"
         className="pointer-events-none fixed left-0 top-0 z-[9999] h-1.5 w-1.5 rounded-full bg-paper mix-blend-difference"
         style={{ willChange: 'transform' }}
       />
