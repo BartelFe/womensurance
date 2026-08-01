@@ -174,7 +174,7 @@ export default function YourLife() {
         <div className="relative md:absolute md:top-0 md:right-0 z-30 px-6 md:px-0 md:pt-20 md:pr-10 pb-8 md:pb-0 pointer-events-none">
           <div className="flex items-baseline justify-end gap-1">
             <span className="data-num text-ink text-4xl md:text-6xl">−</span>
-            <span ref={counterRef} className="data-num text-pink text-5xl md:text-7xl">{de1(baseGap)}</span>
+            <span ref={counterRef} className="data-num text-pink-display text-5xl md:text-7xl">{de1(baseGap)}</span>
             <span className="data-num text-ink text-4xl md:text-6xl">%</span>
           </div>
           <div className="text-xs text-ink/75 mt-1 text-right">der Männer-Rente</div>

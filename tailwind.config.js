@@ -15,6 +15,7 @@ export default {
           DEFAULT: v('pink'),
           soft: v('pink-soft'),
           deep: v('pink-deep'),
+          display: v('pink-display'),
         },
         clay: {
           DEFAULT: v('clay'),

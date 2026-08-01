@@ -89,7 +89,7 @@ export default function MistakesStack() {
       <div className="max-w-6xl mx-auto">
         <h2 className="display-lg text-ink text-balance mb-16 md:mb-20" style={{ fontSize: 'clamp(1.9rem, 4.2vw, 4.2rem)' }}>
           Die 5 teuersten Fehler im{' '}
-          <span className="display-italic text-pink">Versorgungsausgleich.</span>
+          <span className="display-italic text-pink-display">Versorgungsausgleich.</span>
         </h2>
 
         <div className="space-y-6 md:space-y-8 max-w-4xl">
@@ -101,7 +101,7 @@ export default function MistakesStack() {
             >
               <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
                 <div className="col-span-12 md:col-span-2">
-                  <div className="display-italic text-pink" style={{ fontSize: 'clamp(2.2rem, 5vw, 5rem)', lineHeight: 0.9 }}>
+                  <div className="display-italic text-pink-display" style={{ fontSize: 'clamp(2.2rem, 5vw, 5rem)', lineHeight: 0.9 }}>
                     {m.n}
                   </div>
                 </div>

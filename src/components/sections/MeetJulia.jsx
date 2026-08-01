@@ -74,7 +74,7 @@ export default function MeetJulia() {
           <div className="md:col-span-6 lg:col-span-7 flex flex-col justify-between md:pb-0">
             <div>
               <div
-                className="display-italic text-pink leading-none"
+                className="display-italic text-pink-display leading-none"
                 style={{ fontSize: 'clamp(6rem, 14vw, 16rem)', letterSpacing: '-0.03em' }}
               >
                 Julia
@@ -87,7 +87,7 @@ export default function MeetJulia() {
 
             <blockquote data-quote className="display-lg text-ink" style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2.8rem)', lineHeight: 1.1 }}>
               &ldquo;Ich will nicht, dass meine Kundinnen{' '}
-              <span className="display-italic text-pink">abgesichert</span> sind.
+              <span className="display-italic text-pink-display">abgesichert</span> sind.
               Ich will, dass sie{' '}
               <span className="display-italic">frei</span> sind.&rdquo;
               <footer className="mt-5 eyebrow text-ink/75 not-italic">

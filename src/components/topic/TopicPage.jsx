@@ -164,7 +164,7 @@ export default function TopicPage({
         <div className="max-w-6xl mx-auto">
           <div data-reveal>
             <h2 className="display-lg text-ink mb-14" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
-              Was du <span className="display-italic text-pink">jetzt</span> tun kannst.
+              Was du <span className="display-italic text-pink-display">jetzt</span> tun kannst.
             </h2>
           </div>
           {/* Gestapelte Karten — gleiches Layout wie die 4-Schritte-Methode
@@ -178,7 +178,7 @@ export default function TopicPage({
               >
                 <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
                   <div className="col-span-12 md:col-span-2">
-                    <div className="display-italic text-pink" style={{ fontSize: 'clamp(2.2rem, 5vw, 5rem)', lineHeight: 0.9 }}>
+                    <div className="display-italic text-pink-display" style={{ fontSize: 'clamp(2.2rem, 5vw, 5rem)', lineHeight: 0.9 }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
                   </div>

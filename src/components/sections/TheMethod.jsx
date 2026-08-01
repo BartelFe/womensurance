@@ -66,7 +66,7 @@ export default function TheMethod() {
               <div className="grid grid-cols-12 gap-4 md:gap-8 items-start">
                 <div className="col-span-12 md:col-span-2">
                   <div
-                    className="display-italic text-pink"
+                    className="display-italic text-pink-display"
                     style={{ fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 0.9 }}
                   >
                     {step.n}

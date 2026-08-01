@@ -98,7 +98,7 @@ export default function ParttimeCalculator() {
       <div className="max-w-6xl mx-auto">
         <h2 className="display-lg text-ink text-balance mb-4" style={{ fontSize: 'clamp(1.9rem, 4vw, 3.8rem)' }}>
           Rentenlücke berechnen: Was kostet dich{' '}
-          <span className="display-italic text-pink">Teilzeit?</span>
+          <span className="display-italic text-pink-display">Teilzeit?</span>
         </h2>
         <p className="body-lead text-ink/75 max-w-2xl mb-12" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.15rem)' }}>
           Drei Regler, deine Zahl. Gerechnet mit der offiziellen

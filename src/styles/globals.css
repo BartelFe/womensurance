@@ -58,6 +58,7 @@
     --color-pink: #ff2e88;
     --color-pink-soft: #ffd0e2;
     --color-pink-deep: #c91068;
+    --color-pink-display: #ff2e88;
     --color-clay: #7a4a3a;
     --color-clay-deep: #623b2e;
     --color-clay-mid: #a87864;
@@ -72,6 +73,7 @@
     --pink-rgb: 255 46 136;
     --pink-soft-rgb: 255 208 226;
     --pink-deep-rgb: 201 16 104;
+    --pink-display-rgb: 255 46 136;
     --clay-rgb: 122 74 58;
     --clay-deep-rgb: 98 59 46;
     --clay-mid-rgb: 168 120 100;
