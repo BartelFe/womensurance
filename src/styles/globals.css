@@ -224,9 +224,13 @@
    abgeschnitten werden. Divisor ≈ Dokumenthöhe in em, Abzug = Platz für
    Überschrift/Ränder (headless kalibriert, siehe verify-notice.js). */
 .notice-doc {
-  /* mobil: Abzug = Überschrift über dem Bescheid (~66px, gemessen) + Puffer */
-  font-size: clamp(8px, calc((100vh - 98px) / 48), 15px);
-  font-size: clamp(8px, calc((100svh - 98px) / 48), 15px);
+  /* mobil: Abzug = Überschrift über dem Bescheid (~66px, gemessen) + Puffer.
+     Zusätzlich an die BREITE gekoppelt: der Bescheid braucht rund 26em, sonst
+     ragt die Kopfzeile aus der Karte und wird vom overflow-hidden der
+     Pin-Sektion gekappt (WCAG 1.4.10, gemessen bei 375px). Das min() kann die
+     Schrift nur verkleinern — die Höhen-Kalibrierung bleibt damit gültig. */
+  font-size: clamp(8px, min(calc((100vh - 98px) / 48), calc((100vw - 48px) / 27.2)), 15px);
+  font-size: clamp(8px, min(calc((100svh - 98px) / 48), calc((100vw - 48px) / 27.2)), 15px);
   line-height: 1.5;
 }
 @media (min-width: 768px) {

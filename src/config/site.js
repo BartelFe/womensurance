@@ -13,6 +13,7 @@ export const SOCIALS = [
 export const CALL_MINUTES = 60;
 
 // Google Tag Manager Container-ID (z.B. 'GTM-XXXXXXX').
-// Leer lassen = kein Tracking wird geladen, Cookie-Banner funktioniert trotzdem.
-// Wird erst befüllt, wenn Felix den GTM-Container angelegt hat (Phase 4 der Roadmap).
-export const GTM_ID = '';
+// Kommt aus der Umgebung (.env lokal, Environment-Variablen in Vercel), damit
+// die ID nicht im Repo liegt und sich Preview und Produktion trennen lassen.
+// Leer = kein Tracking wird geladen, der Cookie-Banner funktioniert trotzdem.
+export const GTM_ID = import.meta.env.VITE_GTM_ID || '';

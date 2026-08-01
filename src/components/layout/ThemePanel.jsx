@@ -22,6 +22,12 @@ const PICKERS = [
  * Ausklappbares Farb-Panel für die Design-Phase mit Julia.
  * Ändert die CSS-Variablen live, speichert lokal (localStorage) —
  * nur auf dem jeweiligen Gerät sichtbar, nie für andere Besucher.
+ *
+ * ⚠️ NUR ein Abstimmungswerkzeug, kein Feature für Besucherinnen.
+ * Sichtbar, solange `VITE_THEME_PANEL=true` gesetzt ist (siehe .env).
+ * Zum Go-Live in den Vercel-Environment-Variablen auf `false` setzen
+ * bzw. die Variable entfernen — dann rendert die Komponente nichts,
+ * inklusive des Toggle-Tabs am rechten Rand.
  */
 export default function ThemePanel() {
   const [open, setOpen] = useState(false);
@@ -59,6 +65,9 @@ export default function ThemePanel() {
     clearStoredTheme();
     selectPreset(DEFAULT_PRESET);
   };
+
+  // Nach den Hooks, damit die Hook-Reihenfolge stabil bleibt
+  if (import.meta.env.VITE_THEME_PANEL !== 'true') return null;
 
   return (
     <>

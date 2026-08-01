@@ -194,7 +194,10 @@ export default function TheNotice() {
               Basis-Schriftgröße hängt an der Viewport-Höhe (.notice-doc in
               globals.css), alle inneren Maße in em → das Dokument füllt die
               verfügbare Höhe und wird nie abgeschnitten. */}
-          <div className="flex justify-center">
+          {/* min-w-0: Grid-Items haben min-width:auto — ohne das setzt sich die
+              max-w-[360px] des Bescheids gegen das px-6 des Containers durch
+              und der rechte Rand wird vom overflow-hidden gekappt (WCAG 1.4.10). */}
+          <div className="flex justify-center min-w-0">
             <div
               data-doc-card
               className="notice-doc relative w-full max-w-[360px] md:max-w-none md:w-[33em] bg-bone text-ink shadow-[0_40px_120px_-20px_rgba(0,0,0,0.8)]"

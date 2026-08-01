@@ -61,7 +61,10 @@ Das CMS-Thema kam vor Finalisierung hoch (DVMs Personalerin fragte „welches CM
 5. **QA / Abnahme / Go-Live ~10.08.** → Wartung startet, Schlussrechnung raus.
 
 ## A.8 · Offene Aktionspunkte (Checkliste)
-- [ ] **Vercel-Bild-Proxy `api/image` bauen** (~40 Zeilen, Projekt-ID `10o1bkel`) — **vor dem DSB-Vorschaulink.** ← Top-Priorität.
+- [x] ~~**Vercel-Bild-Proxy `api/image` bauen**~~ — **erledigt 01.08.2026** (s. A.10).
+- [ ] **Beim Sanity-Anschluss:** ausnahmslos `urlFor()` aus `src/lib/sanityImage.js` verwenden. Ein einziges direktes `cdn.sanity.io` im Frontend macht die Aussage in der Datenschutzerklärung („keine Verbindung zu Sanity") unwahr.
+- [ ] **Sanity-DPA im Sanity-Account akzeptieren** — die Datenschutzerklärung behauptet einen AVV mit Sanity. Muss vor Go-Live stimmen.
+- [ ] `VITE_THEME_PANEL` in den Vercel-Env-Variablen setzen (jetzt `true` für Julia, zum Go-Live entfernen/`false`).
 - [ ] Vercel-DPA im Account akzeptieren; womensurance.de auf DVM registrieren.
 - [ ] Sanity-Projekt-Region in Sanity Manage gegenprüfen; Sanity-DPF-Status auf dataprivacyframework.gov checken (nur falls DPF statt nur SCC behauptet werden soll — aktuell bewusst SCC).
 - [ ] Von Julia: About-me-Text, Testimonials + Einverständnisse, Kennzahlen + Quellen.
@@ -83,6 +86,25 @@ DVMs IT-Prüfer (Thomas Gessert) hat am 30.07. Barrierefreiheit angemahnt; Doris
 - **Neue Seite** `/barrierefreiheit` (`pages/Barrierefreiheit.jsx`, im Footer verlinkt). Technische Angaben sind belastbar, die rechtliche Endfassung macht Maisel.
 - **Kontrast-Auditor** `contrast-audit.js` (Projektwurzel): misst jedes gerenderte Textelement gegen WCAG 1.4.3, inklusive Alpha-Blending durch die Ancestor-Kette. Inhalt in die Browser-Konsole einfügen → Liste der Verstöße. Bei Design-Änderungen erneut laufen lassen.
 - **Messstand 31.07.:** 0 Kontrastfehler auf allen 5 Routen · 40 tabbare Elemente, alle mit Fokusring und Accessible Name · keine Überschriften-Sprünge, keine doppelten IDs, keine Bilder ohne alt.
+
+## A.10 · Bild-Proxy, Env-Flags & Reflow — 01.08.2026
+
+**Bild-Proxy `api/image.js` steht** (Vercel Node-Function, Region in `vercel.json` auf `fra1` gepinnt — so wie es in der AVV steht). Dataset per MCP verifiziert: **`production`**, ACL public.
+- Kein offener Proxy: Dateiname muss `<sha1>-<b>x<h>.<ext>` matchen, nur eine Whitelist an Transformationsparametern (`w h q fit auto fm dpr rect crop blur sharp flip or bg`) wird durchgereicht, Werte gegen `/^[\w.,-]{1,40}$/` geprüft. Content-Type muss `image/*` sein. SVG bekommt eine sperrende CSP. Cache: `immutable` (der sha1 im Namen macht die URL inhaltsstabil).
+- **Frontend nutzt `urlFor()` / `srcSetFor()` aus `src/lib/sanityImage.js`** — bewusst ohne `@sanity/image-url`, weil die Bibliothek cdn.sanity.io-URLs erzeugt.
+- `vercel.json`: Rewrite ist jetzt `/((?!api/).*)`, sonst hätte der SPA-Fallback `/api/*` verschluckt.
+- Getestet: POST→405, fehlende/fremde/traversierende `id`→400, gültige aber unbekannte `id`→404 (echter Round-Trip zu Sanity), Whitelist verwirft unbekannte Parameter und ungültige Werte.
+
+**Env-Flags** (`.env` ist gitignored, `.env.example` liegt im Repo):
+- `VITE_THEME_PANEL` — `true` rendert das Farb-Panel. Bei `false` **entfernt Vite die Komponente komplett aus dem Bundle** (statisch ersetzte `import.meta.env` + früher Return).
+- `VITE_GTM_ID` — GTM-Container. Leer = kein Tracking. `src/config/site.js` liest jetzt daraus statt aus einer hartkodierten Konstante.
+
+**Reflow (WCAG 1.4.10) — zwei echte Layoutfehler gefunden und behoben:**
+1. `TheNotice`: Der Wrapper des Rentenbescheids brauchte `min-w-0`. Grid-Items haben `min-width: auto`, dadurch setzte sich `max-w-[360px]` gegen das `px-6` durch und der rechte Rand wurde vom `overflow-hidden` gekappt.
+2. `.notice-doc`: Die Basis-Schriftgröße hing nur an der Viewport-**Höhe**. Der Bescheid braucht ~26 em Breite; bei 375 px ragten **52 px** Inhalt aus der Karte. Jetzt zusätzlich `min(…, calc((100vw - 48px) / 27.2))` — kann die Schrift nur verkleinern, die Höhen-Kalibrierung bleibt gültig. Kosten: auf schmalen Handys ist der Bescheid ~18 % kleiner als vorher.
+- Ergebnis: `document.scrollWidth === innerWidth` auf allen 6 Routen, kein horizontales Scrollen, kein abgeschnittener Inhalt.
+
+⚠️ **Messfalle im Preview-Browser:** Dessen Dokument-Zeitachse steht auf 0, deshalb hängen alle GSAP-`fromTo`-Startzustände (z. B. `scale: 1.15`, `scale: 2.6` beim Stempel) im DOM fest und verfälschen jede Breitenmessung. Vor dem Messen die Inline-Transforms neutralisieren, sonst jagt man Phantome. Gleiches gilt für CSS-Transitions — die frieren auf dem Startwert ein.
 
 ---
 
