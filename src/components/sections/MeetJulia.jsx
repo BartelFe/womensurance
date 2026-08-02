@@ -108,9 +108,11 @@ export default function MeetJulia() {
                 style={{ aspectRatio: '3/4' }}
               >
                 <img
-                  src="/images/julia-portrait.jpg"
-                  alt="Julia Pashchenko"
-                  className="absolute inset-0 w-full h-full object-cover object-top"
+                  src="/images/julia-portrait.jpeg"
+                  alt="Julia Pashchenko im pinken Blazer an ihrem Schreibtisch"
+                  width="704"
+                  height="939"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                 />
               </div>
 
@@ -124,9 +126,11 @@ export default function MeetJulia() {
                   className="relative overflow-hidden rounded-sm aspect-square"
                 >
                   <img
-                    src="/images/julia-laptop.jpg"
-                    alt="Julia Pashchenko"
-                    className="absolute inset-0 w-full h-full object-cover object-center"
+                    src="/images/julia-desk.jpeg"
+                    alt="Julia Pashchenko am Besprechungstisch mit ihrem Tablet"
+                    width="704"
+                    height="934"
+                    className="absolute inset-0 w-full h-full object-cover object-[center_28%]"
                   />
                 </div>
 
@@ -149,29 +153,24 @@ export default function MeetJulia() {
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-center">
 
-            {/* Photo pair */}
-            <div className="md:col-span-5 grid grid-cols-2 gap-4">
+            {/* Ein großes Bild statt des früheren Paars (Wunsch Julia 08/2026).
+                Das Seitenverhältnis 5/7 entspricht fast exakt der Originaldatei
+                (1058 × 1476), es wird also nichts weggeschnitten. Die Spalte
+                bleibt bei col-span-5: mehr Breite als ~530 px würde die
+                Auflösung auf Retina-Displays sichtbar weich machen. */}
+            <div className="md:col-span-5">
               <div
                 data-image
                 data-cursor="image"
+                data-cursor-label="Julia"
                 className="relative overflow-hidden rounded-sm"
-                style={{ aspectRatio: '3/4' }}
+                style={{ aspectRatio: '5/7' }}
               >
                 <img
-                  src="/images/julia-window.jpg"
-                  alt="Julia Pashchenko"
-                  className="absolute inset-0 w-full h-full object-cover object-top"
-                />
-              </div>
-              <div
-                data-image
-                data-cursor="image"
-                className="relative overflow-hidden rounded-sm mt-10"
-                style={{ aspectRatio: '3/4' }}
-              >
-                <img
-                  src="/images/julia-desk.jpg"
-                  alt="Julia Pashchenko"
+                  src="/images/julia-geschichte.jpeg"
+                  alt="Julia Pashchenko im Womensurance-Poloshirt vor dem Büro"
+                  width="1058"
+                  height="1476"
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
               </div>

@@ -109,9 +109,11 @@ export default function MistakesStack() {
                   <h3 className="display-lg text-ink mb-2 text-balance" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
                     {m.title}
                   </h3>
-                  {/* pink-deep: kleiner Text braucht 4,5:1, #ff2e88 schafft auf
-                      hellem Grund maximal 3,5:1 — siehe YourLife.jsx */}
-                  <div className="eyebrow text-pink-deep mb-4">{m.cost}</div>
+                  {/* Braun statt Pink: #ff2e88 schafft auf hellem Grund maximal
+                      3,5:1, kleiner Text braucht 4,5:1. Statt eines abgedunkelten
+                      Pinks nehmen wir hier das Palettenbraun (Wunsch Felix
+                      02.08.2026), siehe YourLife.jsx. */}
+                  <div className="eyebrow text-clay-deep mb-4">{m.cost}</div>
                   <p className="body-lead text-ink/75 max-w-2xl">{m.body}</p>
                 </div>
               </div>

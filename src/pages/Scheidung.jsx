@@ -83,8 +83,8 @@ export default function Scheidung() {
         {
           value: 50,
           unit: '%',
-          label: 'deiner Ansprüche stehen auf dem Spiel, wenn Verträge und Anrechte falsch bewertet werden.',
-          source: 'Platzhalter — mit Julia präzisieren*',
+          label: 'aller Scheidungsanträge erfolgen durch die Frau.',
+          source: 'Quelle: Destatis*',
         },
       ]}
       chapters={[

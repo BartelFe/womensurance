@@ -6,7 +6,9 @@ import { createContext, useContext, useState, useCallback, useMemo } from 'react
 //    sicherungsleistungen OHNE Hinterbliebenenrenten), PM N016 v. 04/2024.
 //  - BASE_EURO 450 €  → DRV 2024: Ø Zahlbetrag Altersrente Männer ~1.405 €,
 //    Frauen ~955 € → Differenz ~450 €/Monat (WSI/DRV Rentenbestand).
-//  - RETIREMENT_YEARS 20 → Restlebenserwartung Frauen ab 65 ≈ 21 Jahre.
+//  - RETIREMENT_YEARS 15 → bewusst konservativ. Die Restlebenserwartung von
+//    Frauen ab 65 liegt bei rund 21 Jahren; gerechnet wird trotzdem nur mit 15,
+//    damit die Lebenssumme nicht überzeichnet wirkt (Wunsch Julia/Felix 08/2026).
 // HERGELEITET (Entgeltpunkt-Logik, Rentenwert 40,79 € seit 07/2025):
 //  - parttime 310 €  ≈ 15 Jahre 50%-Teilzeit bei Ø-Lohn = 7,5 EP × 40,79 €.
 //  - children 180 €  ≈ Elternzeit + verzögerter Wiedereinstieg ~4,4 EP.
@@ -70,7 +72,7 @@ export const TOGGLE_META = [
 
 export const BASE_GAP = 39.4; // % — Gender Pension Gap (Destatis 2023, ohne Hinterbliebene)
 export const BASE_EURO = 450; // €/Monat — Ø Rentendifferenz Frau/Mann (DRV 2024)
-export const RETIREMENT_YEARS = 20; // für die Lebenssumme auf dem Rentenbescheid
+export const RETIREMENT_YEARS = 15; // für die Lebenssumme auf dem Rentenbescheid
 
 const GapContext = createContext(null);
 

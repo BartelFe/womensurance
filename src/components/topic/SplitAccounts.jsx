@@ -150,9 +150,13 @@ export default function SplitAccounts() {
             </h2>
           </div>
 
-          {/* Bühne: zwei Konten + wandernde Punkte */}
+          {/* Bühne: zwei Konten + wandernde Punkte.
+              Ab md ist die Bühne höher, weil die Liste der geteilten Anrechte
+              dort in die Mitte zwischen die beiden Konten wandert (siehe unten). */}
           <div data-sa-stage className="relative">
-            <div className="relative w-full" style={{ height: 'min(34vh, 300px)' }}>
+            {/* Untergrenze 410 px: darunter passt die rund 200 px hohe Liste
+                nicht mehr zwischen Raute (Endposition 42 %) und Bühnenrand. */}
+            <div className="relative w-full h-[min(34vh,300px)] md:h-[clamp(410px,52vh,470px)]">
 
               {/* Konto-Karten */}
               <div className="absolute left-0 top-0 bottom-0 w-[42%] md:w-[38%] bg-bone/[0.06] border border-paper/15 rounded-md" />
@@ -221,23 +225,33 @@ export default function SplitAccounts() {
                 <span className="text-base md:text-xl font-bold text-paper/55 ml-2">Punkte</span>
               </div>
             </div>
-          </div>
 
-          {/* Was im Versorgungsausgleich landet */}
-          <div className="mt-5 md:mt-7 text-center">
-            <div data-sa-list-label className="eyebrow text-paper/55 mb-3">
-              Geteilt wird alles davon
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {SHARED.map((s) => (
-                <span
-                  key={s}
-                  data-sa-chip
-                  className="rounded-full border border-paper/20 px-3 py-1.5 text-[11px] md:text-xs text-paper/70"
-                >
-                  {s}
-                </span>
-              ))}
+            {/* Was im Versorgungsausgleich landet.
+                Mobil: schlicht unter der Bühne, als Chip-Wolke (unverändert).
+                Ab md: direkt unter der Raute, in der Lücke zwischen den beiden
+                Konten, als untereinanderstehende Liste in größerer Schrift
+                (Wunsch Felix 02.08.2026). Die Spalte ist 24 % breit — genau
+                der Abstand, den die beiden 38-%-Konten freilassen. */}
+            {/* top = Endposition der Raute (42 %) + halbe Rautenhöhe + Abstand,
+                damit die Liste unabhängig von der Bühnenhöhe immer gleich weit
+                unter der Raute hängt. */}
+            <div className="mt-5 text-center md:absolute md:left-1/2 md:top-[calc(42%_+_30px)] md:mt-0 md:w-[24%] md:-translate-x-1/2">
+              <div data-sa-list-label className="eyebrow text-paper/55 mb-3 md:mb-2">
+                Geteilt wird alles davon
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-2 md:flex-col md:gap-0">
+                {SHARED.map((s) => (
+                  <span
+                    key={s}
+                    data-sa-chip
+                    className="rounded-full border border-paper/20 px-3 py-1.5 text-[11px] text-paper/70
+                               md:w-full md:rounded-none md:border-0 md:border-t md:border-paper/15
+                               md:px-0 md:py-1 md:text-[15px] md:leading-snug md:text-paper/85"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
 

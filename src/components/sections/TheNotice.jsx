@@ -179,8 +179,8 @@ export default function TheNotice() {
             </h2>
             <p className="hidden md:block mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
               {de1(gap)} % klingen abstrakt. Aber die Lücke hat einen
-              Preis — jeden Monat, zwanzig Rentenjahre lang. Das hier ist
-              dein Bescheid.
+              Preis: jeden Monat, {RETIREMENT_YEARS} Rentenjahre lang. Das hier
+              ist dein Bescheid.
             </p>
             <p
               className={`hidden md:block mt-6 max-w-md text-sm text-paper/55 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
@@ -284,7 +284,7 @@ export default function TheNotice() {
                 <div data-sum className="mt-[1em] border border-ink/60 px-[1em] py-[0.6em]">
                   <div className="flex items-baseline justify-between gap-[1em]">
                     <span className="font-bold tracking-[0.06em] text-[0.85em] uppercase whitespace-nowrap">Monatliche Minderung</span>
-                    <span ref={monthlyRef} aria-hidden="true" className="tnum font-black text-[1.35em] text-pink-deep whitespace-nowrap">−0 €</span>
+                    <span ref={monthlyRef} aria-hidden="true" className="tnum font-black text-[1.35em] text-clay-deep whitespace-nowrap">−0 €</span>
                   </div>
                   <div data-mult className="tnum text-ink/75 text-[0.78em] text-right mt-[0.15em]">
                     × 12 Monate × {RETIREMENT_YEARS} Jahre Rente

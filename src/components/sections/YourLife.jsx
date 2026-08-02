@@ -11,34 +11,32 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * "Dein Leben" — die Lebensphasen-Kacheln.
  *
- * Zwei Modi (gsap.matchMedia):
- *  - ab md: gepinnte Horizontal-Section wie gehabt.
- *  - mobil: KEIN Horizontal-Scroll (Wunsch Julia 07/2026) — die Kacheln
- *    stehen schlicht untereinander und faden beim Scrollen ein.
+ * Umbau 02.08.2026 (Wunsch Felix): KEIN Horizontal-Scroll mehr. Die Kacheln
+ * stehen auf allen Breiten untereinander. Ab md stapeln sie sich per
+ * `position: sticky` übereinander — jede Kachel bleibt etwas tiefer stehen
+ * als ihre Vorgängerin (STICK_BASE + i * STICK_STEP), sodass ein schmaler
+ * Rand der darunterliegenden Karten sichtbar bleibt. Mobil bleibt alles wie
+ * gehabt: schlicht untereinander, mit Fade beim Scrollen.
+ *
+ * Die Prozentzahl rechts ist ab md ebenfalls sticky und steht damit die
+ * ganze Sektion über im Blick.
+ *
+ * ⚠️ Kein `overflow: hidden` auf einem Vorfahren dieser Sektion — das würde
+ * jedes `position: sticky` darin still abschalten.
  */
+
+// in rem
+const STICK_BASE = 6.5; // Abstand der ersten Karte zum Viewport-Rand (unter der Nav)
+const STICK_STEP = 0.75; // sichtbarer Rand je bereits gestapelter Karte
+
 export default function YourLife() {
   const root = useRef(null);
-  const pinRef = useRef(null);
   const trackRef = useRef(null);
   const counterRef = useRef(null);
   const [expandedId, setExpandedId] = useState(null);
 
   // Toggles leben jetzt ausschließlich im Hero — hier nur noch die Anzeige
   const { gap, baseGap } = useGap();
-
-  /**
-   * Der Horizontal-Scroll hängt am vertikalen Scroll — wer per Tastatur durch
-   * die Kacheln tabbt, würde sonst auf Elementen landen, die links oder rechts
-   * außerhalb des Bildschirms liegen. Bekommt eine Kachel den Fokus und steht
-   * nicht im sichtbaren Bereich, scrollen wir sie heran (WCAG 2.4.3/2.4.7).
-   * React' onFocus blubbert, der Handler greift also auch für Buttons/Links
-   * innerhalb der Kachel.
-   */
-  const focusCard = (phaseId) => (e) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const offscreen = r.left < 8 || r.right > window.innerWidth - 8;
-    if (offscreen) window.__scrollToPhase?.(phaseId, { duration: 0.35 });
-  };
 
   // Animate counter on gap change
   useEffect(() => {
@@ -68,71 +66,46 @@ export default function YourLife() {
 
   useEffect(() => {
     const root_ = root.current;
-    const pin = pinRef.current;
     const track = trackRef.current;
-    if (!root_ || !pin || !track) return;
+    if (!root_ || !track) return;
 
-    const mm = gsap.matchMedia();
-
-    // ── Desktop / Tablet: gepinnter Horizontal-Scroll ──
-    mm.add('(min-width: 768px)', () => {
-      const scrollDistance = () => track.scrollWidth - window.innerWidth + 200;
-
-      const mainTween = gsap.to(track, {
-        x: () => -scrollDistance(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: root_,
-          start: 'top top',
-          end: () => `+=${scrollDistance() + window.innerHeight}`,
-          scrub: 1,
-          pin,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
+    /**
+     * Absolute Dokumentposition einer Kachel im normalen Fluss.
+     * Bewusst NICHT über `offsetTop` oder `getBoundingClientRect()`: sobald
+     * eine Karte klebt, liefern beide die verschobene Position. Die Höhen der
+     * Vorgängerinnen sind dagegen von `sticky` unberührt.
+     */
+    const flowTopOf = (card) => {
       const cards = track.querySelectorAll('[data-phase-card]');
-      cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0.3, scale: 0.94 },
-          {
-            opacity: 1,
-            scale: 1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'left 80%',
-              end: 'left 30%',
-              scrub: 0.5,
-              containerAnimation: mainTween,
-            },
-          }
-        );
-      });
+      const gapPx = parseFloat(getComputedStyle(track).rowGap) || 0;
+      let y = track.getBoundingClientRect().top + window.scrollY;
+      for (const c of cards) {
+        if (c === card) break;
+        y += c.offsetHeight + gapPx;
+      }
+      return y;
+    };
 
-      // Nav-Dropdown und Tastatur-Fokus springen gezielt zu einer Kachel
-      window.__scrollToPhase = (phaseId, { duration = 1.6 } = {}) => {
-        const st = mainTween.scrollTrigger;
-        const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
-        if (!st || !card) return;
-        const ratio = Math.max(0, Math.min(1, (card.offsetLeft - 48) / scrollDistance()));
-        const y = st.start + ratio * (st.end - st.start);
-        const reduced = document.documentElement.dataset.reducedMotion === 'true';
-        if (window.__lenis) {
-          window.__lenis.scrollTo(y, { duration: reduced ? 0 : duration });
-        } else {
-          window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
-        }
-      };
+    // Nav-Dropdown und /#phase-<id> springen gezielt zu einer Kachel
+    window.__scrollToPhase = (phaseId, { duration = 1.2 } = {}) => {
+      const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
+      if (!card) return;
+      // Ab md ist `top` die Klebeposition, mobil "auto" → fester Nav-Abstand.
+      const stick = parseFloat(getComputedStyle(card).top);
+      const offset = Number.isFinite(stick) ? stick + 12 : 88;
+      const y = Math.max(0, flowTopOf(card) - offset);
+      const reduced = document.documentElement.dataset.reducedMotion === 'true';
+      if (window.__lenis) {
+        window.__lenis.scrollTo(y, { duration: reduced ? 0 : duration });
+      } else {
+        window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+      }
+    };
 
-      return () => {
-        gsap.set(track, { clearProps: 'transform' });
-      };
-    });
-
-    // ── Mobil: gestapelt, kein Pin, kein Horizontal-Scroll ──
+    // Fade beim Scrollen nur mobil. Ab md übernimmt das Stapeln selbst die
+    // Choreografie — ein ScrollTrigger auf einer klebenden Karte würde seine
+    // Start-/Endpunkte an der verschobenen Position messen.
+    const mm = gsap.matchMedia();
     mm.add('(max-width: 767px)', () => {
       const cards = track.querySelectorAll('[data-phase-card]');
       cards.forEach((card) => {
@@ -148,15 +121,6 @@ export default function YourLife() {
           }
         );
       });
-
-      // Nav-Dropdown: schlicht zur Kachel scrollen
-      window.__scrollToPhase = (phaseId) => {
-        const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
-        if (!card) return;
-        const y = card.getBoundingClientRect().top + window.scrollY - 80;
-        if (window.__lenis) window.__lenis.scrollTo(y, { duration: 1.2 });
-        else window.scrollTo({ top: y, behavior: 'smooth' });
-      };
     });
 
     return () => {
@@ -167,32 +131,38 @@ export default function YourLife() {
 
   return (
     <section ref={root} id="life" className="relative bg-paper text-ink">
-      <div ref={pinRef} className="relative md:h-[100svh] md:overflow-hidden pt-20 pb-20 md:py-0">
-        {/* Zähler — mobil im Fluss, ab md oben rechts über den Karten.
-            Der Desktop-Abstand nach oben ist bewusst großzügig, damit die
-            Zahl nie über den Kacheln liegt. */}
-        <div className="relative md:absolute md:top-0 md:right-0 z-30 px-6 md:px-0 md:pt-20 md:pr-10 pb-8 md:pb-0 pointer-events-none">
-          <div className="flex items-baseline justify-end gap-1">
-            <span className="data-num text-ink text-4xl md:text-6xl">−</span>
-            <span ref={counterRef} className="data-num text-pink-display text-5xl md:text-7xl">{de1(baseGap)}</span>
-            <span className="data-num text-ink text-4xl md:text-6xl">%</span>
-          </div>
-          <div className="text-xs text-ink/75 mt-1 text-right">der Männer-Rente</div>
-        </div>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-24 md:pb-32">
+        <div className="md:grid md:grid-cols-12 md:gap-10">
 
-        {/* Track: ab md horizontal + volle Höhe, mobil einfach untereinander */}
-        <div className="md:absolute md:inset-0 md:flex md:items-stretch md:pt-52 md:pb-12">
+          {/* Zähler — mobil im Fluss über den Karten, ab md sticky in der
+              rechten Spalte, damit die Zahl die ganze Sektion über sichtbar
+              bleibt. Die Grid-Zelle streckt sich über die volle Zeilenhöhe;
+              nur deshalb hat das sticky überhaupt Laufweg. */}
+          <div className="md:col-span-4 md:col-start-9 md:row-start-1 pb-10 md:pb-0">
+            <div className="md:sticky md:top-28 pointer-events-none">
+              <div className="flex items-baseline justify-end md:justify-start gap-1">
+                <span className="data-num text-ink text-4xl md:text-6xl">−</span>
+                <span ref={counterRef} className="data-num text-pink-display text-5xl md:text-7xl">{de1(baseGap)}</span>
+                <span className="data-num text-ink text-4xl md:text-6xl">%</span>
+              </div>
+              <div className="text-xs text-ink/75 mt-1 text-right md:text-left">der Männer-Rente</div>
+            </div>
+          </div>
+
+          {/* Kachel-Stapel */}
           <div
             ref={trackRef}
-            className="flex flex-col md:flex-row gap-6 md:gap-8 px-6 md:px-0 md:pl-12 md:h-full md:items-stretch md:will-change-transform"
+            className="relative md:col-span-7 md:col-start-1 md:row-start-1 flex flex-col gap-6 md:gap-8"
           >
             {lifePhases.map((phase, i) => (
               <article
                 key={phase.id}
                 data-phase-card
                 data-phase-id={phase.id}
-                onFocus={focusCard(phase.id)}
-                className="shrink-0 w-full md:w-[440px] xl:w-[520px] 2xl:w-[580px] md:h-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm relative flex flex-col overflow-hidden"
+                style={{ top: `${STICK_BASE + i * STICK_STEP}rem` }}
+                /* focus-within:z-50 — sonst könnte eine bereits gestapelte
+                   Karte das per Tastatur fokussierte Element verdecken. */
+                className="relative md:sticky md:min-h-[58vh] md:scroll-mt-32 focus-within:z-50 w-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm flex flex-col overflow-hidden md:shadow-[0_30px_80px_-30px_rgba(42,33,27,0.45)]"
               >
                 <div className="mb-4 md:mb-6">
                   <span className="text-xs text-ink/75">Alter {phase.age}</span>
@@ -206,21 +176,20 @@ export default function YourLife() {
                 </h3>
 
                 <p
-                  className="body-lead text-ink/70 mb-4 md:mb-6"
+                  className="body-lead text-ink/70 mb-4 md:mb-6 max-w-2xl"
                   style={{ fontSize: 'clamp(0.95rem, 1vw, 1.3rem)' }}
                 >
                   {phase.body}
                 </p>
 
                 <div className="mt-auto pt-4 md:pt-6 border-t border-clay-light/60">
-                  {/* pink-deep ist hier unvermeidbar: #ff2e88 erreicht selbst auf
-                      REINWEISS nur 3,5:1, kleiner Text braucht nach WCAG 1.4.3
-                      aber 4,5:1. Kein heller Grund kann das lösen — die einzige
-                      Alternative wäre, das Label auf >=18,66px fett zu vergrößern
-                      (dann gilt die 3:1-Schwelle für großen Text). */}
-                  <div className="eyebrow text-pink-deep mb-1.5 md:mb-2">Was zählt jetzt</div>
+                  {/* Braun statt Pink (Wunsch Felix 02.08.2026): #ff2e88
+                      erreicht selbst auf REINWEISS nur 3,5:1, kleiner Text
+                      braucht nach WCAG 1.4.3 aber 4,5:1. Statt eines
+                      abgedunkelten Pinks nehmen wir das Palettenbraun. */}
+                  <div className="eyebrow text-clay-deep mb-1.5 md:mb-2">Was zählt jetzt</div>
                   <p
-                    className="text-ink/75 leading-relaxed"
+                    className="text-ink/75 leading-relaxed max-w-2xl"
                     style={{ fontSize: 'clamp(0.8rem, 0.85vw, 1.05rem)' }}
                   >
                     {phase.insurance}
@@ -231,7 +200,7 @@ export default function YourLife() {
                     <button
                       onClick={() => setExpandedId(phase.id)}
                       data-cursor="link"
-                      className="mt-5 inline-flex items-center gap-2 eyebrow text-pink-deep hover:text-ink transition-colors"
+                      className="mt-5 inline-flex items-center gap-2 eyebrow text-clay-deep hover:text-ink transition-colors"
                     >
                       <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none">+</span>
                       Mehr erfahren
@@ -262,7 +231,7 @@ export default function YourLife() {
                   {String(i + 1).padStart(2, '0')}
                 </div>
 
-                {/* Aufklapp-Overlay: legt sich über die Kachel, kein Layout-Shift im Pin */}
+                {/* Aufklapp-Overlay: legt sich über die Kachel, kein Layout-Shift */}
                 <div
                   inert={expandedId === phase.id ? undefined : ''}
                   className={`absolute inset-0 z-20 bg-ink text-paper p-8 md:p-10 flex flex-col transition-all duration-500 ${
@@ -291,9 +260,6 @@ export default function YourLife() {
                 </div>
               </article>
             ))}
-
-            {/* End spacer — nur im Horizontal-Modus nötig */}
-            <div className="hidden md:block shrink-0 w-[20vw]" />
           </div>
         </div>
       </div>

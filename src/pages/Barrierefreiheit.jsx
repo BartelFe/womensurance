@@ -12,8 +12,10 @@ import LegalLayout, { H2, H3, P, UL, Block, A } from '../components/legal/LegalL
  * Endfassung des Textes macht DVM / Maisel Consult, genau wie bei Impressum
  * und Datenschutzerklärung (Werkvertrag § 2 Abs. 6).
  *
- * ⚠️ Der Punkt „Textalternativen für Bilder" wird erst wahr, wenn Julias Fotos
- * mit Alt-Texten eingepflegt sind. Vor Go-Live gegenprüfen.
+ * ✅ Der Punkt „Textalternativen für Bilder" stimmt seit 02.08.2026: Julias
+ * drei Fotos sind eingepflegt und haben beschreibende Alt-Texte. Für später
+ * über Sanity eingepflegte Bilder gilt weiterhin der Absatz „Redaktionelle
+ * Inhalte" — vor Abnahme erneut gegenprüfen.
  *
  * ✏️ Keine Gedankenstriche in diesem Projekt (Wunsch Felix, 01.08.2026).
  */
