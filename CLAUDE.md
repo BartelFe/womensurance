@@ -158,6 +158,26 @@ Alle redaktionellen Platzhalter auf Startseite, `/rentenluecke` und `/scheidung`
 
 **Messstand:** `npm run build` grün · 0 Kontrastverstöße und `ungeprueft: 0` auf `/`, `/rentenluecke`, `/scheidung`, `/impressum` bei 1440×900 und 375×812 · kein Pin-Überlauf, `document.scrollWidth === innerWidth` überall · keine Konsolenfehler bei frischem Laden.
 
+> ⚠️ Teile von A.11 und A.12 sind durch **A.13** überholt (Sticky-Stapel in `YourLife`, Overlay-Aufklapptext, „durchschnittlich"-Bedingung, `MeetJulia`-H2).
+
+## A.13 · Layout-Korrekturrunde 02.08.2026 (Felix, nach Sichtung)
+
+- **`YourLife`: der Sticky-Stapel ist wieder raus.** Das Stapeln sah nicht gut aus. Die Kacheln stehen jetzt auf allen Breiten schlicht untereinander und blenden sich beim Scrollen ein — dieselbe `fromTo`-Mechanik wie `TheMethod` („4 Schritte. Ein Konzept."). Damit sind auch die drei Sticky-Warnungen aus A.11 hinfällig: kein `top`-Versatz, kein `focus-within:z-50`, ScrollTrigger läuft wieder auf allen Breiten.
+  - Der **Scrub aus `TheMethod`** (Vorgängerkarten schrumpfen und rutschen hoch) wurde bewusst **nicht** übernommen: dort sind die Karten ~250 px hoch, hier 420–1600 px. Derselbe `yPercent`-Wert zöge die Vorgängerinnen sichtbar über die nachfolgenden — genau der Stapel-Look, der raus sollte.
+  - `__scrollToPhase` behält die Vorgänger-Summe (`offsetHeight`), jetzt aber wegen der `translateY(80px)`-Einblendung statt wegen `sticky`. Fester Offset 96 px.
+  - **Aufklapptext liegt jetzt auf allen Breiten im Fluss** (`hidden`-Attribut), die Kachel wächst. Ohne Stapel gibt es keinen Grund mehr, Julias langen Text in ein Scrollfenster zu sperren. Der Button toggelt („Mehr erfahren" / „Weniger anzeigen", `aria-expanded`).
+- **Prozentzahl mobil fixiert.** Der Zähler klebt jetzt auch mobil (`sticky top-20`), ab `md` wie gehabt bei `top-28`.
+  - ⚠️ `sticky` sitzt auf dem **Grid-Element selbst**, nicht auf einem Kind: mobil ist der Container nur so hoch wie sein Inhalt, ein sticky Kind hätte darin keinen Laufweg. Ab `md` braucht es dafür `md:self-start`, sonst streckt das Grid die Zelle auf die volle Zeilenhöhe und `sticky` greift wieder nicht.
+  - Mobil ist es ein **deckendes Band über die volle Breite** (`-mx-6`, `bg-paper`, Hairline unten), kein schwebendes Kästchen: ein Kästchen legte sich beim Scrollen gemessen über je eine Textzeile jeder Kachel. Ab `md` transparent und ohne Rahmen.
+- **`.notice-doc` (Rentenbescheid) ist jetzt auch an die BREITE gekoppelt.** Vorher hing die Schriftgröße ab `md` allein an der Viewport-Höhe. Der Bescheid hat wegen mehrerer `whitespace-nowrap`-Zeilen eine harte Mindestbreite von **28,8em** — auf 768×1024 ragte er dadurch 56 px aus seiner Spalte, auf 1920×1080 rund 40 px, beides vom `overflow-hidden` der Pin-Sektion gekappt (WCAG 1.4.10). Zwei Media-Queries, Divisor = Spaltenanteil / 29,5em.
+  - Dazu bekommt der Bescheid zwischen `md` und `lg` mehr Spaltenbreite (`md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:grid-cols-2`); bei 50/50 wäre seine Schrift auf einem 768er Tablet auf 10,7 px geschrumpft, so sind es 12,9 px. Die beiden Fließtext-Absätze in der linken Spalte sind dort `hidden lg:block`. **Ab 1024 px ist der Bescheid unverändert.** Wer die Spaltenanteile ändert, muss die Divisoren in `globals.css` mitziehen.
+- **`TheTruth`:** „durchschnittlich" steht jetzt **immer** und in voller Schriftgröße da, auch wenn Lebensereignisse angeklickt sind (Wunsch Felix, ersetzt die `activeMeta`-Bedingung aus A.12). Gemessen: „durchschnittlich 59,4 %." braucht 1016 px in der 1152 px breiten `line-mask`, bricht also nicht um.
+- **`MeetJulia`-H2** hat jetzt das Satzbild von „4 Schritte. Ein Konzept.": `display-lg` in Paper, „womensurance" kursiv in Pink, `clamp(2.1rem, 3.8vw, 3.8rem)`. Mobil mehr Luft (`py-24`, `gap-12`, `space-y-7`).
+- **Footer-Rechtsleiste** bricht mobil um (`flex-col` + `flex-wrap gap-y-3`); vorher standen die vier Links in einem `flex gap-6` ohne Umbruch, „Cookie-Einstellungen" lief aus dem Bild.
+- **`LegalLayout`-H1:** `hyphens-auto` + `lang="de"` + `break-words`. „Datenschutzerklärung" ist ein 20-Zeichen-Wort und war mobil rund 60 px breiter als die Spalte; es wird jetzt getrennt statt verkleinert, die Schriftgröße bleibt bei `clamp(2.4rem, 6vw, 5rem)`.
+
+**Messstand:** `npm run build` grün (8,87 s) · 0 Kontrastverstöße und `ungeprueft: 0` auf `/`, `/rentenluecke`, `/scheidung`, `/datenschutz`, `/impressum`, `/barrierefreiheit` · `document.scrollWidth === innerWidth` bei **320 · 375 · 768 · 1024 · 1280 · 1440 · 1920** · nichts vom `overflow-hidden` gekappt außer den drei bewusst überstehenden Deko-Elementen (Stempel „VERMEIDBAR", Wasserzeichen „Lücke", Radial-Gradient).
+
 ---
 
 # B · Projekt-, Design- & Story-Kontext (ursprünglich, ~Mai 2026)

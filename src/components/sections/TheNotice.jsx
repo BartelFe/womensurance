@@ -169,7 +169,15 @@ export default function TheNotice() {
   return (
     <section ref={root} id="gap" className="relative bg-ink text-paper">
       <div ref={pinRef} className="relative h-[100svh] overflow-hidden flex items-center">
-        <div className="w-full max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-4 md:gap-10 items-center">
+        {/* Zwischen md und lg bekommt der Bescheid mehr Breite als die
+            Überschrift (0,8fr / 1,2fr). Bei 50/50 blieben auf einem 768er
+            Tablet nur 316px Spalte übrig — der Bescheid kann aber nicht
+            unter 28,8em, seine Schrift wäre dort auf 10,7px geschrumpft.
+            Ab lg wieder 50/50, dort ist Platz genug. `minmax(0, …)` statt
+            `…fr`, sonst verhindert die Auto-Mindestbreite der Grid-Zellen
+            das Schrumpfen. Die Divisoren in `.notice-doc` (globals.css)
+            hängen an genau diesen Anteilen. */}
+        <div className="w-full max-w-6xl mx-auto px-6 md:px-12 grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:grid-cols-2 gap-4 md:gap-10 items-center">
 
           {/* ── Links: die These (mobil nur die Überschrift) ── */}
           <div data-doc-intro>
@@ -179,14 +187,16 @@ export default function TheNotice() {
             </h2>
             {/* Die Prozentzahl bleibt bewusst dynamisch: sie folgt den Toggles
                 im Hero, sonst widerspräche der Text dem Bescheid daneben. */}
-            <p className="hidden md:block mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
+            {/* Erst ab lg: zwischen md und lg ist die linke Spalte nur rund
+                250px breit, da steht neben der Überschrift kein Fließtext. */}
+            <p className="hidden lg:block mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
               {de1(gap)} % sind mehr als nur eine Statistik. Für viele Frauen
               bedeuten sie jeden Monat mehrere hundert Euro weniger Rente. Hier
               siehst du, was diese Zahl ganz konkret für deine persönliche
               Situation bedeutet und warum es sich lohnt, früh gegenzusteuern.
             </p>
             <p
-              className={`hidden md:block mt-6 max-w-md text-sm text-paper/55 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
+              className={`hidden lg:block mt-6 max-w-md text-sm text-paper/55 leading-relaxed ${activeMeta.length === 0 ? '' : 'lg:invisible'}`}
             >
               Tipp: Wähl oben im Diagramm an, was auf dich zutrifft — der
               Bescheid rechnet live mit.

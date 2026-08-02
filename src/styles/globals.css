@@ -242,11 +242,26 @@
   font-size: clamp(8px, min(calc((100svh - 98px) / 48), calc((100vw - 48px) / 27.2)), 15px);
   line-height: 1.5;
 }
+/* Ab md steht die Überschrift neben dem Bescheid. Der zweite Term koppelt die
+   Schriftgröße an die BREITE der Bescheid-Spalte: der Bescheid hat wegen
+   mehrerer `whitespace-nowrap`-Zeilen eine harte Mindestbreite von 28,8em und
+   kann nicht schmaler werden. Ohne diesen Term hing die Größe allein an der
+   Viewport-HÖHE — auf einem 768er Tablet (hoch, aber schmal) ragte der
+   Bescheid dadurch 56px aus seiner Spalte und wurde vom overflow-hidden der
+   Pin-Sektion gekappt (WCAG 1.4.10, gemessen 02.08.2026). Gleiche Technik wie
+   mobil. Divisor jeweils = Spaltenanteil / 29,5em Sicherheitsbreite. */
 @media (min-width: 768px) {
-  /* ab md steht die Überschrift daneben — nur noch Rand-Puffer nötig */
+  /* md–lg: Spalten 0,8fr / 1,2fr → Bescheid bekommt 60 % von (100vw − 136px) */
   .notice-doc {
-    font-size: clamp(9px, calc((100vh - 34px) / 54.5), 19px);
-    font-size: clamp(9px, calc((100svh - 34px) / 54.5), 19px);
+    font-size: clamp(9px, min(calc((100vh - 34px) / 54.5), calc((100vw - 136px) / 49.2)), 19px);
+    font-size: clamp(9px, min(calc((100svh - 34px) / 54.5), calc((100vw - 136px) / 49.2)), 19px);
+  }
+}
+@media (min-width: 1024px) {
+  /* ab lg: 50/50, Container bei 1152px gedeckelt */
+  .notice-doc {
+    font-size: clamp(9px, min(calc((100vh - 34px) / 54.5), calc((min(1152px, 100vw) - 136px) / 59)), 19px);
+    font-size: clamp(9px, min(calc((100svh - 34px) / 54.5), calc((min(1152px, 100vw) - 136px) / 59)), 19px);
   }
 }
 

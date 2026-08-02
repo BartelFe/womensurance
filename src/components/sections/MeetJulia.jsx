@@ -149,9 +149,12 @@ export default function MeetJulia() {
       </div>
 
       {/* ── Part 2: Bio strip ─────────────────────────────────────── */}
-      <div className="bg-ink text-paper mt-16 md:mt-24 py-20 md:py-28 px-6 md:px-12">
+      {/* Mobil mehr Luft als früher (py-20 → py-24, gap-6 → gap-12):
+          Bild, Überschrift und Fließtext standen auf dem Handy fast
+          aneinander (Wunsch Felix 02.08.2026). */}
+      <div className="bg-ink text-paper mt-16 md:mt-24 py-24 md:py-28 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-12 gap-6 md:gap-10 items-center">
+          <div className="grid md:grid-cols-12 gap-12 md:gap-10 items-center">
 
             {/* Ein großes Bild statt des früheren Paars (Wunsch Julia 08/2026).
                 Das Seitenverhältnis 5/7 entspricht fast exakt der Originaldatei
@@ -179,16 +182,19 @@ export default function MeetJulia() {
             {/* Bio text */}
             <div
               data-bio
-              className="md:col-span-6 md:col-start-7 space-y-6"
+              className="md:col-span-6 md:col-start-7 space-y-7 md:space-y-6"
             >
-              {/* Überschrift eine Stufe kleiner als früher: „Die Geschichte
-                  hinter womensurance" ist gut doppelt so lang wie „Die
-                  Geschichte" und stand sonst dreizeilig in der Spalte. */}
+              {/* Satzbild wie „4 Schritte. Ein Konzept." (TheMethod.jsx):
+                  display-lg in Paper, der Markenname kursiv in Pink.
+                  Kleinere Obergrenze als dort, weil die Überschrift hier
+                  nicht über die volle Breite läuft, sondern in einer
+                  6-Spalten-Spalte steht (Wunsch Felix 02.08.2026). */}
               <h2
-                className="display-lg text-pink mb-8 text-balance"
-                style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.2rem)' }}
+                className="display-lg text-paper mb-6 md:mb-8 text-balance"
+                style={{ fontSize: 'clamp(2.1rem, 3.8vw, 3.8rem)' }}
               >
-                Die Geschichte hinter womensurance
+                Die Geschichte hinter{' '}
+                <span className="display-italic text-pink">womensurance</span>
               </h2>
 
               {[

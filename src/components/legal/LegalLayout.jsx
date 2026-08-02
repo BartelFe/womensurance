@@ -74,7 +74,17 @@ export default function LegalLayout({ title, subtitle, stand, children }) {
       <section className="bg-ink text-paper px-6 md:px-12 pt-36 md:pt-44 pb-14 md:pb-20">
         <div className="max-w-3xl mx-auto">
           <div className="eyebrow text-pink mb-6">Rechtliches</div>
-          <h1 className="display-xl text-paper" style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}>
+          {/* „Datenschutzerklärung" ist ein einziges 20-Zeichen-Wort. Ohne
+              Trennung war es auf einem 375er Display rund 60px breiter als
+              die Spalte und lief in den Rand. `hyphens-auto` + `lang="de"`
+              trennt es sauber („Datenschutz-/erklärung"), die Schriftgröße
+              kann dadurch bleiben. `break-words` ist das Netz für Geräte,
+              auf denen die Trennung nicht greift. */}
+          <h1
+            className="display-xl text-paper hyphens-auto break-words"
+            lang="de"
+            style={{ fontSize: 'clamp(2.4rem, 6vw, 5rem)' }}
+          >
             {title}
           </h1>
           {subtitle && <p className="mt-6 body-lead text-paper/55 max-w-xl">{subtitle}</p>}

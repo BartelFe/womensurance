@@ -9,10 +9,7 @@ export default function TheTruth() {
   const numRef = useRef(null);
   const headRef = useRef(null);
   const subRef = useRef(null);
-  const { gap, baseGap, activeMeta } = useGap();
-  // „durchschnittlich" stimmt nur, solange niemand ein Lebensereignis
-  // angeklickt hat — danach steht dort die personalisierte Zahl.
-  const istDurchschnitt = activeMeta.length === 0;
+  const { gap, baseGap } = useGap();
 
   useEffect(() => {
     if (!numRef.current) return;
@@ -61,9 +58,6 @@ export default function TheTruth() {
   return (
     <section ref={root} className="bg-ink text-paper py-32 md:py-48 px-6 md:px-12 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Schriftgröße bewusst kleiner als früher: „Deine Rentenlücke:" ist
-            sechs Zeichen länger als das frühere „Deine Lücke:" und würde bei
-            10rem aus dem Container laufen (line-mask kappt per overflow). */}
         {/* Obergrenze 6,5rem, nicht 10rem wie früher: „Deine Rentenlücke:" ist
             sechs Zeichen länger als das frühere „Deine Lücke:". Ab ~104px
             Schriftgrad bricht „Aber sie ist kein Schicksal." in der 1152px
@@ -71,13 +65,13 @@ export default function TheTruth() {
             zerlegt die zeilenweise Einblendung. */}
         <div ref={headRef} className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.2rem, 7vw, 6.5rem)' }}>
           <span className="block line-mask"><span data-line>Deine Rentenlücke:</span></span>
+          {/* „durchschnittlich" steht immer da und in voller Schriftgröße
+              (Wunsch Felix 02.08.2026) — also auch dann, wenn im Hero
+              Lebensereignisse angeklickt sind und die Zahl über dem
+              Basiswert liegt. `not-italic`, damit nur die Zahl kursiv bleibt. */}
           <span className="block line-mask">
             <span data-line>
-              {istDurchschnitt && (
-                <span className="not-italic text-paper/70" style={{ fontSize: '0.4em' }}>
-                  durchschnittlich{' '}
-                </span>
-              )}
+              <span className="not-italic">durchschnittlich </span>
               <span ref={numRef} className="display-italic text-pink">{de1(gap)}</span>
               <span className="display-italic text-pink">&nbsp;%</span>
               <span>.</span>

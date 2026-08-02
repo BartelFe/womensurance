@@ -48,9 +48,12 @@ export default function Footer() {
 
       {/* Legal bar */}
       <div className="border-t border-paper/10 bg-ink/80 px-6 md:px-12 py-8">
-        <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-paper/55">
-          <span>© 2026 Womensurance — Eine Marke der Deutschen Versicherungsmakler GmbH &amp; Co. KG</span>
-          <div className="flex gap-6">
+        {/* Mobil untereinander: die vier Links passten in einer Zeile nicht
+            nebeneinander (`flex gap-6` ohne Umbruch), „Cookie-Einstellungen"
+            lief dadurch aus dem Bild. Ab md wieder zweispaltig. */}
+        <div className="flex flex-col gap-5 md:flex-row md:flex-wrap md:items-center md:justify-between text-xs text-paper/55">
+          <span className="leading-relaxed">© 2026 Womensurance — Eine Marke der Deutschen Versicherungsmakler GmbH &amp; Co. KG</span>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
             <Link to="/impressum" className="hover:text-pink">Impressum</Link>
             <Link to="/datenschutz" className="hover:text-pink">Datenschutz</Link>
             <Link to="/barrierefreiheit" className="hover:text-pink">Barrierefreiheit</Link>

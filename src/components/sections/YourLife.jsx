@@ -11,23 +11,22 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * "Dein Leben" — die Lebensphasen-Kacheln.
  *
- * Umbau 02.08.2026 (Wunsch Felix): KEIN Horizontal-Scroll mehr. Die Kacheln
- * stehen auf allen Breiten untereinander. Ab md stapeln sie sich per
- * `position: sticky` übereinander — jede Kachel bleibt etwas tiefer stehen
- * als ihre Vorgängerin (STICK_BASE + i * STICK_STEP), sodass ein schmaler
- * Rand der darunterliegenden Karten sichtbar bleibt. Mobil bleibt alles wie
- * gehabt: schlicht untereinander, mit Fade beim Scrollen.
+ * Umbau 02.08.2026 (Wunsch Felix, zweite Runde): weder Horizontal-Scroll noch
+ * `position: sticky`-Stapel. Die Kacheln stehen auf ALLEN Breiten schlicht
+ * untereinander und blenden sich beim Scrollen ein — dieselbe Mechanik wie
+ * „4 Schritte. Ein Konzept." (TheMethod.jsx).
  *
- * Die Prozentzahl rechts ist ab md ebenfalls sticky und steht damit die
- * ganze Sektion über im Blick.
+ * Bewusst OHNE den Scrub aus TheMethod, der bereits gescrollte Karten leicht
+ * verkleinert und übereinanderschiebt: dort sind die Karten ~250px hoch, hier
+ * 500–900px. Derselbe Wert würde die Vorgängerkarten sichtbar über die
+ * nachfolgenden ziehen — also genau der Stapel-Look, der raus sollte.
  *
- * ⚠️ Kein `overflow: hidden` auf einem Vorfahren dieser Sektion — das würde
- * jedes `position: sticky` darin still abschalten.
+ * Die Prozentzahl klebt auf allen Breiten (mobil oben rechts als Kachel über
+ * dem Inhalt, ab md in der rechten Spalte) und ist damit die ganze Sektion
+ * über sichtbar. Das funktioniert nur, weil Zähler und Kachel-Spalte
+ * GESCHWISTER im selben Container sind: ein sticky-Element klebt nur so
+ * lange, wie sein Elternelement im Bild ist.
  */
-
-// in rem
-const STICK_BASE = 6.5; // Abstand der ersten Karte zum Viewport-Rand (unter der Nav)
-const STICK_STEP = 0.75; // sichtbarer Rand je bereits gestapelter Karte
 
 /** `body`/`details` in lifePhases.js dürfen String oder Absatz-Array sein. */
 const asParagraphs = (v) => (Array.isArray(v) ? v : v ? [v] : []);
@@ -67,8 +66,8 @@ export default function YourLife() {
     }
   }, [baseGap]);
 
-  // Mobil wächst die Kachel beim Aufklappen, dadurch verschieben sich alle
-  // Trigger darunter. Auf Desktop ist es ein Overlay, da ändert sich nichts.
+  // Der Aufklapptext liegt im Fluss, die Kachel wächst also beim Öffnen.
+  // Dadurch verschieben sich alle Trigger darunter.
   useEffect(() => {
     const t = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(t);
@@ -81,9 +80,9 @@ export default function YourLife() {
 
     /**
      * Absolute Dokumentposition einer Kachel im normalen Fluss.
-     * Bewusst NICHT über `offsetTop` oder `getBoundingClientRect()`: sobald
-     * eine Karte klebt, liefern beide die verschobene Position. Die Höhen der
-     * Vorgängerinnen sind dagegen von `sticky` unberührt.
+     * Bewusst NICHT über `getBoundingClientRect()`: die Einblendung setzt
+     * währenddessen ein `transform: translateY(80px)` auf die Karte, das dort
+     * mitgemessen würde. Die Höhen der Vorgängerinnen sind davon unberührt.
      */
     const flowTopOf = (card) => {
       const cards = track.querySelectorAll('[data-phase-card]');
@@ -100,10 +99,7 @@ export default function YourLife() {
     window.__scrollToPhase = (phaseId, { duration = 1.2 } = {}) => {
       const card = track.querySelector(`[data-phase-id="${phaseId}"]`);
       if (!card) return;
-      // Ab md ist `top` die Klebeposition, mobil "auto" → fester Nav-Abstand.
-      const stick = parseFloat(getComputedStyle(card).top);
-      const offset = Number.isFinite(stick) ? stick + 12 : 88;
-      const y = Math.max(0, flowTopOf(card) - offset);
+      const y = Math.max(0, flowTopOf(card) - 96); // 96 = Nav + Luft
       const reduced = document.documentElement.dataset.reducedMotion === 'true';
       if (window.__lenis) {
         window.__lenis.scrollTo(y, { duration: reduced ? 0 : duration });
@@ -112,30 +108,27 @@ export default function YourLife() {
       }
     };
 
-    // Fade beim Scrollen nur mobil. Ab md übernimmt das Stapeln selbst die
-    // Choreografie — ein ScrollTrigger auf einer klebenden Karte würde seine
-    // Start-/Endpunkte an der verschobenen Position messen.
-    const mm = gsap.matchMedia();
-    mm.add('(max-width: 767px)', () => {
+    const ctx = gsap.context(() => {
       const cards = track.querySelectorAll('[data-phase-card]');
-      cards.forEach((card) => {
+      cards.forEach((card, i) => {
         gsap.fromTo(
           card,
-          { opacity: 0, y: 36 },
+          { y: 80, opacity: 0, rotate: i % 2 === 0 ? -1.5 : 1.5 },
           {
-            opacity: 1,
             y: 0,
-            duration: 0.7,
+            opacity: 1,
+            rotate: 0,
+            duration: 1,
             ease: 'power3.out',
-            scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none reverse' },
+            scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none reverse' },
           }
         );
       });
-    });
+    }, root_);
 
     return () => {
       delete window.__scrollToPhase;
-      mm.revert();
+      ctx.revert();
     };
   }, []);
 
@@ -144,22 +137,39 @@ export default function YourLife() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-24 md:pb-32">
         <div className="md:grid md:grid-cols-12 md:gap-10">
 
-          {/* Zähler — mobil im Fluss über den Karten, ab md sticky in der
-              rechten Spalte, damit die Zahl die ganze Sektion über sichtbar
-              bleibt. Die Grid-Zelle streckt sich über die volle Zeilenhöhe;
-              nur deshalb hat das sticky überhaupt Laufweg. */}
-          <div className="md:col-span-4 md:col-start-9 md:row-start-1 pb-10 md:pb-0">
-            <div className="md:sticky md:top-28 pointer-events-none">
-              <div className="flex items-baseline justify-end md:justify-start gap-1">
-                <span className="data-num text-ink text-4xl md:text-6xl">−</span>
-                <span ref={counterRef} className="data-num text-pink-display text-5xl md:text-7xl">{de1(baseGap)}</span>
-                <span className="data-num text-ink text-4xl md:text-6xl">%</span>
+          {/* Zähler — klebt auf allen Breiten. Mobil als kompakte dunkle
+              Kachel oben rechts über den Karten (Wunsch Felix 02.08.2026),
+              ab md ruhig in der rechten Spalte. Die Grid-Zelle streckt sich
+              über die volle Zeilenhöhe; nur deshalb hat das sticky Laufweg. */}
+          {/* `sticky` sitzt auf dem Grid-Element SELBST, nicht auf einem Kind:
+              mobil ist dieser Container nur so hoch wie die Kachel, ein
+              sticky Kind hätte darin praktisch keinen Laufweg. Ab md braucht
+              es dafür `self-start`, sonst streckt das Grid die Zelle auf die
+              volle Zeilenhöhe und das sticky greift wieder nicht. */}
+          <div className="sticky top-20 z-30 pointer-events-none md:top-28 md:self-start md:col-span-4 md:col-start-9 md:row-start-1 pb-8 md:pb-0">
+            {/* Mobil ein durchgehendes Band direkt unter der Nav, nicht ein
+                frei schwebendes Kästchen: ein Kästchen legte sich beim
+                Scrollen immer wieder über einzelne Textzeilen der Kacheln.
+                Ein deckendes Band über die volle Breite (daher `-mx-6`)
+                liest sich dagegen als Kopfzeile — der Text verschwindet
+                sauber darunter. `flex-row-reverse` stellt die Zahl nach
+                rechts, ohne die Reihenfolge fürs Desktop-Layout zu drehen. */}
+            <div
+              className="-mx-6 flex flex-row-reverse items-center justify-between gap-3 border-b border-clay-light bg-paper px-6 py-2
+                         md:mx-0 md:block md:border-0 md:bg-transparent md:px-0 md:py-0"
+            >
+              <div className="flex items-baseline gap-1">
+                <span className="data-num text-ink text-xl md:text-6xl">−</span>
+                <span ref={counterRef} className="data-num text-pink-display text-3xl md:text-7xl">
+                  {de1(baseGap)}
+                </span>
+                <span className="data-num text-ink text-xl md:text-6xl">%</span>
               </div>
-              <div className="text-xs text-ink/75 mt-1 text-right md:text-left">der Männer-Rente</div>
+              <div className="text-[11px] text-ink/75 md:mt-1.5 md:text-xs">der Männer-Rente</div>
             </div>
           </div>
 
-          {/* Kachel-Stapel */}
+          {/* Kacheln — untereinander, keine Überlappung */}
           <div
             ref={trackRef}
             className="relative md:col-span-7 md:col-start-1 md:row-start-1 flex flex-col gap-6 md:gap-8"
@@ -169,10 +179,7 @@ export default function YourLife() {
                 key={phase.id}
                 data-phase-card
                 data-phase-id={phase.id}
-                style={{ top: `${STICK_BASE + i * STICK_STEP}rem` }}
-                /* focus-within:z-50 — sonst könnte eine bereits gestapelte
-                   Karte das per Tastatur fokussierte Element verdecken. */
-                className="relative md:sticky md:min-h-[58vh] md:scroll-mt-32 focus-within:z-50 w-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm flex flex-col overflow-hidden md:shadow-[0_30px_80px_-30px_rgba(42,33,27,0.45)]"
+                className="relative scroll-mt-28 w-full bg-bone border border-clay-light/60 p-6 md:p-10 xl:p-12 rounded-sm flex flex-col overflow-hidden shadow-[0_30px_80px_-30px_rgba(42,33,27,0.35)]"
               >
                 <div className="mb-4 md:mb-6">
                   <span className="text-xs text-ink/75">Alter {phase.age}</span>
@@ -213,12 +220,15 @@ export default function YourLife() {
                   {/* Aufklappen (Karten mit Zusatztext) oder Unterseite (Teilzeit/Scheidung) */}
                   {phase.details && (
                     <button
-                      onClick={() => setExpandedId(phase.id)}
+                      onClick={() => setExpandedId(expandedId === phase.id ? null : phase.id)}
+                      aria-expanded={expandedId === phase.id}
                       data-cursor="link"
                       className="mt-5 inline-flex items-center gap-2 eyebrow text-clay-deep hover:text-ink transition-colors"
                     >
-                      <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none">+</span>
-                      Mehr erfahren
+                      <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] leading-none">
+                        {expandedId === phase.id ? '−' : '+'}
+                      </span>
+                      {expandedId === phase.id ? 'Weniger anzeigen' : 'Mehr erfahren'}
                     </button>
                   )}
                   {phase.subpage && (
@@ -246,54 +256,44 @@ export default function YourLife() {
                   {String(i + 1).padStart(2, '0')}
                 </div>
 
-                {/* Aufklapp-Text. Zwei Verhalten, weil Julias Texte lang sind:
-                    - ab md: Overlay über der Kachel (kein Layout-Shift im Stapel),
-                      der Text scrollt innerhalb der Karte.
-                    - mobil: klappt IN DER KACHEL auf und lässt sie wachsen. Als
-                      Overlay blieben auf einem 375er Display nur ~305 px
-                      Sichtfenster für bis zu 939 px Text übrig. */}
-                <div
-                  inert={expandedId === phase.id ? undefined : ''}
-                  className={`
-                    ${expandedId === phase.id ? 'block' : 'hidden'} md:flex md:flex-col
-                    mt-5 rounded-sm bg-ink text-paper p-6
-                    md:absolute md:inset-0 md:z-20 md:mt-0 md:rounded-none md:p-10
-                    md:transition-all md:duration-500
-                    ${expandedId === phase.id
-                      ? 'md:opacity-100 md:translate-y-0 md:pointer-events-auto'
-                      : 'md:opacity-0 md:translate-y-4 md:pointer-events-none'}
-                  `}
-                >
-                  <div className="flex items-start justify-between mb-5">
-                    <div>
-                      <div className="eyebrow text-pink mb-2">Mehr zu dieser Phase</div>
-                      <h4 className="display-lg text-paper" style={{ fontSize: 'clamp(1.4rem, 2vw, 2rem)' }}>
-                        {phase.title}
-                      </h4>
-                    </div>
-                    <button
-                      onClick={() => setExpandedId(null)}
-                      aria-label="Schließen"
-                      data-cursor="link"
-                      className="text-paper/55 hover:text-pink text-2xl leading-none -mt-1"
-                    >
-                      ×
-                    </button>
-                  </div>
-                  {/* Ab md scrollt der Block innerhalb der Kachel, damit die
-                      Karte im Stapel ihre Höhe behält. Mobil wächst die Kachel. */}
-                  <div className="space-y-3 md:space-y-4 md:min-h-0 md:overflow-y-auto md:pr-2">
-                    {asParagraphs(phase.details).map((p, j) => (
-                      <p
-                        key={j}
-                        className="body-lead text-paper/75"
-                        style={{ fontSize: 'clamp(0.9rem, 0.9vw, 1.05rem)' }}
+                {/* Aufklapp-Text — auf allen Breiten IM FLUSS, die Kachel
+                    wächst also. Das frühere Overlay war nötig, solange die
+                    Karten klebten; ohne Stapel gibt es keinen Grund mehr,
+                    Julias langen Text in ein Scrollfenster zu sperren. */}
+                {phase.details && (
+                  <div
+                    hidden={expandedId !== phase.id}
+                    className="relative z-10 mt-5 md:mt-6 rounded-sm bg-ink text-paper p-6 md:p-8"
+                  >
+                    <div className="flex items-start justify-between mb-5">
+                      <div>
+                        <div className="eyebrow text-pink mb-2">Mehr zu dieser Phase</div>
+                        <h4 className="display-lg text-paper" style={{ fontSize: 'clamp(1.4rem, 2vw, 2rem)' }}>
+                          {phase.title}
+                        </h4>
+                      </div>
+                      <button
+                        onClick={() => setExpandedId(null)}
+                        aria-label="Schließen"
+                        data-cursor="link"
+                        className="text-paper/55 hover:text-pink text-2xl leading-none -mt-1"
                       >
-                        {p}
-                      </p>
-                    ))}
+                        ×
+                      </button>
+                    </div>
+                    <div className="space-y-3 md:space-y-4">
+                      {asParagraphs(phase.details).map((p, j) => (
+                        <p
+                          key={j}
+                          className="body-lead text-paper/75"
+                          style={{ fontSize: 'clamp(0.9rem, 0.9vw, 1.05rem)' }}
+                        >
+                          {p}
+                        </p>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
               </article>
             ))}
           </div>
