@@ -29,6 +29,9 @@ gsap.registerPlugin(ScrollTrigger);
 const STICK_BASE = 6.5; // Abstand der ersten Karte zum Viewport-Rand (unter der Nav)
 const STICK_STEP = 0.75; // sichtbarer Rand je bereits gestapelter Karte
 
+/** `body`/`details` in lifePhases.js dürfen String oder Absatz-Array sein. */
+const asParagraphs = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+
 export default function YourLife() {
   const root = useRef(null);
   const trackRef = useRef(null);
@@ -63,6 +66,13 @@ export default function YourLife() {
       counterRef.current.dataset.current = baseGap;
     }
   }, [baseGap]);
+
+  // Mobil wächst die Kachel beim Aufklappen, dadurch verschieben sich alle
+  // Trigger darunter. Auf Desktop ist es ein Overlay, da ändert sich nichts.
+  useEffect(() => {
+    const t = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(t);
+  }, [expandedId]);
 
   useEffect(() => {
     const root_ = root.current;
@@ -175,12 +185,17 @@ export default function YourLife() {
                   {phase.title}
                 </h3>
 
-                <p
-                  className="body-lead text-ink/70 mb-4 md:mb-6 max-w-2xl"
-                  style={{ fontSize: 'clamp(0.95rem, 1vw, 1.3rem)' }}
-                >
-                  {phase.body}
-                </p>
+                <div className="mb-4 md:mb-6 space-y-3">
+                  {asParagraphs(phase.body).map((p, j) => (
+                    <p
+                      key={j}
+                      className="body-lead text-ink/70 max-w-2xl"
+                      style={{ fontSize: 'clamp(0.95rem, 1vw, 1.3rem)' }}
+                    >
+                      {p}
+                    </p>
+                  ))}
+                </div>
 
                 <div className="mt-auto pt-4 md:pt-6 border-t border-clay-light/60">
                   {/* Braun statt Pink (Wunsch Felix 02.08.2026): #ff2e88
@@ -231,12 +246,23 @@ export default function YourLife() {
                   {String(i + 1).padStart(2, '0')}
                 </div>
 
-                {/* Aufklapp-Overlay: legt sich über die Kachel, kein Layout-Shift */}
+                {/* Aufklapp-Text. Zwei Verhalten, weil Julias Texte lang sind:
+                    - ab md: Overlay über der Kachel (kein Layout-Shift im Stapel),
+                      der Text scrollt innerhalb der Karte.
+                    - mobil: klappt IN DER KACHEL auf und lässt sie wachsen. Als
+                      Overlay blieben auf einem 375er Display nur ~305 px
+                      Sichtfenster für bis zu 939 px Text übrig. */}
                 <div
                   inert={expandedId === phase.id ? undefined : ''}
-                  className={`absolute inset-0 z-20 bg-ink text-paper p-8 md:p-10 flex flex-col transition-all duration-500 ${
-                    expandedId === phase.id ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
-                  }`}
+                  className={`
+                    ${expandedId === phase.id ? 'block' : 'hidden'} md:flex md:flex-col
+                    mt-5 rounded-sm bg-ink text-paper p-6
+                    md:absolute md:inset-0 md:z-20 md:mt-0 md:rounded-none md:p-10
+                    md:transition-all md:duration-500
+                    ${expandedId === phase.id
+                      ? 'md:opacity-100 md:translate-y-0 md:pointer-events-auto'
+                      : 'md:opacity-0 md:translate-y-4 md:pointer-events-none'}
+                  `}
                 >
                   <div className="flex items-start justify-between mb-5">
                     <div>
@@ -254,9 +280,19 @@ export default function YourLife() {
                       ×
                     </button>
                   </div>
-                  <p className="body-lead text-paper/75 overflow-y-auto pr-1" style={{ fontSize: 'clamp(0.95rem, 0.95vw, 1.15rem)' }}>
-                    {phase.details}
-                  </p>
+                  {/* Ab md scrollt der Block innerhalb der Kachel, damit die
+                      Karte im Stapel ihre Höhe behält. Mobil wächst die Kachel. */}
+                  <div className="space-y-3 md:space-y-4 md:min-h-0 md:overflow-y-auto md:pr-2">
+                    {asParagraphs(phase.details).map((p, j) => (
+                      <p
+                        key={j}
+                        className="body-lead text-paper/75"
+                        style={{ fontSize: 'clamp(0.9rem, 0.9vw, 1.05rem)' }}
+                      >
+                        {p}
+                      </p>
+                    ))}
+                  </div>
                 </div>
               </article>
             ))}

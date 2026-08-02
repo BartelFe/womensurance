@@ -181,19 +181,30 @@ export default function MeetJulia() {
               data-bio
               className="md:col-span-6 md:col-start-7 space-y-6"
             >
+              {/* Überschrift eine Stufe kleiner als früher: „Die Geschichte
+                  hinter womensurance" ist gut doppelt so lang wie „Die
+                  Geschichte" und stand sonst dreizeilig in der Spalte. */}
               <h2
-                className="display-lg text-pink mb-8"
-                style={{ fontSize: 'clamp(2.2rem, 4.4vw, 4rem)' }}
+                className="display-lg text-pink mb-8 text-balance"
+                style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3.2rem)' }}
               >
-                Die Geschichte
+                Die Geschichte hinter womensurance
               </h2>
 
-              <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
-                Als Fachwirtin und erfahrene Beraterin unterstütze ich Frauen dabei, ihre Versicherungen selbstbewusst und informiert zu gestalten. Ich kenne die Stolpersteine und Unsicherheiten, die viele Frauen beim Thema Versicherung erleben und helfe, diese zu überwinden.
-              </p>
-              <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
+              {[
+                'Womensurance ist entstanden, weil ich gesehen habe, wie schnell sich das Leben verändern kann und wie unvorbereitet viele Frauen dann sind.',
+                'Kurz nach meiner Ausbildung saß eine Kundin vor mir. Sie hatte einen guten Job, eine glückliche Familie und eigentlich das Gefühl, alles richtig gemacht zu haben.',
+                'Doch durch Elternzeit, reduzierte Arbeitszeit und eine Scheidung veränderte sich ihre Situation schlagartig. Plötzlich entstanden Versorgungslücken, über die vorher niemand gesprochen hatte.',
+                'In diesem Moment wurde mir klar: Frauen brauchen keine komplizierten Versicherungen. Sie brauchen jemanden, der ihnen verständlich erklärt, welche Entscheidungen heute ihre finanzielle Zukunft sichern.',
+                'Deshalb habe ich womensurance gegründet. Ich begleite Frauen dabei, ihre Versicherungs- und Vorsorgethemen zu verstehen und selbstbestimmte Entscheidungen zu treffen. Abgestimmt auf ihre Lebensphase, ihre Ziele und ihre Zukunft.',
+              ].map((p) => (
+                <p key={p.slice(0, 24)} className="body-lead text-paper/75" style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.1rem)' }}>
+                  {p}
+                </p>
+              ))}
+              <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.1rem)' }}>
                 <strong className="text-paper font-medium">Mein Anspruch:</strong><br />
-                Jede Frau soll sich in jeder Lebenslage sicher fühlen und die passende Absicherung finden.
+                Jede Frau soll wissen, wofür sie abgesichert ist und sich in jeder Lebenslage finanziell sicher fühlen.
               </p>
 
               {/* Credentials */}

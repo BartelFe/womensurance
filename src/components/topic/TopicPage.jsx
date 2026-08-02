@@ -24,6 +24,7 @@ export default function TopicPage({
   chapters,
   quote,
   actions,
+  actionsHeadline = null,
   ctaHeadline,
   ctaBody,
   afterHero = null,
@@ -163,8 +164,12 @@ export default function TopicPage({
       <section className="bg-paper text-ink px-6 md:px-12 py-24 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div data-reveal>
-            <h2 className="display-lg text-ink mb-14" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
-              Was du <span className="display-italic text-pink-display">jetzt</span> tun kannst.
+            <h2 className="display-lg text-ink mb-14 text-balance" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
+              {actionsHeadline ?? (
+                <>
+                  Was du <span className="display-italic text-pink-display">jetzt</span> tun kannst.
+                </>
+              )}
             </h2>
           </div>
           {/* Gestapelte Karten — gleiches Layout wie die 4-Schritte-Methode
@@ -186,6 +191,14 @@ export default function TopicPage({
                     <h3 className="display-lg text-ink mb-3 text-balance" style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2.2rem)' }}>
                       {a.title}
                     </h3>
+                    {/* Optionale Merksatz-Zeile über dem Fließtext.
+                        Bewusst kein `eyebrow`: das sind ganze Sätze, in
+                        Versalien wären sie kaum noch lesbar. */}
+                    {a.lead && (
+                      <p className="mb-3 font-medium text-clay-deep max-w-2xl" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)' }}>
+                        {a.lead}
+                      </p>
+                    )}
                     <p className="body-lead text-ink/75 max-w-2xl">{a.body}</p>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import MagneticButton from '../ui/MagneticButton';
-import { BOOKING_URL, CALL_MINUTES } from '../../config/site';
+import { BOOKING_URL } from '../../config/site';
 import { RETIREMENT_YEARS } from '../../hooks/useGapState';
 
 // Offizielle Entgeltpunkt-Logik (vereinfacht):
@@ -175,8 +175,10 @@ export default function ParttimeCalculator() {
                 </svg>
               </MagneticButton>
               <p className="mt-4 text-[11px] text-paper/55 leading-relaxed max-w-sm">
-                Die echte Zahl hängt an deinem Rentenkonto — Ausgleichszeiten,
-                Kindererziehung, Verträge. In {CALL_MINUTES} Minuten rechnen wir sie gemeinsam.
+                Die Statistik zeigt den Durchschnitt. Deine persönliche Zahl
+                hängt von deinem Rentenkonto, Kindererziehungszeiten und deiner
+                Vorsorge ab. Gemeinsam finden wir heraus, wie groß deine
+                Rentenlücke wirklich ist und was du dagegen tun kannst.
               </p>
             </div>
           </div>

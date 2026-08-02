@@ -71,7 +71,10 @@ export default function TheStep() {
         </h2>
 
         <p className="mt-12 max-w-xl mx-auto body-lead text-paper/55">
-          Wenn nach diesem Gespräch klar ist, dass wir nicht passen — auch okay. Aber du gehst mit Klarheit und den nächsten relevanten Schritten raus.
+          Vielleicht stellst du nach unserem Gespräch fest, dass wir nicht die
+          Richtigen füreinander sind. Auch das ist völlig okay. Mir ist wichtig,
+          dass du unser Gespräch mit mehr Klarheit verlässt, als du
+          hineingegangen bist.
         </p>
 
         <div data-cta className="mt-12 flex flex-col items-center gap-6">

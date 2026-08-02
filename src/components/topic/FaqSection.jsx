@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 
+/** Antworten dürfen ein String ODER ein Array von Absätzen sein. */
+const absaetze = (a) => (Array.isArray(a) ? a : [a]);
+
 /**
  * SEO-FAQ: natives <details>-Accordion (zugänglich, kein JS nötig)
  * + FAQPage-JSON-LD im <head> für Google Rich Results.
@@ -14,7 +17,8 @@ export default function FaqSection({ title, items, note }) {
       mainEntity: items.map((i) => ({
         '@type': 'Question',
         name: i.q,
-        acceptedAnswer: { '@type': 'Answer', text: i.a },
+        // Google will einen zusammenhängenden Antworttext, keine Absatz-Liste.
+        acceptedAnswer: { '@type': 'Answer', text: absaetze(i.a).join(' ') },
       })),
     });
     document.head.appendChild(script);
@@ -42,9 +46,13 @@ export default function FaqSection({ title, items, note }) {
                   +
                 </span>
               </summary>
-              <p className="pb-6 pr-10 body-lead text-paper/60" style={{ fontSize: 'clamp(0.9rem, 1vw, 1.05rem)' }}>
-                {item.a}
-              </p>
+              <div className="pb-6 pr-10 space-y-3">
+                {absaetze(item.a).map((p, i) => (
+                  <p key={i} className="body-lead text-paper/60" style={{ fontSize: 'clamp(0.9rem, 1vw, 1.05rem)' }}>
+                    {p}
+                  </p>
+                ))}
+              </div>
             </details>
           ))}
         </div>

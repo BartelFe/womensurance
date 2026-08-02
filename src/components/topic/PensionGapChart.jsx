@@ -184,7 +184,7 @@ export default function PensionGapChart() {
                 className="display-italic text-paper/80 mt-2 max-w-md"
                 style={{ fontSize: 'clamp(0.95rem, 1.5vw, 1.5rem)' }}
               >
-                Jeden Monat. Im Schnitt. Das sind {BASE_GAP.toFixed(1).replace('.', ',')} % weniger Rente.
+                {BASE_GAP.toFixed(1).replace('.', ',')} % weniger Rente. Jeden Monat. Für viele Frauen Realität.
               </div>
             </div>
           </div>

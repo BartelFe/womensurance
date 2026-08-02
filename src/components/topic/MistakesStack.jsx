@@ -4,40 +4,42 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// "Die 5 teuersten Fehler im Versorgungsausgleich" — Sticky-Stack
-// (gleiche Mechanik wie TheMethod auf der Startseite).
-// ⚠️ €-Größenordnungen = illustrative Beispiele, mit Julia validieren.
+// "5 Fehler, die viele Frauen nach einer Scheidung erst zu spät bemerken"
+// — Sticky-Stack (gleiche Mechanik wie TheMethod auf der Startseite).
+// ✅ Texte von Julia, eingepflegt 02.08.2026.
+// `cost` ist jetzt ein ganzer Merksatz, kein Kürzel — deshalb steht er
+// nicht mehr als `eyebrow` in Versalien, sondern in normaler Schreibweise.
 
 const MISTAKES = [
   {
     n: '01',
-    title: 'Die eigenen Anrechte nicht kennen',
-    cost: 'Klarheit fehlt genau dann, wenn sie zählt',
-    body: 'Die alte Betriebsrente aus dem Job vor zehn Jahren, die kleine private Police aus den Zwanzigern: Wer die eigene Aufstellung nicht kennt, kann auch nicht einschätzen, was der Ausgleich für sie bedeutet — und was danach an eigener Vorsorge übrig bleibt.',
+    title: 'Die eigenen Rentenansprüche nicht kennen',
+    cost: 'Wer seine Ansprüche nicht kennt, kann keine guten Entscheidungen treffen.',
+    body: 'Viele Frauen haben neben der gesetzlichen Rente weitere Rentenansprüche, zum Beispiel aus einer betrieblichen Altersvorsorge oder einer privaten Rentenversicherung. Nur wenn alle Ansprüche bekannt sind, lässt sich einschätzen, welche Auswirkungen der Versorgungsausgleich auf die eigene Altersvorsorge hat.',
   },
   {
     n: '02',
-    title: 'Auskünfte ungeprüft übernehmen',
-    cost: 'fünfstellige Abweichungen möglich',
-    body: 'Die Versorgungsträger melden dem Gericht Werte — und niemand prüft nach. Falsche Ehezeitanteile, veraltete Bewertungen, Rechenfehler: Was im Beschluss steht, ist später kaum noch zu korrigieren.',
+    title: 'Den Versorgungsausgleich nicht verstehen',
+    cost: 'Nicht alles sollte ungeprüft unterschrieben werden.',
+    body: 'Der Versorgungsausgleich ist komplex und für viele schwer nachvollziehbar. Deshalb lohnt es sich, die Berechnungen und die berücksichtigten Rentenansprüche genau zu verstehen. Nur so weißt du, welche Auswirkungen die Aufteilung auf deine spätere Altersvorsorge hat.',
   },
   {
     n: '03',
-    title: 'Pauschal auf den Ausgleich verzichten',
-    cost: 'der teuerste Einzelfehler',
-    body: '"Jeder behält seins" klingt nach einem fairen, schnellen Frieden. Aber wer jahrelang für die Familie zurückgesteckt hat, verzichtet damit auf genau die Jahre, die der Ausgleich ausgleichen sollte.',
+    title: 'Die eigene Vorsorge nach der Scheidung nicht neu planen',
+    cost: 'Der Versorgungsausgleich ersetzt keine Altersvorsorge.',
+    body: 'Der Versorgungsausgleich regelt die während der Ehe erworbenen Rentenansprüche. Er ersetzt jedoch nicht die Vorsorge für die Zukunft. Gerade nach einer Scheidung lohnt es sich, die eigene Altersvorsorge an die neue Lebenssituation anzupassen.',
   },
   {
     n: '04',
-    title: 'Übertragene Anrechte schlecht anlegen',
-    cost: 'Rendite-Verlust über Jahrzehnte',
-    body: 'Bei der externen Teilung wird Kapital übertragen — und du entscheidest, wohin. Wer es unbesehen in den erstbesten Vertrag lenkt, verliert über zwanzig, dreißig Jahre bares Geld.',
+    title: 'Übertragene Ansprüche nicht überprüfen',
+    cost: 'Die neue Lebenssituation braucht eine neue Strategie.',
+    body: 'Nach einer Scheidung verändern sich Ziele, Einkommen und Zukunftspläne. Deshalb sollte geprüft werden, ob bestehende Vorsorgelösungen noch zur eigenen Situation passen oder angepasst werden sollten.',
   },
   {
     n: '05',
-    title: 'Nach der Scheidung nichts anpassen',
-    cost: 'das neue Leben, unversichert',
-    body: 'Begünstigte in alten Verträgen, gemeinsame Policen, fehlende eigene Absicherung: Wer nach dem Beschluss die Ordner zuklappt, zahlt später — oder die falsche Person bekommt im Ernstfall das Geld.',
+    title: 'Versicherungen nach der Scheidung nicht aktualisieren',
+    cost: 'Ein neuer Lebensabschnitt braucht auch eine neue Absicherung.',
+    body: 'Bezugsberechtigungen, gemeinsame Verträge oder veränderte Lebensumstände sollten nach einer Scheidung überprüft und angepasst werden. So stellst du sicher, dass deine Absicherung auch weiterhin zu deinem Leben passt.',
   },
 ];
 
@@ -87,9 +89,11 @@ export default function MistakesStack() {
   return (
     <section ref={root} className="bg-paper text-ink py-24 md:py-32 px-6 md:px-12">
       <div className="max-w-6xl mx-auto">
-        <h2 className="display-lg text-ink text-balance mb-16 md:mb-20" style={{ fontSize: 'clamp(1.9rem, 4.2vw, 4.2rem)' }}>
-          Die 5 teuersten Fehler im{' '}
-          <span className="display-italic text-pink-display">Versorgungsausgleich.</span>
+        {/* Eine Stufe kleiner als früher: die Überschrift ist jetzt gut doppelt
+            so lang und stand bei 4,2rem vierzeilig über der halben Sektion. */}
+        <h2 className="display-lg text-ink text-balance mb-16 md:mb-20" style={{ fontSize: 'clamp(1.7rem, 3.2vw, 3.2rem)' }}>
+          5 Fehler, die viele Frauen nach einer Scheidung{' '}
+          <span className="display-italic text-pink-display">erst zu spät bemerken.</span>
         </h2>
 
         <div className="space-y-6 md:space-y-8 max-w-4xl">
@@ -113,7 +117,12 @@ export default function MistakesStack() {
                       3,5:1, kleiner Text braucht 4,5:1. Statt eines abgedunkelten
                       Pinks nehmen wir hier das Palettenbraun (Wunsch Felix
                       02.08.2026), siehe YourLife.jsx. */}
-                  <div className="eyebrow text-clay-deep mb-4">{m.cost}</div>
+                  <p
+                    className="font-medium text-clay-deep mb-4 max-w-2xl"
+                    style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)' }}
+                  >
+                    {m.cost}
+                  </p>
                   <p className="body-lead text-ink/75 max-w-2xl">{m.body}</p>
                 </div>
               </div>
@@ -122,8 +131,10 @@ export default function MistakesStack() {
         </div>
 
         <p className="mt-10 text-[12px] text-ink/75 leading-relaxed max-w-2xl">
-          * Größenordnungen aus typischen Fallkonstellationen — dein Fall ist individuell.
-          Keine Rechtsberatung; wir schauen auf die Vorsorge-Seite.
+          Hinweis: Jede Scheidung ist individuell. Die genannten Beispiele dienen
+          der ersten Orientierung und ersetzen keine Rechtsberatung. Ich
+          unterstütze dich dabei, die Auswirkungen auf deine Altersvorsorge und
+          Versicherungen verständlich einzuordnen.
         </p>
       </div>
     </section>

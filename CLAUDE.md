@@ -138,6 +138,26 @@ DVMs IT-Prüfer (Thomas Gessert) hat am 30.07. Barrierefreiheit angemahnt; Doris
 - **Scheidungs-Statistik #3** ersetzt: der Platzhalter „50 % deiner Ansprüche stehen auf dem Spiel" ist jetzt „50 % aller Scheidungsanträge erfolgen durch die Frau", Quelle Destatis (Zahl von Felix, nicht gegengeprüft).
 - **Messstand nach dieser Runde:** `npm run build` grün · 0 Kontrastverstöße und `ungeprueft: 0` auf `/`, `/scheidung`, `/rentenluecke` bei 1440×900 und 375×812 · `document.scrollWidth === innerWidth` überall · keine Konsolenfehler.
 
+## A.12 · Julias Texte eingepflegt — 02.08.2026
+
+Alle redaktionellen Platzhalter auf Startseite, `/rentenluecke` und `/scheidung` sind durch Julias Fassungen ersetzt. Betroffen: `data/lifePhases.js`, `data/methodSteps.js`, `TheNotice`, `TheTruth`, `TheStep`, `OpeningStatement`, `MeetJulia`, `PensionGapChart`, `ParttimeCalculator`, `MistakesStack`, `pages/Rentenluecke.jsx`, `pages/Scheidung.jsx`.
+
+**Strukturelle Folgen (die Texte sind 3 bis 5 mal so lang wie die Platzhalter):**
+- `lifePhases.body` und `.details` dürfen jetzt **String oder Array von Absätzen** sein, `FaqSection`-Antworten (`a`) ebenfalls. Das JSON-LD joint das Array wieder zu einem Fließtext, sonst frisst Google die Absatzliste nicht.
+- `TopicPage`-Actions haben ein optionales `lead` (Merksatz über dem Fließtext) und die Sektion eine optionale `actionsHeadline`.
+- **`YourLife`-Aufklapptext hat jetzt zwei Verhalten:** ab `md` weiterhin Overlay über der Kachel (kein Layout-Shift im Sticky-Stapel, Text scrollt innen). **Mobil klappt er in der Kachel auf und lässt sie wachsen** — als Overlay blieben auf einem 375er Display nur ~305 px Sichtfenster für bis zu 939 px Text. Beim Auf-/Zuklappen läuft ein `ScrollTrigger.refresh()`.
+- **Schriftgrade heruntergesetzt, weil die Überschriften länger wurden:**
+  `TheTruth` von `10rem` auf `6.5rem` (ab ~104 px bricht „Aber sie ist kein Schicksal." in der 1152 px breiten Spalte um, und ein Umbruch innerhalb einer `line-mask` zerlegt die zeilenweise Einblendung) · `MistakesStack`-H2 von `4.2rem` auf `3.2rem` · `MeetJulia`-H2 von `4rem` auf `3.2rem`.
+- `MistakesStack.cost` ist jetzt ein ganzer Merksatz und steht deshalb **nicht mehr als `eyebrow` in Versalien**, sondern in normaler Schreibweise (`font-medium text-clay-deep`).
+
+**Dynamische Zahlen bleiben dynamisch.** `TheNotice`-Lead und `TheTruth`-Headline zeigen weiter den Wert aus `useGap()`, nicht die feste 39,4. In `TheTruth` erscheint das Wort „durchschnittlich" deshalb **nur, solange kein Lebensereignis angeklickt ist** (`activeMeta.length === 0`) — sonst stünde „durchschnittlich 51,4 %" da.
+
+**An Julias Fassung geändert (Felix informiert, jederzeit rückgängig):** drei Gedankenstriche zu Komma/Punkt (Regel A.8b) · Tippfehler „Ttrotzdem", „Rechtschutz" → „Rechtsschutz" · Grammatik „und einer Scheidung" → „und eine Scheidung" · fehlende Satzzeichen ergänzt.
+
+**Offen / von Felix zu bestätigen:** ob die Tipp-Zeile im Rentenbescheid bleibt (aktuell drin) · wo genau „Womensurance / Unabhängige Beratung." stand (der Text existiert im Repo nicht, geändert wurde die Hero-Unterzeile) · **30 oder 60 Minuten Erstgespräch** (`CALL_MINUTES` steht auf 60, Julias Startseiten-Text nennt 30, ihr Scheidungs-Text 60).
+
+**Messstand:** `npm run build` grün · 0 Kontrastverstöße und `ungeprueft: 0` auf `/`, `/rentenluecke`, `/scheidung`, `/impressum` bei 1440×900 und 375×812 · kein Pin-Überlauf, `document.scrollWidth === innerWidth` überall · keine Konsolenfehler bei frischem Laden.
+
 ---
 
 # B · Projekt-, Design- & Story-Kontext (ursprünglich, ~Mai 2026)

@@ -1,22 +1,24 @@
+// Die vier Schritte der Beratung (Section "TheMethod").
+// ✅ Texte von Julia, eingepflegt 02.08.2026.
 export const methodSteps = [
   {
     n: '01',
     title: 'Bestandsaufnahme',
-    body: 'Wir schauen uns gemeinsam an, was du hast — und was du davon wirklich brauchst. Keine Einschätzung von außen, sondern eine ehrliche Inventur.',
+    body: 'Gemeinsam schauen wir uns deine bestehenden Versicherungen an und finden heraus, welche Absicherungen wirklich zu deinem Leben passen. Ohne Fachchinesisch, ohne Druck. Dafür mit einer ehrlichen und verständlichen Bestandsaufnahme.',
   },
   {
     n: '02',
     title: 'Lücken sichtbar machen',
-    body: 'Wo bist du gut abgesichert, wo gar nicht? Welche Risiken trägst du selbst, ohne es zu wissen? Diese Klarheit ist die Basis für alles Weitere.',
+    body: 'Wo bist du gut abgesichert? Wo besteht noch Handlungsbedarf? Gemeinsam erkennen wir Versorgungslücken und vermeiden gleichzeitig unnötige Doppelversicherungen. Denn Klarheit ist die Grundlage für gute Entscheidungen.',
   },
   {
     n: '03',
     title: 'Strategie',
-    body: 'Wir bauen ein Konzept, das zu deinem Leben passt — nicht zu meiner Provision. Altersvorsorge, Berufsunfähigkeit, Sachversicherung, alles eingebettet in einen Plan, den du verstehst.',
+    body: 'Jede Frau hat eine andere Lebensgeschichte. Deshalb gibt es bei mir keine Standardlösung. Gemeinsam entwickeln wir ein individuelles Konzept für deine Altersvorsorge, Arbeitskraft- und Sachversicherungen. Verständlich erklärt und passend zu deinen Zielen.',
   },
   {
     n: '04',
     title: 'Begleitung',
-    body: 'Versicherungen sind kein einmaliger Abschluss. Wir bleiben in Kontakt — bei jedem Lebensereignis, jeder Veränderung. Das ist der Teil, den die meisten vergessen.',
+    body: 'Versicherungen begleiten dich durch viele Lebensphasen. Ob neuer Job, Hochzeit, Kinder oder Immobilienkauf. Ich bleibe auch nach unserer Beratung an deiner Seite und passe deine Absicherung an, wenn sich dein Leben verändert.',
   },
 ];

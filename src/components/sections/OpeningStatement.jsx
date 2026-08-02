@@ -322,12 +322,18 @@ export default function OpeningStatement() {
           </h1>
 
           {/* Subtitle — desktop only */}
-          <div
-            ref={subRef}
-            className="hidden md:block mt-6 max-w-md body-lead text-paper/60"
-            style={{ fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)' }}
-          >
-            Versicherung von Frau zu Frau: Für alle Lebenslagen
+          <div ref={subRef} className="hidden md:block mt-6 max-w-md">
+            <p
+              className="body-lead text-paper/75"
+              style={{ fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)' }}
+            >
+              Deine Versicherungsschwester: ehrlich, verständlich und an deiner
+              Seite.
+            </p>
+            <p className="mt-2 text-paper/55" style={{ fontSize: 'clamp(0.78rem, 0.85vw, 1rem)' }}>
+              Spezialisiert auf Altersvorsorge, Arbeitskraft- und
+              Sachversicherungen für Frauen.
+            </p>
           </div>
         </div>
 

@@ -14,30 +14,48 @@ const FAQ = {
   items: [
     {
       q: 'Wie kann ich meine Rentenlücke berechnen?',
-      a: 'Der schnellste Weg: unser Rechner oben auf dieser Seite — Stunden, Jahre und Gehalt einstellen, fertig. Für die genaue Zahl brauchst du deine jährliche Renteninformation der Deutschen Rentenversicherung: Dort steht deine bisher erreichte Anwartschaft. Die Lücke ist die Differenz zwischen dieser Zahl (nach Abzug von Inflation und Abgaben) und dem, was du im Alter monatlich brauchst.',
+      a: [
+        'Für eine erste Einschätzung kannst du den Rechner auf dieser Seite nutzen. Gib einfach deine Arbeitszeit, die Jahre in Teilzeit und dein Einkommen ein.',
+        'Möchtest du deine persönliche Rentenlücke genauer kennen, benötigst du deine jährliche Renteninformation der Deutschen Rentenversicherung. Gemeinsam schauen wir uns deine bisher erworbenen Rentenansprüche an und berechnen, was später nach Inflation und Abgaben tatsächlich übrigbleibt.',
+      ],
     },
     {
       q: 'Wie stark reduziert Teilzeit meine Rente?',
-      a: 'Die gesetzliche Rente rechnet in Entgeltpunkten: Wer die Hälfte arbeitet, sammelt die Hälfte der Punkte. Zehn Jahre halbe Stelle bei Durchschnittsgehalt kosten rund 200 Euro Monatsrente — lebenslang. Jede Stunde weniger wirkt also doppelt: heute weniger Gehalt, später weniger Rente.',
+      a: [
+        'Die gesetzliche Rente berechnet sich über sogenannte Entgeltpunkte. Je geringer dein Einkommen, desto weniger Rentenpunkte sammelst du. Arbeitest du über mehrere Jahre in Teilzeit, wirkt sich das direkt auf deine spätere Rente aus.',
+        'Hinzu kommt: Weniger Einkommen bedeutet häufig auch weniger Möglichkeiten, zusätzlich privat für das Alter vorzusorgen.',
+      ],
     },
     {
       q: 'Zählt Elternzeit für die Rente?',
-      a: 'Ja. Pro Kind werden bis zu drei Jahre Kindererziehungszeit angerechnet — ungefähr so, als hättest du durchschnittlich verdient. Die eigentliche Lücke entsteht meist danach: durch den Wiedereinstieg in Teilzeit und die langsamere Gehaltsentwicklung. Genau diese Folgejahre gleicht der Staat nicht aus.',
+      a: [
+        'Ja. Pro Kind können bis zu drei Jahre Kindererziehungszeit auf dein Rentenkonto angerechnet werden. Wichtig ist jedoch, dass diese Zeiten bei der Deutschen Rentenversicherung beantragt werden.',
+        'Die eigentliche Rentenlücke entsteht häufig erst nach der Elternzeit, zum Beispiel durch einen Wiedereinstieg in Teilzeit oder eine längere Erwerbsunterbrechung.',
+      ],
     },
     {
       q: 'Werden Pflegezeiten bei der Rente angerechnet?',
-      a: 'Unter Bedingungen ja: Wer eine Person mit mindestens Pflegegrad 2 wenigstens zehn Stunden pro Woche an mindestens zwei Tagen pflegt und selbst nicht mehr als 30 Stunden arbeitet, bekommt Rentenbeiträge von der Pflegekasse — aber nur, wenn es gemeldet wird. Viele verschenken diese Punkte, weil niemand ihnen davon erzählt hat.',
+      a: [
+        'Ja, unter bestimmten Voraussetzungen. Pflegst du eine Person mit mindestens Pflegegrad 2 regelmäßig und erfüllst die gesetzlichen Voraussetzungen, können Rentenbeiträge von der Pflegekasse übernommen werden.',
+        'Viele Frauen kennen diese Möglichkeit nicht und verzichten dadurch unbewusst auf wertvolle Rentenansprüche.',
+      ],
     },
     {
       q: 'Wann sollte ich anfangen, meine Rentenlücke zu schließen?',
-      a: 'So früh wie möglich — nicht, weil das dramatischer klingt, sondern wegen des Zinseszinses: Wer mit 30 anfängt, braucht für dieselbe Zusatzrente ungefähr die Hälfte des Monatsbeitrags wie jemand, der mit 45 startet. Aber auch mit 50 ist mehr möglich, als die meisten denken.',
+      a: [
+        'Je früher, desto besser. Nicht, weil du sofort hohe Beiträge zahlen musst, sondern weil dein Geld mehr Zeit hat zu wachsen.',
+        'Schon kleine monatliche Beträge können durch den Zinseszinseffekt langfristig einen großen Unterschied machen. Und selbst wenn du erst später startest: Es ist nie zu spät, deine Zukunft aktiv zu gestalten.',
+      ],
     },
     {
       q: 'Was ist der Gender Pension Gap?',
-      a: 'Der geschlechtsspezifische Unterschied bei den Alterseinkünften. In Deutschland erhalten Frauen aus eigenen Ansprüchen im Schnitt 39,4 Prozent weniger Alterssicherung als Männer (Statistisches Bundesamt, 2023, ohne Hinterbliebenenrenten). Hauptursachen: Teilzeit, Care-Arbeit, Erwerbspausen und der Gender Pay Gap.',
+      a: [
+        'Der Gender Pension Gap beschreibt den Unterschied bei den Alterseinkünften von Frauen und Männern. In Deutschland erhalten Frauen aus eigenen Rentenansprüchen durchschnittlich 39,4 % weniger Alterssicherung als Männer.',
+        'Zu den wichtigsten Ursachen gehören Teilzeit, Care-Arbeit, Erwerbsunterbrechungen und der Gender Pay Gap.',
+      ],
     },
   ],
-  note: 'Vereinfachte Antworten für den ersten Überblick — keine Steuer- oder Rechtsberatung. Deine konkrete Situation klären wir im Gespräch.',
+  note: 'Hinweis: Alle Antworten dienen einer ersten Orientierung und ersetzen keine Steuer- oder Rechtsberatung. Wie deine persönliche Situation aussieht und welche Möglichkeiten du hast, besprechen wir gerne gemeinsam.',
 };
 
 // ⚠️ Zahlen/Quellen sind Platzhalter in plausibler Größenordnung —
@@ -67,9 +85,9 @@ export default function Rentenluecke() {
       eyebrow="Teilzeit / Care-Arbeit"
       titleLines={[
         { text: 'Die Rentenlücke' },
-        { text: 'wächst leise.', italic: true },
+        { text: 'wächst schweigend.', italic: true },
       ]}
-      lead="Teilzeit fühlt sich wie eine Übergangslösung an — für ein paar Jahre, solange die Kinder klein sind, solange die Eltern Hilfe brauchen. Aber die Rente vergisst kein einziges Jahr. Diese Seite zeigt dir, wie aus reduzierten Stunden eine Lücke von mehreren hundert Euro im Monat wird — und warum sie kein Schicksal ist."
+      lead="Teilzeit ist für viele Frauen eine bewusste Entscheidung für die Familie, für Angehörige oder für mehr Zeit im Alltag. Was dabei oft übersehen wird: Die gesetzliche Rente zählt jedes Jahr mit. Aus wenigen Jahren Teilzeit kann so eine spürbare Rentenlücke entstehen. Genau deshalb zeigen wir dir auf dieser Seite, wie groß deine persönliche Rentenlücke sein kann und was du schon heute dagegen tun kannst."
       stats={[
         {
           value: 49,
@@ -96,24 +114,24 @@ export default function Rentenluecke() {
           kicker: 'Der Mechanismus',
           title: 'Warum jede Stunde doppelt zählt',
           paragraphs: [
-            'Die gesetzliche Rente rechnet in Entgeltpunkten: Wer ein Jahr lang das Durchschnittsgehalt verdient, bekommt einen Punkt. Wer halbtags arbeitet, bekommt einen halben. Das klingt fair — aber es bedeutet: Zehn Jahre Teilzeit sind fünf verlorene Rentenjahre.',
-            'Dazu kommt der zweite, unsichtbare Effekt: Wer weniger arbeitet, macht seltener Karriereschritte, verhandelt seltener Gehalt und zahlt weniger in betriebliche und private Vorsorge ein. Die Lücke multipliziert sich — Jahr für Jahr, still und ohne Kontoauszug.',
+            'Die gesetzliche Rente berechnet sich über sogenannte Entgeltpunkte. Verdienst du ein Jahr lang das Durchschnittsgehalt, erhältst du einen Entgeltpunkt. Arbeitest du in Teilzeit, sammelst du entsprechend weniger Punkte. Das bedeutet: Zehn Jahre in Teilzeit können sich auf deine Rente auswirken wie fünf Jahre ohne volles Einkommen.',
+            'Doch dabei bleibt es nicht. Wer weniger arbeitet, steigt oft seltener im Beruf auf, verhandelt seltener über das Gehalt und hat meist weniger finanziellen Spielraum, zusätzlich für die eigene Altersvorsorge vorzusorgen. So wächst die Rentenlücke Schritt für Schritt, oft unbemerkt.',
           ],
         },
         {
           kicker: 'Care-Arbeit',
           title: 'Die unbezahlte zweite Schicht',
           paragraphs: [
-            'Kinder, Haushalt, pflegebedürftige Eltern: Der größte Teil der Sorgearbeit in Deutschland wird von Frauen geleistet — unbezahlt und ohne Rentenpunkte. Pflegezeiten können zwar angerechnet werden, aber nur unter Bedingungen, die viele nicht kennen und deshalb nicht nutzen.',
-            'Das Ergebnis: Ausgerechnet die Frauen, die am meisten für andere da sind, stehen am Ende mit der kleinsten eigenen Absicherung da. Nicht, weil sie etwas falsch gemacht haben — sondern weil ihnen niemand gezeigt hat, wo die Stellschrauben sind.',
+            'Ob Kinder, Haushalt oder die Pflege von Angehörigen. Noch immer übernehmen Frauen den größten Teil der Sorgearbeit. Viele wissen nicht, dass Pflegezeiten unter bestimmten Voraussetzungen auf die gesetzliche Rente angerechnet werden können und verschenken dadurch wertvolle Ansprüche.',
+            'Das Ergebnis: Gerade die Frauen, die jeden Tag für andere da sind, haben später oft die größten Versorgungslücken. Nicht, weil sie etwas falsch gemacht haben, sondern weil ihnen niemand gezeigt hat, welche Möglichkeiten sie haben.',
           ],
         },
         {
           kicker: 'Der Ausweg',
-          title: 'Die Lücke lässt sich schließen — wenn du sie kennst',
+          title: 'Die Lücke lässt sich schließen, wenn du sie kennst.',
           paragraphs: [
-            'Der erste Schritt ist Klarheit: Wie groß ist deine persönliche Lücke wirklich? Renteninformation lesen, Vorsorgeverträge prüfen, Pflege- und Erziehungszeiten anrechnen lassen — vieles davon kostet nichts außer einem Nachmittag.',
-            'Der zweite Schritt ist ein Plan, der zu deinem Leben passt: Ausgleichsbeiträge während der Teilzeit, eine private Vorsorge in der richtigen Höhe, eine faire Aufteilung mit dem Partner. Ab hier ist jede Situation individuell — und genau da beginnt Beratung.',
+            'Der erste Schritt ist, deine persönliche Situation zu verstehen. Wie groß ist deine Rentenlücke wirklich? Welche Ansprüche hast du bereits und welche Möglichkeiten wurden bisher vielleicht noch gar nicht genutzt?',
+            'Im zweiten Schritt entwickeln wir gemeinsam einen Plan, der zu deinem Leben passt. Egal ob Teilzeit, Familie oder Beruf. Denn jede Frau hat eine andere Geschichte. Deshalb sollte auch ihre Vorsorge individuell sein.',
           ],
         },
       ]}
@@ -124,19 +142,19 @@ export default function Rentenluecke() {
       actions={[
         {
           title: 'Renteninformation verstehen',
-          body: 'Der jährliche Brief der Rentenversicherung zeigt deine Ansprüche — aber die entscheidende Zahl (was nach Inflation wirklich bleibt) steht nicht drin. Wir rechnen sie gemeinsam aus.',
+          body: 'Deine jährliche Renteninformation zeigt dir zwar deine bisherigen Ansprüche, aber nicht, wie viel Rente dir später unter Berücksichtigung der Inflation tatsächlich bleibt. Gemeinsam schauen wir uns deine Zahlen an und erklären sie verständlich.',
         },
         {
           title: 'Pflege- & Erziehungszeiten anrechnen',
-          body: 'Kindererziehungs- und Pflegezeiten können Rentenpunkte bringen — aber nur, wenn sie beantragt werden. Viele verschenken hier bares Geld.',
+          body: 'Kindererziehungs- und Pflegezeiten können deine spätere Rente erhöhen. Viele Frauen wissen jedoch nicht, dass diese Zeiten aktiv beantragt werden müssen und verschenken dadurch wertvolle Rentenansprüche.',
         },
         {
           title: 'Teilzeit-Lücke aktiv ausgleichen',
-          body: 'Schon kleine monatliche Beiträge in die richtige Vorsorgeform gleichen reduzierte Stunden aus — je früher, desto günstiger.',
+          body: 'Auch während einer Teilzeitbeschäftigung kannst du deine Rentenlücke Schritt für Schritt schließen. Schon kleine monatliche Beiträge können langfristig einen großen Unterschied machen. Gemeinsam finden wir die Vorsorgelösung, die zu deinem Leben passt.',
         },
         {
           title: 'Fair teilen statt still tragen',
-          body: 'Wenn Teilzeit eine gemeinsame Familienentscheidung ist, kann auch die Vorsorge gemeinsam getragen werden — z. B. über Ausgleichszahlungen des Partners.',
+          body: 'Ist Teilzeit eine gemeinsame Entscheidung, sollte auch die finanzielle Vorsorge gemeinsam gedacht werden. Zusammen entwickeln wir ein Vorsorgekonzept, das eure Lebenssituation berücksichtigt und gleichzeitig deine finanzielle Unabhängigkeit stärkt.',
         },
       ]}
       ctaHeadline={

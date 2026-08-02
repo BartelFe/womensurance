@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import TopicPage from '../components/topic/TopicPage';
 import SplitAccounts from '../components/topic/SplitAccounts';
 import MistakesStack from '../components/topic/MistakesStack';
+import { CALL_MINUTES } from '../config/site';
 
 // FAQ auf "versorgungsausgleich"-Suchintention optimiert (~23.500 Suchen/Monat)
 // — Feinschliff in dedizierter SEO-Session.
@@ -9,36 +10,36 @@ const FAQ = {
   title: (
     <>
       Häufige Fragen zum{' '}
-      <span className="display-italic text-pink">Versorgungsausgleich.</span>
+      <span className="display-italic text-pink">Versorgungsausgleich</span>
     </>
   ),
   items: [
     {
       q: 'Was ist der Versorgungsausgleich?',
-      a: 'Das gerichtliche Verfahren, das bei einer Scheidung alle in der Ehezeit erworbenen Rentenanrechte hälftig zwischen den Ehepartnern teilt. Es läuft automatisch mit der Scheidung — du musst es nicht beantragen, kannst es aber auch nicht einfach ignorieren.',
+      a: 'Der Versorgungsausgleich regelt, wie die während der Ehe erworbenen Renten- und Versorgungsansprüche zwischen beiden Ehepartnern aufgeteilt werden. Das Verfahren wird im Rahmen der Scheidung grundsätzlich automatisch vom Familiengericht durchgeführt.',
     },
     {
       q: 'Wie wird der Versorgungsausgleich berechnet?',
-      a: 'Für jedes Anrecht wird der Ehezeitanteil ermittelt: der Teil der Rentenansprüche, der zwischen Eheschließung und Zustellung des Scheidungsantrags entstanden ist. Davon erhält der andere Partner grundsätzlich die Hälfte. Die Versorgungsträger melden die Werte an das Familiengericht — geprüft werden sollten sie trotzdem.',
+      a: 'Für jeden Rentenanspruch wird geprüft, welcher Teil während der Ehe erworben wurde. Dieser sogenannte Ehezeitanteil wird grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Die Berechnungen erfolgen durch die jeweiligen Versorgungsträger und bilden die Grundlage für die Entscheidung des Familiengerichts.',
     },
     {
-      q: 'Welche Rentenansprüche werden geteilt?',
-      a: 'Praktisch alle: gesetzliche Rente, Betriebsrenten, Beamtenversorgung, berufsständische Versorgungswerke, Riester- und Rürup-Verträge sowie private Rentenversicherungen. Kapital-Lebensversicherungen mit Einmalzahlung fallen dagegen in den Zugewinnausgleich, nicht in den Versorgungsausgleich.',
+      q: 'Welche Rentenansprüche werden berücksichtigt?',
+      a: 'Zum Versorgungsausgleich gehören grundsätzlich die gesetzliche Rentenversicherung, Betriebsrenten, Beamtenversorgungen, berufsständische Versorgungswerke sowie viele private Altersvorsorgeverträge. Welche Ansprüche im Einzelfall berücksichtigt werden, hängt von der jeweiligen Vertragsart ab.',
     },
     {
       q: 'Kann man den Versorgungsausgleich ausschließen?',
-      a: 'Ja — per notariellem Ehevertrag oder Scheidungsfolgenvereinbarung. Aber das Gericht prüft solche Vereinbarungen auf Fairness, und für dich gilt: Ein Verzicht ohne echten Gegenwert ist fast immer ein Verlustgeschäft für die Person, die für die Familie beruflich zurückgesteckt hat.',
+      a: 'Ja. Durch einen notariellen Ehevertrag oder eine Scheidungsfolgenvereinbarung kann der Versorgungsausgleich ganz oder teilweise ausgeschlossen oder verändert werden. Bevor du einer solchen Vereinbarung zustimmst, solltest du genau verstehen, welche Auswirkungen sie auf deine spätere Altersvorsorge haben kann.',
     },
     {
-      q: 'Was passiert bei kurzer Ehe?',
-      a: 'Bei einer Ehezeit von bis zu drei Jahren findet der Versorgungsausgleich nur statt, wenn ihn ein Ehepartner ausdrücklich beantragt. Auch Kleinstbeträge werden oft nicht ausgeglichen — was sich bei mehreren kleinen Anrechten trotzdem summieren kann.',
+      q: 'Was passiert bei einer kurzen Ehe?',
+      a: 'Bei einer Ehe von bis zu drei Jahren wird der Versorgungsausgleich grundsätzlich nur durchgeführt, wenn einer der Ehepartner ihn beantragt. Ob sich ein Antrag lohnt, hängt von der individuellen Situation ab.',
     },
     {
-      q: 'Kann der Versorgungsausgleich später angepasst werden?',
-      a: 'In engen Grenzen. Stirbt zum Beispiel die ausgleichsberechtigte Person, kann die Kürzung beim Ex-Partner unter Umständen entfallen. Grobe Fehler im Beschluss lassen sich dagegen später kaum noch korrigieren — deshalb ist der richtige Zeitpunkt zum Prüfen vor dem Gerichtstermin, nicht danach.',
+      q: 'Kann der Versorgungsausgleich später noch geändert werden?',
+      a: 'Änderungen sind nur in wenigen gesetzlich geregelten Ausnahmefällen möglich. Deshalb ist es wichtig, die Unterlagen und Berechnungen bereits während des Scheidungsverfahrens sorgfältig zu prüfen und offene Fragen frühzeitig zu klären.',
     },
   ],
-  note: 'Vereinfachte Antworten für den ersten Überblick — keine Rechtsberatung. Für die juristische Seite gehören Anwältin oder Notar an deine Seite; wir kümmern uns um deine Vorsorge.',
+  note: 'Hinweis: Die Antworten dienen einer ersten Orientierung und ersetzen keine Rechtsberatung. Für rechtliche Fragen solltest du dich an eine Rechtsanwältin oder einen Notar wenden. Ich unterstütze dich dabei, die Auswirkungen auf deine Altersvorsorge und Versicherungen verständlich einzuordnen.',
 };
 
 // ⚠️ Zahlen/Quellen sind Platzhalter in plausibler Größenordnung —
@@ -66,12 +67,12 @@ export default function Scheidung() {
         { text: 'Getrennte Wege.' },
         { text: 'Geteilte Rente.', italic: true },
       ]}
-      lead="Bei einer Scheidung wird nicht nur das Haus aufgeteilt — sondern auch jeder Rentenanspruch, den ihr in der Ehe aufgebaut habt. Dieses Verfahren heißt Versorgungsausgleich, läuft automatisch mit und entscheidet über dein Einkommen im Alter. Kaum jemand versteht es. Genau deshalb solltest du es."
+      lead="Mit einer Scheidung endet nicht nur eine Ehe. Auch die gemeinsame finanzielle Zukunft wird neu geregelt. Dabei werden die während der Ehe erworbenen Renten- und Versorgungsansprüche grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Dieses Verfahren nennt sich Versorgungsausgleich. Was das für deine persönliche Altersvorsorge bedeutet, wissen die wenigsten. Genau deshalb schauen wir uns gemeinsam an, welche Auswirkungen das auf deine spätere Rente hat und wo du gegebenenfalls neu vorsorgen solltest."
       stats={[
         {
           value: 35,
           unit: '%',
-          label: 'der Ehen in Deutschland werden geschieden — nach durchschnittlich rund 15 Jahren.',
+          label: 'der Ehen in Deutschland werden nach durchschnittlich rund 15 Jahren geschieden.',
           source: 'Quelle: Destatis*',
         },
         {
@@ -92,56 +93,65 @@ export default function Scheidung() {
           kicker: 'Das Verfahren',
           title: 'Was der Versorgungsausgleich wirklich macht',
           paragraphs: [
-            'Bei der Scheidung teilt das Familiengericht alle Rentenanrechte, die während der Ehe entstanden sind: gesetzliche Rente, Betriebsrenten, private Rentenversicherungen, Versorgungswerke. Jeder gibt die Hälfte seiner Ehezeit-Anrechte an den anderen ab — automatisch, auch wenn du nichts beantragst.',
-            'Das klingt nach Gerechtigkeit, und oft ist es das auch. Aber der Teufel steckt in der Bewertung: Welche Verträge werden wie gezählt? Was passiert mit Anrechten, die extern geteilt werden? Wer prüft, ob die Auskünfte der Versorgungsträger stimmen? In der Praxis: oft niemand.',
+            'Mit einer Scheidung verändert sich nicht nur dein Alltag, sondern auch deine finanzielle Zukunft. Die Renten- und Versorgungsansprüche, die während der Ehe aufgebaut wurden, werden grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Dieses Verfahren nennt sich Versorgungsausgleich und läuft automatisch über das Familiengericht.',
+            'Gerade deshalb ist es wichtig zu wissen, welche Ansprüche berücksichtigt werden und welche Auswirkungen die Aufteilung auf deine spätere Rente hat. Wer seine Unterlagen versteht und die Berechnung nachvollziehen kann, trifft bessere Entscheidungen für die eigene Zukunft.',
           ],
         },
         {
           kicker: 'Die Rechnung danach',
-          title: 'Warum hälftig noch lange nicht ausreichend heißt',
+          title: 'Warum der Versorgungsausgleich allein oft nicht ausreicht',
           paragraphs: [
-            'Der Versorgungsausgleich gleicht aus, was in der Ehe entstanden ist — aber er ersetzt nicht, was in den Jahren davor und danach fehlt. Wer für Familie und Care-Arbeit zurückgesteckt hat, startet auch nach einer sauberen Teilung mit weniger eigenen Ansprüchen ins zweite Kapitel.',
-            'Dazu kommt: Was das Gericht teilt, ist eine Momentaufnahme in Aktenform. Wie viel davon im Alter tatsächlich auf deinem Konto landet, welche Verträge nach der Scheidung noch zu dir passen und wo eine Lücke bleibt — das steht in keinem Beschluss. Genau diese Rechnung machen wir gemeinsam.',
+            'Der Versorgungsausgleich verteilt die Rentenansprüche, die während der Ehe aufgebaut wurden. Was er jedoch nicht ausgleicht, sind die finanziellen Auswirkungen von Elternzeit, Teilzeit oder längeren Erwerbsunterbrechungen. Gerade Frauen haben dadurch häufig auch nach der Scheidung eine geringere Altersvorsorge.',
+            'Nach einer Scheidung lohnt es sich deshalb, die eigene finanzielle Situation neu zu betrachten. Welche Rentenansprüche bleiben bestehen? Welche Versicherungen müssen angepasst werden? Und wo entstehen Versorgungslücken? Gemeinsam schaffen wir Klarheit und entwickeln eine Lösung, die zu deiner neuen Lebenssituation passt.',
           ],
         },
         {
           kicker: 'Danach',
           title: 'Der Neustart braucht ein eigenes Fundament',
           paragraphs: [
-            'Nach der Scheidung stehen viele Frauen zum ersten Mal seit Jahren allein vor ihren Finanzen: eigene Absicherung, eigene Vorsorge, oft mit Kindern und reduziertem Einkommen. Genau jetzt entscheidet sich, wie das nächste Kapitel finanziell aussieht.',
-            'Die gute Nachricht: Kaum ein Moment eignet sich besser für einen ehrlichen Kassensturz. Alte Verträge gehören auf den Prüfstand, Begünstigungen müssen geändert, die eigene Vorsorge neu aufgebaut werden — diesmal so, dass sie dir gehört. Ab hier ist jede Situation individuell, und genau dafür gibt es das Gespräch.',
+            'Nach einer Scheidung beginnt nicht nur ein neuer Lebensabschnitt, sondern oft auch ein finanzieller Neuanfang. Jetzt ist der richtige Zeitpunkt, deine Absicherung und Altersvorsorge neu aufzustellen, passend zu deinem Leben und deinen Zukunftsplänen.',
+            'Gemeinsam prüfen wir bestehende Verträge, passen Bezugsberechtigungen an und schließen mögliche Versorgungslücken. So schaffst du dir Schritt für Schritt ein finanzielles Fundament, das unabhängig ist und zu deiner neuen Lebenssituation passt.',
           ],
         },
       ]}
       quote={{
-        text: 'Die meisten meiner Kundinnen kommen nach der Scheidung. Ich wünschte, sie kämen davor — denn im Versorgungsausgleich wird über ihre Rente entschieden, ob sie hinschauen oder nicht.',
+        text: 'Die meisten meiner Kundinnen treffe ich erst, wenn die Scheidung bereits abgeschlossen ist. Dann können wir vieles neu aufbauen, aber manches nicht mehr verändern. Deshalb wünsche ich mir, Frauen schon vorher begleiten zu dürfen.',
         author: 'Julia Pashchenko',
       }}
+      actionsHeadline={
+        <>
+          Was du jetzt <span className="display-italic text-pink-display">konkret</span> tun kannst
+        </>
+      }
       actions={[
         {
-          title: 'Alle Anrechte auflisten',
-          body: 'Gesetzliche Rente, Betriebsrenten, private Verträge, Versorgungswerke — erst die vollständige Liste zeigt, worüber im Verfahren überhaupt entschieden wird. Und was danach von deiner eigenen Vorsorge übrig bleibt.',
+          title: 'Alle Rentenansprüche sammeln',
+          lead: 'Erst die vollständige Übersicht schafft Klarheit.',
+          body: 'Dazu gehören die gesetzliche Rente, Betriebsrenten, private Rentenversicherungen und mögliche Versorgungswerke. Nur wenn alle Ansprüche bekannt sind, lässt sich einschätzen, welche Auswirkungen der Versorgungsausgleich auf deine spätere Altersvorsorge hat.',
         },
         {
-          title: 'Auskünfte prüfen lassen',
-          body: 'Die Bewertungen der Versorgungsträger sind nicht unfehlbar. Vor dem Gerichtstermin prüfen lassen, ob die Zahlen stimmen — danach ist es zu spät.',
+          title: 'Die Unterlagen verstehen und prüfen',
+          lead: 'Nicht jede Zahl erklärt sich von selbst.',
+          body: 'Die Berechnungen im Versorgungsausgleich sind oft schwer nachvollziehbar. Deshalb lohnt es sich, die Unterlagen genau anzuschauen und zu verstehen, welche Rentenansprüche berücksichtigt wurden und was das für deine persönliche Situation bedeutet.',
         },
         {
-          title: 'Vereinbarungen nicht blind unterschreiben',
-          body: 'Ehevertrag oder Scheidungsfolgenvereinbarung können den Versorgungsausgleich ausschließen oder verändern. Was heute großzügig wirkt, kann im Alter teuer werden.',
+          title: 'Vereinbarungen bewusst entscheiden',
+          lead: 'Schnelle Lösungen sind nicht immer die besten.',
+          body: 'Eheverträge oder Scheidungsfolgenvereinbarungen können den Versorgungsausgleich beeinflussen. Bevor du etwas unterschreibst, solltest du verstehen, welche Auswirkungen die Regelung langfristig auf deine Altersvorsorge haben kann.',
         },
         {
-          title: 'Eigene Vorsorge neu aufstellen',
-          body: 'Nach der Scheidung: Begünstigte ändern, Absicherung anpassen, eigene Altersvorsorge aufbauen — als Fundament für das nächste Kapitel.',
+          title: 'Deine Vorsorge neu aufstellen',
+          lead: 'Der Neustart braucht ein eigenes Fundament.',
+          body: 'Nach der Scheidung sollten Bezugsberechtigungen, gemeinsame Verträge und deine persönliche Absicherung überprüft werden. Gemeinsam schauen wir, wie du deine Altersvorsorge und finanzielle Sicherheit passend zu deiner neuen Lebenssituation aufbauen kannst.',
         },
       ]}
       ctaHeadline={
         <>
-          Bevor der Scheidungsantrag eingelegt wird:{' '}
-          <span className="display-italic text-pink">reden wir.</span>
+          Bevor der Scheidungsantrag gestellt wird,{' '}
+          <span className="display-italic text-pink">lass uns sprechen.</span>
         </>
       }
-      ctaBody="Ob das Verfahren vor dir liegt, gerade läuft oder schon hinter dir ist — die entscheidende Frage ist, wie deine Vorsorge danach aussieht. 60 Minuten, kostenlos, vertraulich. Keine Rechtsberatung, sondern Klarheit über deine Zahlen."
+      ctaBody={`Ob das Verfahren noch vor dir liegt, gerade läuft oder bereits abgeschlossen ist: Gemeinsam verschaffen wir dir Klarheit über deine Altersvorsorge, deine Versicherungen und die nächsten sinnvollen Schritte. ${CALL_MINUTES} Minuten. Kostenlos. Vertraulich. Auf Augenhöhe.`}
     />
   );
 }

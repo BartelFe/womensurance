@@ -175,12 +175,15 @@ export default function TheNotice() {
           <div data-doc-intro>
             <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 4.2rem)' }}>
               Was die Prozente in{' '}
-              <span className="display-italic text-pink">Euros</span> bedeuten.
+              <span className="display-italic text-pink">Euro</span> bedeuten
             </h2>
+            {/* Die Prozentzahl bleibt bewusst dynamisch: sie folgt den Toggles
+                im Hero, sonst widerspräche der Text dem Bescheid daneben. */}
             <p className="hidden md:block mt-8 max-w-md body-lead text-paper/55" style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.2rem)' }}>
-              {de1(gap)} % klingen abstrakt. Aber die Lücke hat einen
-              Preis: jeden Monat, {RETIREMENT_YEARS} Rentenjahre lang. Das hier
-              ist dein Bescheid.
+              {de1(gap)} % sind mehr als nur eine Statistik. Für viele Frauen
+              bedeuten sie jeden Monat mehrere hundert Euro weniger Rente. Hier
+              siehst du, was diese Zahl ganz konkret für deine persönliche
+              Situation bedeutet und warum es sich lohnt, früh gegenzusteuern.
             </p>
             <p
               className={`hidden md:block mt-6 max-w-md text-sm text-paper/55 leading-relaxed ${activeMeta.length === 0 ? '' : 'md:invisible'}`}
