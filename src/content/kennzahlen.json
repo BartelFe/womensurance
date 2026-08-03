@@ -13,25 +13,25 @@
     "hinweis": "Fast jede zweite erwerbstätige Frau arbeitet Teilzeit. Bei Männern: 12 %.",
     "kennung": "parttime",
     "label": "Frauen in Teilzeit",
-    "quelle": "Quelle noch zu belegen (Destatis, Teilzeitquote)",
+    "quelle": "Statistisches Bundesamt, Pressemitteilung Nr. 175 vom 19.05.2025 (Berichtsjahr 2024)",
     "reihenfolge": 2,
     "wert": 49
   },
   {
     "einheit": "%",
-    "hinweis": "Unbereinigter Gehaltsunterschied zwischen Frauen und Männern.",
+    "hinweis": "Unbereinigter Gehaltsunterschied zwischen Frauen und Männern je Stunde.",
     "kennung": "paygap",
     "label": "Gender Pay Gap",
-    "quelle": "Quelle noch zu belegen (Destatis, Gender Pay Gap)",
+    "quelle": "Statistisches Bundesamt, Pressemitteilung Nr. 453 vom 16.12.2025 (Berichtsjahr 2025)",
     "reihenfolge": 3,
-    "wert": 18
+    "wert": 16
   },
   {
     "einheit": "%",
     "hinweis": "Frauen übernehmen täglich rund 44 % mehr Sorgearbeit als Männer.",
     "kennung": "care",
     "label": "mehr unbezahlte Care-Arbeit",
-    "quelle": "Quelle noch zu belegen (Zeitverwendungserhebung)",
+    "quelle": "Statistisches Bundesamt, Pressemitteilung Nr. 073 vom 28.03.2024, Zeitverwendungserhebung 2022",
     "reihenfolge": 4,
     "wert": 44
   }

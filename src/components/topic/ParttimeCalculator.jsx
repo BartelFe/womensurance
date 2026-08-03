@@ -8,7 +8,10 @@ import { RETIREMENT_YEARS } from '../../hooks/useGapState';
 //  EP/Jahr = eigenes Jahresbrutto ÷ Durchschnittsentgelt (gedeckelt ~BBG)
 //  Verlust = volle EP × Teilzeit-Anteil × Jahre × aktueller Rentenwert
 // Konstanten mit Julia validieren / jährlich pflegen:
-const RENTENWERT = 40.79; // €/Entgeltpunkt·Monat, Stand 07/2025
+// ⚠️ Der Rentenwert wird jedes Jahr zum 1. Juli neu festgesetzt und steht
+// sichtbar unter dem Rechner. Er MUSS dann hier nachgezogen werden, sonst
+// rechnet die Seite offen mit einem veralteten gesetzlichen Wert.
+const RENTENWERT = 42.52; // €/Entgeltpunkt·Monat, Stand 01.07.2026 (zuvor 40,79 €)
 const AVG_INCOME_YEAR = 50493; // Durchschnittsentgelt 2025 (vorläufig)
 const EP_CAP = 2.07; // Deckel nahe Beitragsbemessungsgrenze
 const FULL_HOURS = 40;
