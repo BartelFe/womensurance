@@ -1,90 +1,30 @@
 // Lebensphasen für Section "Dein Leben".
-// `body` und `details` dürfen ein String ODER ein Array von Absätzen sein
-// (YourLife rendert je Eintrag ein <p>).
-// `details` = aufklappbarer Zusatztext in der Kachel.
-// `subpage` = eigene Unterseite (Teilzeit/Care-Arbeit → Rentenlücke, Scheidung → Versorgungsausgleich).
-// ✅ Texte von Julia, eingepflegt 02.08.2026 (vorher redaktionelle Platzhalter).
-
-export const lifePhases = [
-  {
-    id: 'study',
-    age: '18–24',
-    title: 'Ausbildung/Studium',
-    body: 'Du legst gerade den Grundstein für deine Zukunft. Vielleicht verdienst du noch nicht viel und an später denkst du im Alltag kaum. Doch genau jetzt kannst du wichtige Entscheidungen treffen, die dich langfristig absichern. Oft so günstig wie nie wieder.',
-    insurance: 'Berufsunfähigkeitsversicherung. Altersvorsorge. Haftpflicht. Krankenversicherung.',
-    details: [
-      'Die meisten denken während der Ausbildung oder im Studium noch nicht an ihre finanzielle Zukunft. Das ist völlig normal. Gleichzeitig ist genau jetzt der beste Zeitpunkt, um wichtige Entscheidungen zu treffen. Denn viele Absicherungen bekommst du in jungen Jahren so günstig wie nie wieder.',
-      'Eine Berufsunfähigkeitsversicherung kostet mit Anfang 20 häufig deutlich weniger als einige Jahre später. Solange du jung und gesund bist, profitierst du von günstigen Beiträgen und einer besseren Gesundheitsprüfung. Wartest du zu lange, kann es deutlich teurer werden oder im schlimmsten Fall gar nicht mehr möglich sein.',
-      'Auch bei der Altersvorsorge gilt: Du musst nicht mit großen Summen starten. Schon 25 oder 50 Euro im Monat können durch den Zinseszinseffekt über Jahrzehnte ein beachtliches Vermögen aufbauen. Je früher du beginnst, desto mehr Zeit arbeitet dein Geld für dich.',
-      'Mit deiner Volljährigkeit oder spätestens beim Auszug aus dem Elternhaus übernimmst du außerdem die Verantwortung für dein eigenes Handeln. Beschädigst du fremdes Eigentum oder verletzt versehentlich eine andere Person, haftest du mit deinem gesamten Vermögen. Eine private Haftpflichtversicherung schützt dich genau in solchen Situationen: Sie übernimmt berechtigte Schadenersatzforderungen und wehrt unberechtigte Ansprüche für dich ab.',
-    ],
-  },
-  {
-    id: 'firstjob',
-    age: '24–28',
-    title: 'Erster Job',
-    body: [
-      'Das erste eigene Gehalt. Die erste eigene Wohnung. Zum ersten Mal triffst du finanzielle Entscheidungen ganz allein. Zwischen Miete, Freizeit und neuen Wünschen gerät die eigene Absicherung schnell in den Hintergrund. Dabei legst du genau jetzt den Grundstein für deine finanzielle Zukunft.',
-      'Viele Versicherungen begleiten dich über viele Jahre. Deshalb lohnt es sich, sie von Anfang an passend zu deinem Leben auszuwählen, statt später teure Lücken schließen zu müssen.',
-    ],
-    insurance: 'Berufsunfähigkeitsversicherung. Altersvorsorge. Hausrat. Haftpflicht. Rechtsschutz.',
-    details: [
-      'Mit deinem ersten eigenen Gehalt beginnt ein neuer Lebensabschnitt. Jetzt entscheidest du selbst, wie du dein Geld einsetzt und legst gleichzeitig den Grundstein für deine finanzielle Zukunft. Schon kleine Beiträge in die Altersvorsorge können durch den Zinseszinseffekt langfristig einen großen Unterschied machen.',
-      'Auch dein Einstiegsgehalt spielt eine wichtige Rolle. Frauen verhandeln statistisch seltener nach. Dabei wirkt sich jedes zusätzliche Gehalt nicht nur heute, sondern auch auf deine spätere Rente und deine finanziellen Möglichkeiten aus.',
-      'Hast du bereits während deiner Ausbildung eine Berufsunfähigkeitsversicherung abgeschlossen, solltest du sie jetzt überprüfen. Viele Tarife ermöglichen es, die versicherte Rente nach dem Berufseinstieg ohne erneute Gesundheitsprüfung zu erhöhen.',
-      'Mit deiner ersten eigenen Wohnung wächst außerdem dein Hausrat. Möbel, Technik und persönliche Gegenstände haben oft einen höheren Wert, als man denkt. Eine Hausratversicherung schützt dich vor den finanziellen Folgen von Schäden oder Einbruch.',
-    ],
-  },
-  {
-    id: 'partner',
-    age: '28–32',
-    title: 'Beziehung',
-    body: 'Ihr zieht zusammen, teilt euren Alltag und schmiedet gemeinsame Pläne. Vielleicht steht sogar eine Hochzeit bevor. Jetzt lassen sich viele Versicherungen gemeinsam organisieren und Kosten sparen. Trotzdem ist es wichtig, dass deine eigene finanzielle Absicherung und Altersvorsorge nicht in den Hintergrund geraten.',
-    insurance: 'Haftpflicht. Rechtsschutz. Unfall. Altersvorsorge. Bezugsberechtigung klären.',
-    details: [
-      'Liebe ist kein Finanzkonzept. Gemeinsame Konten, gemeinsame Pläne oder ein gemeinsamer Kredit können sinnvoll sein. Trotzdem solltest du deine eigene finanzielle Absicherung nie aus der Hand geben.',
-      'Haftpflicht-, Hausrat- oder Rechtsschutzversicherung lassen sich oft gemeinsam organisieren und dadurch Kosten sparen. Deine Altersvorsorge und Arbeitskraftabsicherung solltest du dagegen regelmäßig überprüfen und an deine persönliche Lebenssituation anpassen.',
-      'In vielen Partnerschaften übernimmt eine Person die Finanzentscheidungen, und das ist häufig nicht die Frau. Wer die eigenen Verträge kennt und sich aktiv um die eigene Vorsorge kümmert, bleibt finanziell unabhängig und kann in jeder Lebensphase selbstbestimmt entscheiden.',
-    ],
-  },
-  {
-    id: 'children',
-    age: '30–35',
-    title: 'Kind',
-    body: 'Mit der Geburt deines Kindes beginnt einer der schönsten und gleichzeitig größten neuen Lebensabschnitte. Plötzlich dreht sich alles um dein Kind. Dabei gerät die eigene finanzielle Absicherung oft in den Hintergrund. Gerade jetzt ist es wichtig, auch an deine Zukunft zu denken, damit ihr beide langfristig gut abgesichert seid.',
-    insurance: 'Krankenversicherung. Kindersparer. Altersvorsorge. Berufsunfähigkeitsversicherung. Unfallversicherung.',
-    details: [
-      'Mit der Geburt deines Kindes ändern sich nicht nur dein Alltag, sondern auch viele Versicherungs- und Vorsorgethemen. Ist ein Elternteil privat krankenversichert, sollte früh geklärt werden, wie dein Kind versichert wird. Hier gelten Fristen, die du nicht verpassen solltest.',
-      'Die gute Nachricht: Über den Familientarif sind Kinder in der privaten Haftpflicht- und Rechtsschutzversicherung häufig automatisch mitversichert. Gleichzeitig kannst du mit dem Kindergeld schon früh den finanziellen Grundstein für dein Kind legen, zum Beispiel für den Führerschein, das Studium oder sogar die Altersvorsorge.',
-      'Bei all den Veränderungen solltest du jedoch eines nicht vergessen: deine eigene Absicherung. Elternzeit und ein späterer Wiedereinstieg in Teilzeit hinterlassen oft Spuren auf deinem Rentenkonto. Deshalb ist es meist sinnvoller, deine Altersvorsorge oder Arbeitskraftabsicherung vorübergehend anzupassen oder zu pausieren, statt sie vollständig zu kündigen. Die Entscheidungen, die du heute triffst, begleiten dich oft bis in die Rente.',
-    ],
-  },
-  {
-    id: 'parttime',
-    age: '35–50',
-    title: 'Teilzeit / Care-Arbeit',
-    body: 'Fast jede zweite erwerbstätige Frau arbeitet in Teilzeit. Oft, um Familie oder Angehörige zu unterstützen. Viele glauben, dass sie hohe Beiträge investieren müssen, um ihre Rentenlücke auszugleichen. Dabei können schon kleine, regelmäßig investierte Beträge langfristig einen großen Unterschied machen. Entscheidend ist nicht die Höhe des Beitrags, sondern die passende Strategie.',
-    insurance: 'Berufsunfähigkeitsversicherung. Altersvorsorge.',
-    subpage: '/rentenluecke',
-    subpageLabel: 'Deine Rentenlücke verstehen & schließen',
-    subpageShort: 'Rentenlücke verstehen & schließen',
-  },
-  {
-    id: 'divorce',
-    age: '30–55',
-    title: 'Scheidung',
-    body: [
-      'Eine Trennung verändert nicht nur das Privatleben, sondern oft auch die finanzielle Zukunft. Mit der Scheidung wird der Versorgungsausgleich durchgeführt. Dabei werden die während der Ehe erworbenen Renten- und Versorgungsansprüche grundsätzlich zwischen beiden Ehepartnern aufgeteilt.',
-      'Gerade nach einer Scheidung entstehen jedoch häufig neue Versorgungslücken. Deshalb ist jetzt der richtige Zeitpunkt, deine Absicherung zu überprüfen und deine finanzielle Zukunft neu zu planen.',
-    ],
-    insurance: 'Versorgungsausgleich. Versicherungslücken aufdecken. Ansprüche prüfen.',
-    subpage: '/scheidung',
-    subpageLabel: 'Was du jetzt tun kannst',
-    subpageShort: 'Was du jetzt tun kannst',
-  },
-];
+//
+// Der Inhalt kommt seit der CMS-Anbindung aus `src/content/lebensphasen.json`
+// (gefüllt beim Bauen der Seite aus Sanity, siehe scripts/fetch-content.mjs).
+// Diese Datei bleibt bestehen und übersetzt die Feldnamen des
+// Redaktionssystems in die Namen, die die Komponenten schon immer benutzen.
+// Dadurch musste am Rendering nichts angefasst werden.
+//
 // Hinweise:
-// - Die frühere 7. Kachel "Rente" ist bewusst entfernt — das Rententhema
+// - Die frühere 7. Kachel "Rente" ist bewusst entfernt, das Rententhema
 //   lebt in der Unterseite /rentenluecke (Teilzeit/Care-Arbeit).
 // - Die Lebensereignis-Toggles (inkl. €-Beträge) leben zentral in
-//   src/hooks/useGapState.jsx (TOGGLE_META).
+//   src/hooks/useGapState.jsx (TOGGLE_META). Sie sind Rechenlogik und
+//   bewusst nicht redaktionell pflegbar.
+
+import roh from '../content/lebensphasen.json';
+
+export const lifePhases = [...roh]
+  .sort((a, b) => (a.reihenfolge ?? 0) - (b.reihenfolge ?? 0))
+  .map((p) => ({
+    id: p.kennung,
+    age: p.alter,
+    title: p.titel,
+    body: p.body,
+    insurance: p.versicherungen,
+    details: p.details?.length ? p.details : undefined,
+    subpage: p.unterseite || undefined,
+    subpageLabel: p.unterseiteLabel || undefined,
+    subpageShort: p.unterseiteKurz || undefined,
+  }));

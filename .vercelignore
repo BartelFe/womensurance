@@ -1,0 +1,11 @@
+# Die Redaktionsoberflaeche ist ein eigenstaendiges Projekt und wird nicht
+# zusammen mit der Website ausgeliefert. Sie laeuft unter ihrer eigenen
+# Adresse (`cd studio && npm run deploy`).
+studio
+
+# Einmal-Werkzeuge der Inhaltsmigration. `scripts/fetch-content.mjs` wird
+# dagegen beim Bauen gebraucht und darf NICHT ausgeschlossen werden.
+scripts/roh
+scripts/extract-topic.mjs
+scripts/build-content.mjs
+scripts/seed-sanity.mjs

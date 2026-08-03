@@ -1,16 +1,31 @@
-// Zentrale Site-Konstanten — eine Quelle statt vier Kopien.
+// Zentrale Site-Konstanten: eine Quelle statt vier Kopien.
+//
+// Buchungslink, Social-Profile und die Länge des Erstgesprächs pflegt die
+// Redaktion selbst (Sanity → src/content/startseite.json). Die Rückfallwerte
+// hier greifen nur, falls ein Feld einmal leer ist, damit kein Knopf ins
+// Leere führt.
+
+import startseite from '../content/startseite.json';
 
 export const BOOKING_URL =
-  'https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled';
+  startseite.buchungsUrl || 'https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled';
 
 // TikTok entfernt (07/2026: Julia bespielt den Kanal nicht mehr).
-export const SOCIALS = [
-  { id: 'instagram', label: 'Instagram', short: 'IG', url: 'https://www.instagram.com/womensurance/' },
-  { id: 'linkedin', label: 'LinkedIn', short: 'in', url: 'https://www.linkedin.com/in/julia-pashchenko/' },
-];
+// Kurzform und Symbol hängen an der Kennung des Netzwerks, deshalb sind im
+// Redaktionssystem nur Instagram und LinkedIn wählbar.
+const KURZ = { instagram: 'IG', linkedin: 'in' };
 
-// Länge des kostenlosen Erstgesprächs — an einer Stelle pflegen.
-export const CALL_MINUTES = 60;
+export const SOCIALS = (startseite.socialProfile || []).map((p) => ({
+  id: p.netzwerk,
+  label: p.label,
+  short: KURZ[p.netzwerk] || '',
+  url: p.url,
+}));
+
+// Länge des kostenlosen Erstgesprächs, an einer Stelle pflegen.
+// Wird über den Platzhalter {minuten} in alle Texte eingesetzt, in denen die
+// Dauer vorkommt (Startseite, beide Unterseiten, Kurzprofil).
+export const CALL_MINUTES = startseite.gespraechsdauer ?? 60;
 
 // Google Tag Manager Container-ID (z.B. 'GTM-XXXXXXX').
 // Kommt aus der Umgebung (.env lokal, Environment-Variablen in Vercel), damit

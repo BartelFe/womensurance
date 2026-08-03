@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { methodSteps } from '../../data/methodSteps';
+import { Satz } from '../../lib/inhalt';
+import startseite from '../../content/startseite.json';
 
 export default function TheMethod() {
   const root = useRef(null);
@@ -52,7 +54,7 @@ export default function TheMethod() {
     <section ref={root} id="method" className="bg-ink text-paper py-32 md:py-48 px-6 md:px-12 relative">
       <div className="max-w-6xl mx-auto">
         <h2 className="display-lg text-paper text-balance mb-20" style={{ fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}>
-          4 Schritte. <span className="display-italic text-pink">Ein Konzept.</span>
+          <Satz teile={startseite.methodeUeberschrift} />
         </h2>
 
         <div className="space-y-6 md:space-y-8 max-w-4xl">

@@ -1,0 +1,21 @@
+{
+  "name": "womensurance-studio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Redaktionsoberflaeche (Sanity Studio) fuer womensurance.de",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "seed": "sanity dataset import seed/inhalte.ndjson production --missing"
+  },
+  "dependencies": {
+    "@sanity/vision": "^6.8.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sanity": "^6.8.0",
+    "styled-components": "^6.4.4"
+  }
+}

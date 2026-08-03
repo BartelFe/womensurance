@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useLenis } from './hooks/useLenis';
 import { useReducedMotion } from './hooks/useReducedMotion';
 import { GapProvider } from './hooks/useGapState';
@@ -85,6 +87,8 @@ export default function App() {
 
       <Footer />
       <CookieConsent />
+      <Analytics />
+      <SpeedInsights />
     </GapProvider>
   );
 }

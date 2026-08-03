@@ -3,6 +3,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGap } from '../../hooks/useGapState';
 import { de1 } from '../../utils/format';
+import { fuellen } from '../../lib/inhalt';
+import startseite from '../../content/startseite.json';
 
 export default function TheTruth() {
   const root = useRef(null);
@@ -64,21 +66,21 @@ export default function TheTruth() {
             breiten Spalte um — und ein Umbruch innerhalb einer `line-mask`
             zerlegt die zeilenweise Einblendung. */}
         <div ref={headRef} className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.2rem, 7vw, 6.5rem)' }}>
-          <span className="block line-mask"><span data-line>Deine Rentenlücke:</span></span>
+          <span className="block line-mask"><span data-line>{startseite.lueckeZeile1}</span></span>
           {/* „durchschnittlich" steht immer da und in voller Schriftgröße
               (Wunsch Felix 02.08.2026) — also auch dann, wenn im Hero
               Lebensereignisse angeklickt sind und die Zahl über dem
               Basiswert liegt. `not-italic`, damit nur die Zahl kursiv bleibt. */}
           <span className="block line-mask">
             <span data-line>
-              <span className="not-italic">durchschnittlich </span>
+              <span className="not-italic">{startseite.lueckeVorZahl} </span>
               <span ref={numRef} className="display-italic text-pink">{de1(gap)}</span>
               <span className="display-italic text-pink">&nbsp;%</span>
               <span>.</span>
             </span>
           </span>
           <span className="block line-mask">
-            <span data-line className="text-paper">Aber sie ist kein Schicksal.</span>
+            <span data-line className="text-paper">{startseite.lueckeZeile3}</span>
           </span>
         </div>
 
@@ -87,11 +89,7 @@ export default function TheTruth() {
           className="mt-12 max-w-xl body-lead text-paper/55"
           style={{ fontSize: 'clamp(1rem, 1.2vw, 1.2rem)' }}
         >
-          Die {de1(baseGap)} % sind ein Durchschnittswert. Wie groß deine
-          persönliche Rentenlücke tatsächlich ist, hängt von deiner individuellen
-          Lebenssituation ab. Gemeinsam finden wir heraus, was diese Zahl für
-          dich bedeutet und welche Möglichkeiten du hast, schon heute
-          gegenzusteuern.
+          {fuellen(startseite.lueckeText, { basiswert: de1(baseGap) })}
         </div>
       </div>
 

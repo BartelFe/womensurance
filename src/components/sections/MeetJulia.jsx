@@ -1,6 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Satz, Bild, fuellen } from '../../lib/inhalt';
+import { CALL_MINUTES } from '../../config/site';
+import julia from '../../content/julia.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,22 +80,15 @@ export default function MeetJulia() {
                 className="display-italic text-pink-display leading-none"
                 style={{ fontSize: 'clamp(6rem, 14vw, 16rem)', letterSpacing: '-0.03em' }}
               >
-                Julia
+                {julia.vorname}
               </div>
 
-              <div className="eyebrow text-ink/75 mt-4 mb-10 md:mb-16">
-                Fachwirtin für Versicherungen und Finanzen · DVM Ingolstadt
-              </div>
+              <div className="eyebrow text-ink/75 mt-4 mb-10 md:mb-16">{julia.rolle}</div>
             </div>
 
             <blockquote data-quote className="display-lg text-ink" style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2.8rem)', lineHeight: 1.1 }}>
-              &ldquo;Ich will nicht, dass meine Kundinnen{' '}
-              <span className="display-italic text-pink-display">abgesichert</span> sind.
-              Ich will, dass sie{' '}
-              <span className="display-italic">frei</span> sind.&rdquo;
-              <footer className="mt-5 eyebrow text-ink/75 not-italic">
-                — Julia Pashchenko, Gründerin
-              </footer>
+              &ldquo;<Satz teile={julia.zitat} grund="hell" />&rdquo;
+              <footer className="mt-5 eyebrow text-ink/75 not-italic">{julia.zitatQuelle}</footer>
             </blockquote>
           </div>
 
@@ -107,11 +103,10 @@ export default function MeetJulia() {
                 className="flex-1 relative overflow-hidden rounded-sm"
                 style={{ aspectRatio: '3/4' }}
               >
-                <img
-                  src="/images/julia-portrait.jpeg"
-                  alt="Julia Pashchenko im pinken Blazer an ihrem Schreibtisch"
-                  width="704"
-                  height="939"
+                <Bild
+                  quelle={julia.portraet}
+                  breiten={[400, 600, 800]}
+                  sizes="(min-width: 768px) 30vw, 60vw"
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
               </div>
@@ -125,21 +120,19 @@ export default function MeetJulia() {
                   data-cursor="image"
                   className="relative overflow-hidden rounded-sm aspect-square"
                 >
-                  <img
-                    src="/images/julia-desk.jpeg"
-                    alt="Julia Pashchenko am Besprechungstisch mit ihrem Tablet"
-                    width="704"
-                    height="934"
+                  <Bild
+                    quelle={julia.zweitbild}
+                    breiten={[300, 450, 600]}
+                    sizes="(min-width: 768px) 15vw, 30vw"
                     className="absolute inset-0 w-full h-full object-cover object-[center_28%]"
                   />
                 </div>
 
                 {/* Info card */}
                 <div className="bg-ink text-paper p-4 md:p-5 rounded-sm">
-                  <div className="eyebrow text-pink mb-2 md:mb-3">Womensurance</div>
+                  <div className="eyebrow text-pink mb-2 md:mb-3">{julia.infokarteTitel}</div>
                   <p className="text-xs text-paper/70 leading-relaxed font-light hyphens-auto break-words">
-                    Julia, deine Versicherungsschwester. Sie redet Klartext,
-                    hört zu und bleibt an deiner Seite.
+                    {julia.infokarteText}
                   </p>
                 </div>
               </div>
@@ -169,11 +162,10 @@ export default function MeetJulia() {
                 className="relative overflow-hidden rounded-sm"
                 style={{ aspectRatio: '5/7' }}
               >
-                <img
-                  src="/images/julia-geschichte.jpeg"
-                  alt="Julia Pashchenko im Womensurance-Poloshirt vor dem Büro"
-                  width="1058"
-                  height="1476"
+                <Bild
+                  quelle={julia.geschichteBild}
+                  breiten={[420, 640, 1060]}
+                  sizes="(min-width: 768px) 40vw, 90vw"
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
               </div>
@@ -193,36 +185,28 @@ export default function MeetJulia() {
                 className="display-lg text-paper mb-6 md:mb-8 text-balance"
                 style={{ fontSize: 'clamp(2.1rem, 3.8vw, 3.8rem)' }}
               >
-                Die Geschichte hinter{' '}
-                <span className="display-italic text-pink">womensurance</span>
+                <Satz teile={julia.geschichteUeberschrift} />
               </h2>
 
-              {[
-                'Womensurance ist entstanden, weil ich gesehen habe, wie schnell sich das Leben verändern kann und wie unvorbereitet viele Frauen dann sind.',
-                'Kurz nach meiner Ausbildung saß eine Kundin vor mir. Sie hatte einen guten Job, eine glückliche Familie und eigentlich das Gefühl, alles richtig gemacht zu haben.',
-                'Doch durch Elternzeit, reduzierte Arbeitszeit und eine Scheidung veränderte sich ihre Situation schlagartig. Plötzlich entstanden Versorgungslücken, über die vorher niemand gesprochen hatte.',
-                'In diesem Moment wurde mir klar: Frauen brauchen keine komplizierten Versicherungen. Sie brauchen jemanden, der ihnen verständlich erklärt, welche Entscheidungen heute ihre finanzielle Zukunft sichern.',
-                'Deshalb habe ich womensurance gegründet. Ich begleite Frauen dabei, ihre Versicherungs- und Vorsorgethemen zu verstehen und selbstbestimmte Entscheidungen zu treffen. Abgestimmt auf ihre Lebensphase, ihre Ziele und ihre Zukunft.',
-              ].map((p) => (
+              {julia.geschichteAbsaetze.map((p) => (
                 <p key={p.slice(0, 24)} className="body-lead text-paper/75" style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.1rem)' }}>
                   {p}
                 </p>
               ))}
-              <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.1rem)' }}>
-                <strong className="text-paper font-medium">Mein Anspruch:</strong><br />
-                Jede Frau soll wissen, wofür sie abgesichert ist und sich in jeder Lebenslage finanziell sicher fühlen.
-              </p>
+              {julia.anspruchText && (
+                <p className="body-lead text-paper/75" style={{ fontSize: 'clamp(0.95rem, 1.05vw, 1.1rem)' }}>
+                  <strong className="text-paper font-medium">{julia.anspruchTitel}</strong><br />
+                  {julia.anspruchText}
+                </p>
+              )}
 
               {/* Credentials */}
               <div className="pt-6 border-t border-paper/10 grid grid-cols-2 gap-4">
-                {[
-                  { n: '5+', label: 'Jahre Erfahrung' },
-                  { n: '100%', label: 'Unabhängig' },
-                  { n: '∅ 60', label: 'Min. Erstgespräch' },
-                  { n: 'IHK', label: 'Zertifiziert' },
-                ].map(({ n, label }) => (
+                {julia.kurzprofil.map(({ wert, label }) => (
                   <div key={label} className="flex flex-col">
-                    <span className="data-num text-pink text-3xl md:text-4xl leading-none">{n}</span>
+                    <span className="data-num text-pink text-3xl md:text-4xl leading-none">
+                      {fuellen(wert, { minuten: CALL_MINUTES })}
+                    </span>
                     <span className="eyebrow text-paper/55 mt-1">{label}</span>
                   </div>
                 ))}

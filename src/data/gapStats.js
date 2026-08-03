@@ -1,35 +1,28 @@
-// Deutsche Daten — Größenordnungen aus Statistischem Bundesamt / Bundesregierung.
-// Felix: vor Live-Schaltung exakte Quellen + Jahreszahlen einfügen.
+// Kennzahlen-Band. Inhalt aus dem Redaktionssystem, Mechanik siehe
+// src/data/lifePhases.js.
+//
+// ⚠️ `HERO_GAP_VALUE` ist nicht nur eine Anzeige, sondern der Ausgangswert
+// des Rechners im Kopfbereich. Er kommt aus der Kennzahl mit der Kennung
+// `pension`. Ändert die Redaktion diese Zahl, ändert sich also auch die Zahl,
+// mit der der Rechner startet. Genau so ist es gewollt (eine Quelle statt
+// zwei), es ist aber der Grund, warum bei der Kennzahl die Quellenangabe
+// Pflichtfeld ist.
 
-export const gapStats = [
-  {
-    id: 'pension',
-    value: 39.4,
-    unit: '%',
-    label: 'Gender Pension Gap',
-    note: 'Frauen erhalten in Deutschland im Schnitt fast 40 % weniger Rente als Männer.',
-  },
-  {
-    id: 'parttime',
-    value: 49,
-    unit: '%',
-    label: 'Frauen in Teilzeit',
-    note: 'Fast jede zweite erwerbstätige Frau arbeitet Teilzeit. Bei Männern: 12 %.',
-  },
-  {
-    id: 'paygap',
-    value: 18,
-    unit: '%',
-    label: 'Gender Pay Gap',
-    note: 'Unbereinigter Gehaltsunterschied zwischen Frauen und Männern.',
-  },
-  {
-    id: 'care',
-    value: 44,
-    unit: '%',
-    label: 'mehr unbezahlte Care-Arbeit',
-    note: 'Frauen übernehmen täglich rund 44 % mehr Sorgearbeit als Männer.',
-  },
-];
+import roh from '../content/kennzahlen.json';
 
-export const HERO_GAP_VALUE = 39.4;
+export const gapStats = [...roh]
+  .sort((a, b) => (a.reihenfolge ?? 0) - (b.reihenfolge ?? 0))
+  .map((k) => ({
+    id: k.kennung,
+    value: k.wert,
+    unit: k.einheit,
+    label: k.label,
+    note: k.hinweis,
+    source: k.quelle,
+  }));
+
+const rente = gapStats.find((k) => k.id === 'pension');
+
+// Rückfallwert 39,4: Der Rechner darf nicht auf NaN laufen, falls die Kennzahl
+// einmal fehlt. Der Wert entspricht dem Gender Pension Gap zum Projektstart.
+export const HERO_GAP_VALUE = rente?.value ?? 39.4;

@@ -7,6 +7,8 @@ import DataNumber from '../ui/DataNumber';
 import { SOCIAL_ICONS } from '../ui/SocialIcons';
 import FaqSection from './FaqSection';
 import { BOOKING_URL, SOCIALS, CALL_MINUTES } from '../../config/site';
+import { klasseFuerStil, fuellen } from '../../lib/inhalt';
+import startseite from '../../content/startseite.json';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,7 +88,7 @@ export default function TopicPage({
           <div className="eyebrow text-pink mb-8">{eyebrow}</div>
           <h1 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.8rem, 8vw, 8rem)' }}>
             {titleLines.map((line, i) => (
-              <span key={i} className={`block ${line.italic ? 'display-italic text-pink' : ''}`}>
+              <span key={i} className={`block ${klasseFuerStil(line.stil) || ''}`}>
                 {line.text}
               </span>
             ))}
@@ -221,10 +223,12 @@ export default function TopicPage({
           <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.2rem, 6vw, 6rem)' }}>
             {ctaHeadline}
           </h2>
-          <p className="mt-8 max-w-xl mx-auto body-lead text-paper/55">{ctaBody}</p>
+          <p className="mt-8 max-w-xl mx-auto body-lead text-paper/55">
+            {fuellen(ctaBody, { minuten: CALL_MINUTES })}
+          </p>
           <div className="mt-10 flex flex-col items-center gap-5">
             <MagneticButton href={BOOKING_URL} target="_blank" variant="pink">
-              <span className="font-medium tracking-wide">Erstgespräch buchen</span>
+              <span className="font-medium tracking-wide">{startseite.abschlussButton}</span>
               <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -233,7 +237,7 @@ export default function TopicPage({
 
             {/* Social Media — wie auf der Startseite */}
             <div className="mt-6 flex flex-col items-center gap-4">
-              <div className="eyebrow text-paper/55">Oder folge mir</div>
+              <div className="eyebrow text-paper/55">{startseite.abschlussSocialHinweis}</div>
               <div className="flex items-center justify-center gap-3">
                 {SOCIALS.map((s) => (
                   <a

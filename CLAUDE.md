@@ -62,7 +62,8 @@ Das CMS-Thema kam vor Finalisierung hoch (DVMs Personalerin fragte „welches CM
 
 ## A.8 · Offene Aktionspunkte (Checkliste)
 - [x] ~~**Vercel-Bild-Proxy `api/image` bauen**~~ — **erledigt 01.08.2026** (s. A.10).
-- [ ] **Beim Sanity-Anschluss:** ausnahmslos `urlFor()` aus `src/lib/sanityImage.js` verwenden. Ein einziges direktes `cdn.sanity.io` im Frontend macht die Aussage in der Datenschutzerklärung („keine Verbindung zu Sanity") unwahr.
+- [x] ~~**Beim Sanity-Anschluss:** ausnahmslos `urlFor()` verwenden~~ — **erledigt 03.08.2026** (s. A.14). Bilder laufen über `Bild` aus `src/lib/inhalt.jsx`, Inhalte werden beim Bauen geholt, kein Laufzeit-Kontakt zu Sanity.
+- [ ] **Sanity: Felix' Handgriffe** (interaktive Anmeldung nötig): `cd studio && npx sanity login` → `npm run seed` → `npm run deploy` → Julia einladen → Deploy Hook + Webhook (Anleitung `studio/README.md`).
 - [ ] **Sanity-DPA im Sanity-Account akzeptieren** — die Datenschutzerklärung behauptet einen AVV mit Sanity. Muss vor Go-Live stimmen.
 - [ ] **`/barrierefreiheit` vor Abnahme final gegenprüfen.** Die Seite ist bewusst ein Zwischenstand (am 01.08. an Thomas Gessert/DVM-IT verlinkt), **nicht** die Endfassung. Zur Abnahme: (a) alle 8 Punkte unter „Stand der Umsetzung" gegen den dann aktuellen Code neu messen (Julias Fotos sind seit 02.08. mit Alt-Texten drin; offen bleiben später über Sanity eingepflegte Bilder); (b) rechtliche Endfassung von Maisel Consult einholen (Werkvertrag § 2 Abs. 6); (c) `stand=` auf das Abnahmedatum setzen.
 - [ ] `VITE_THEME_PANEL` in den Vercel-Env-Variablen setzen (jetzt `true` für Julia, zum Go-Live entfernen/`false`).
@@ -177,6 +178,30 @@ Alle redaktionellen Platzhalter auf Startseite, `/rentenluecke` und `/scheidung`
 - **`LegalLayout`-H1:** `hyphens-auto` + `lang="de"` + `break-words`. „Datenschutzerklärung" ist ein 20-Zeichen-Wort und war mobil rund 60 px breiter als die Spalte; es wird jetzt getrennt statt verkleinert, die Schriftgröße bleibt bei `clamp(2.4rem, 6vw, 5rem)`.
 
 **Messstand:** `npm run build` grün (8,87 s) · 0 Kontrastverstöße und `ungeprueft: 0` auf `/`, `/rentenluecke`, `/scheidung`, `/datenschutz`, `/impressum`, `/barrierefreiheit` · `document.scrollWidth === innerWidth` bei **320 · 375 · 768 · 1024 · 1280 · 1440 · 1920** · nichts vom `overflow-hidden` gekappt außer den drei bewusst überstehenden Deko-Elementen (Stempel „VERMEIDBAR", Wasserzeichen „Lücke", Radial-Gradient).
+
+## A.14 · Sanity-Anbindung 03.08.2026
+
+**Entscheidungen (Felix, vor Baubeginn):** redaktionell ist alles Inhaltliche, Rechtstexte und Rechenlogik bleiben im Code · Aktualisierung über automatischen Neubau, nicht zur Laufzeit · Studio auf eigener Adresse, nicht eingebettet.
+
+**Architektur.** `Sanity → npm run build → scripts/fetch-content.mjs → src/content/*.json → Bundle`. Die Website fragt Sanity **nur beim Bauen** ab. Das ist kein Performance-Trick, sondern Werkvertrag § 6 Abs. 4 und AVV: beim Besuch geht nichts an das CMS. Nebeneffekt: der Besucherverkehr läuft nicht gegen die harten Kontingente des Gratis-Plans (die laut Sanity-Doku sonst dazu führen, dass Inhalte schlicht nicht mehr laden).
+- **`src/content/*.json` ist der Vertrag.** Dieselbe Struktur, egal ob aus Sanity geholt oder aus dem Repo. Die Dateien sind eingecheckt und dienen als Rückfall: schlägt der Abruf fehl oder ist die Antwort unvollständig, **bricht der Build nicht ab**, sondern baut mit dem letzten Stand. Bewusst so.
+- `src/data/*.js` sind nur noch Übersetzer von den Sanity-Feldnamen auf die Namen, die die Komponenten schon benutzten. Dadurch blieb das Rendering unangetastet.
+- `src/lib/inhalt.jsx`: `Satz` (Überschriften aus Teilen, `stil`: normal/betont/kursiv), `fuellen` (Platzhalter `{minuten}`, `{basiswert}`, `{gap}`, `{anzahl}`), `Bild` (Sanity-Referenz **oder** noch Datei aus `public/images`, immer über `urlFor()`).
+- ⚠️ **Der Platzhalter `{minuten}`** ersetzt die früher an drei Stellen kopierte Gesprächsdauer. `CALL_MINUTES` kommt jetzt aus `startseite.gespraechsdauer`. Damit ist die offene Frage „30 oder 60 Minuten" aus A.12 einmal zentral entscheidbar (steht auf 60).
+
+**Studio** liegt als eigenes Projekt in `studio/` (eigene `package.json`, eigene `postcss.config.js`; ohne die zieht der Studio-Build die Tailwind-Basis der Website samt `cursor: none` ein). Bewusst **kein** MCP-verwaltetes Schema: Werkvertrag § 9 schuldet ein Übergabe-Paket mit Quellcode, eine Nachfolge-Agentur soll Standard-Werkzeug vorfinden. Menüstruktur in `studio/structure.js` nach der Reihenfolge der Website, Einzelstücke ohne Duplizieren/Löschen.
+
+**Erfundene Testimonials sind raus.** `voices.js` liefert eine leere Liste, `Voices` rendert dann `null`, die Überschrift zählt über `{anzahl}` mit. Grund: § 5b Abs. 3 UWG (Echtheitsprüfung bei Bewertungen) und die AVV, die „in Testimonials genannte Personen" als betroffene Gruppe führt. Im Schema ist `einverstaendnis` ein Pflichthaken, ohne den sich eine Stimme nicht veröffentlichen lässt.
+
+**Inhalte wurden nicht abgetippt.** `scripts/extract-topic.mjs` hat die rund 8 KB Text der beiden Themenseiten per Textchirurgie aus dem JSX gelöst (Zwischenstand in `scripts/roh/`), `scripts/build-content.mjs` hat daraus die JSON-Dateien gebaut. Beide sind Einmal-Werkzeuge und laufen inzwischen aus den JSON-Dateien, damit ein zweiter Lauf nichts zerstört. `scripts/seed-sanity.mjs` erzeugt daraus `studio/seed/inhalte.ndjson` inklusive Bild-Upload.
+
+**Offen, braucht Felix' Hand** (interaktive Anmeldung, kann ich nicht): `cd studio && npx sanity login`, dann `npm run seed`, `npm run deploy`, Julia einladen, Deploy Hook + Sanity-Webhook verdrahten (Anleitung in `studio/README.md`).
+
+**Nebenbefund, behoben:** Die sieben Rasterbeschriftungen im Hero-Diagramm (`AUSBILDUNG`, `ERSTER JOB`, …) standen mit 9px auf `paper/0.4` = **3,18:1** gegen die geforderten 4,5:1. Jetzt `paper/0.55` = 4,75:1. Vorbestehend seit dem Hero-Umbau. Der Auditor hatte sie übersehen, weil sie im Vorschau-Browser auf dem GSAP-Startwert `opacity: 0` festhängen und als `ungeprueft` durchliefen. Die frühere Meldung „0 Verstöße bei ungeprueft 0" war an dieser Stelle also unvollständig. **Lehre: erst force-visible, dann messen, und Deko-Ausnahme nur für wirklich dekorativen Text.**
+
+**Messstand:** `npm run build` grün · Abruf-Rückfall getestet (leeres Dataset → Build läuft mit Repo-Inhalten weiter, Exit 0) · 0 Kontrastverstöße mit `ungeprueft: 0` auf `/`, `/rentenluecke`, `/scheidung` bei 375, 768 und 1280 · kein ungeklippter Überlauf (die drei bewusst überstehenden Deko-Elemente bleiben) · Startseite, beide Unterseiten und alle Zählwerte inhaltlich gegengeprüft.
+
+⚠️ **Messfalle Vorschau-Browser (neu):** `resize_window` ändert `clientWidth`, aber **nicht** `innerWidth`, und `position: fixed`-Elemente behalten die alte Breite. Überlauf deshalb gegen `clientWidth` prüfen und fixierte Elemente ausnehmen. Außerdem baut GSAP den `pin-spacer` bei einem Resize ohne echtes Resize-Ereignis nicht neu. Nach Größenänderung die Seite **neu laden**, sonst misst man einen 1280er Spacer in einem 375er Fenster.
 
 ---
 

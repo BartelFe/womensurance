@@ -2,11 +2,17 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { voices } from '../../data/voices';
+import { Satz, zahlwort } from '../../lib/inhalt';
+import startseite from '../../content/startseite.json';
 
 export default function Voices() {
   const root = useRef(null);
 
   useEffect(() => {
+    // Ohne veröffentlichte Stimmen rendert die Sektion nichts, dann gibt es
+    // auch nichts zu animieren.
+    if (!root.current) return undefined;
+
     const ctx = gsap.context(() => {
       const items = root.current.querySelectorAll('[data-voice]');
       items.forEach((item) => {
@@ -35,11 +41,20 @@ export default function Voices() {
     return () => ctx.revert();
   }, []);
 
+  // Solange keine echte Kundinnenstimme veröffentlicht ist, entfällt die
+  // Sektion ersatzlos. Ein Platzhalter wäre hier keine Option: erfundene
+  // Bewertungen sind wettbewerbsrechtlich angreifbar (§ 5b Abs. 3 UWG).
+  if (!voices.length) return null;
+
   return (
     <section ref={root} id="voices" className="bg-paper text-ink relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-32 pb-12">
         <h2 className="display-lg text-ink text-balance" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4.5rem)' }}>
-          Drei Frauen. Drei <span className="display-italic text-pink-display">Geschichten.</span>
+          <Satz
+            teile={startseite.stimmenUeberschrift}
+            werte={{ anzahl: zahlwort(voices.length) }}
+            grund="hell"
+          />
         </h2>
       </div>
 

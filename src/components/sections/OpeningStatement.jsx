@@ -6,6 +6,8 @@ import { BOOKING_URL } from '../../config/site';
 import { useGap, TOGGLE_META } from '../../hooks/useGapState';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { de1 } from '../../utils/format';
+import { satzText, klasseFuerStil } from '../../lib/inhalt';
+import startseite from '../../content/startseite.json';
 
 // ── Chart-Geometrie (viewBox 0 0 600 400) ─────────────────────
 // Lebensphasen-Raster (Spaltenköpfe)
@@ -310,14 +312,15 @@ export default function OpeningStatement() {
                 ein Screenreader würde die Headline buchstabieren. Deshalb steht
                 der Satz einmal als zusammenhängender Text hier und die animierte
                 Fassung ist für assistive Technologien ausgeblendet. */}
-            <span className="sr-only">Über deine Zukunft wird im Stillen entschieden.</span>
+            <span className="sr-only">{satzText(startseite.heroZeilen, null, ' ')}</span>
             <span className="block" aria-hidden="true">
-              <span className="block line-mask"><span data-line>Über deine</span></span>
-              <span className="block line-mask"><span data-line>Zukunft wird</span></span>
-              <span className="block line-mask">
-                <span data-line className="display-italic text-pink">im Stillen</span>
-              </span>
-              <span className="block line-mask"><span data-line>entschieden.</span></span>
+              {startseite.heroZeilen.map((zeile, i) => (
+                <span key={i} className="block line-mask">
+                  <span data-line className={klasseFuerStil(zeile.stil)}>
+                    {zeile.text}
+                  </span>
+                </span>
+              ))}
             </span>
           </h1>
 
@@ -327,12 +330,10 @@ export default function OpeningStatement() {
               className="body-lead text-paper/75"
               style={{ fontSize: 'clamp(0.9rem, 1.05vw, 1.4rem)' }}
             >
-              Deine Versicherungsschwester: ehrlich, verständlich und an deiner
-              Seite.
+              {startseite.heroUntertitel}
             </p>
             <p className="mt-2 text-paper/55" style={{ fontSize: 'clamp(0.78rem, 0.85vw, 1rem)' }}>
-              Spezialisiert auf Altersvorsorge, Arbeitskraft- und
-              Sachversicherungen für Frauen.
+              {startseite.heroZusatz}
             </p>
           </div>
         </div>
@@ -365,9 +366,17 @@ export default function OpeningStatement() {
                     {/* Mobil nur ausgewählte Labels sichtbar — aber `invisible`
                         statt `hidden`, damit der Platz reserviert bleibt und
                         alle Rasterlinien gleich hoch beginnen. */}
+                    {/* 0,55 statt 0,4 (03.08.2026): bei 9px braucht Text
+                        4,5:1, Paper auf Ink schaffte mit 0,4 nur 3,18:1.
+                        0,55 ergibt 4,75:1. Die Beschriftungen sind keine
+                        Deko, sie benennen die Lebensphasen der Kurve, also
+                        greift die Ausnahme für rein dekorativen Text nicht.
+                        Der Auditor hatte sie bisher übersehen, weil sie im
+                        Vorschau-Browser auf dem GSAP-Startwert opacity 0
+                        festhängen und dadurch als ungeprüft durchliefen. */}
                     <span
                       className={mobileLabel ? '' : 'invisible md:visible'}
-                      style={{ fontSize: '9px', letterSpacing: '0.12em', color: 'rgb(var(--paper-rgb) / 0.4)', whiteSpace: 'nowrap' }}
+                      style={{ fontSize: '9px', letterSpacing: '0.12em', color: 'rgb(var(--paper-rgb) / 0.55)', whiteSpace: 'nowrap' }}
                     >
                       {label}
                     </span>
@@ -506,12 +515,12 @@ export default function OpeningStatement() {
           className="hidden md:inline-flex group items-center gap-2 eyebrow text-paper border border-paper/30 hover:border-pink hover:text-pink rounded-full px-5 py-3 transition-colors shrink-0"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-pink animate-pulse" />
-          Erstgespräch buchen
+          {startseite.abschlussButton}
         </a>
 
         <div ref={chipsRef} className="w-full md:w-auto">
           <div className="hidden md:block eyebrow text-paper/55 mb-2 text-center">
-            Und bei dir? Tippe an, was zutrifft
+            {startseite.heroChipsHinweis}
           </div>
           {/* Immer 2×2 oder 4×1 — nie 3+1 */}
           <div className="grid grid-cols-2 xl:grid-cols-4 gap-2">

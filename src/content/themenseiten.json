@@ -1,0 +1,366 @@
+[
+  {
+    "kennung": "rentenluecke",
+    "eyebrow": "Teilzeit / Care-Arbeit",
+    "titelZeilen": [
+      {
+        "text": "Die Rentenlücke",
+        "stil": "normal"
+      },
+      {
+        "text": "wächst schweigend.",
+        "stil": "betont"
+      }
+    ],
+    "lead": "Teilzeit ist für viele Frauen eine bewusste Entscheidung für die Familie, für Angehörige oder für mehr Zeit im Alltag. Was dabei oft übersehen wird: Die gesetzliche Rente zählt jedes Jahr mit. Aus wenigen Jahren Teilzeit kann so eine spürbare Rentenlücke entstehen. Genau deshalb zeigen wir dir auf dieser Seite, wie groß deine persönliche Rentenlücke sein kann und was du schon heute dagegen tun kannst.",
+    "kennzahlen": [
+      {
+        "wert": 49,
+        "nachkommastellen": 0,
+        "einheit": "%",
+        "label": "der erwerbstätigen Frauen in Deutschland arbeiten Teilzeit — bei Männern sind es 12 %.",
+        "quelle": "Quelle: Statistisches Bundesamt*"
+      },
+      {
+        "wert": 39.4,
+        "nachkommastellen": 1,
+        "einheit": "%",
+        "label": "weniger Rente erhalten Frauen im Schnitt als Männer (Gender Pension Gap).",
+        "quelle": "Quelle: Destatis*"
+      },
+      {
+        "wert": 44,
+        "nachkommastellen": 0,
+        "einheit": "%",
+        "label": "mehr unbezahlte Sorgearbeit leisten Frauen täglich gegenüber Männern.",
+        "quelle": "Quelle: Zeitverwendungserhebung*"
+      }
+    ],
+    "kapitel": [
+      {
+        "kicker": "Der Mechanismus",
+        "titel": "Warum jede Stunde doppelt zählt",
+        "absaetze": [
+          "Die gesetzliche Rente berechnet sich über sogenannte Entgeltpunkte. Verdienst du ein Jahr lang das Durchschnittsgehalt, erhältst du einen Entgeltpunkt. Arbeitest du in Teilzeit, sammelst du entsprechend weniger Punkte. Das bedeutet: Zehn Jahre in Teilzeit können sich auf deine Rente auswirken wie fünf Jahre ohne volles Einkommen.",
+          "Doch dabei bleibt es nicht. Wer weniger arbeitet, steigt oft seltener im Beruf auf, verhandelt seltener über das Gehalt und hat meist weniger finanziellen Spielraum, zusätzlich für die eigene Altersvorsorge vorzusorgen. So wächst die Rentenlücke Schritt für Schritt, oft unbemerkt."
+        ]
+      },
+      {
+        "kicker": "Care-Arbeit",
+        "titel": "Die unbezahlte zweite Schicht",
+        "absaetze": [
+          "Ob Kinder, Haushalt oder die Pflege von Angehörigen. Noch immer übernehmen Frauen den größten Teil der Sorgearbeit. Viele wissen nicht, dass Pflegezeiten unter bestimmten Voraussetzungen auf die gesetzliche Rente angerechnet werden können und verschenken dadurch wertvolle Ansprüche.",
+          "Das Ergebnis: Gerade die Frauen, die jeden Tag für andere da sind, haben später oft die größten Versorgungslücken. Nicht, weil sie etwas falsch gemacht haben, sondern weil ihnen niemand gezeigt hat, welche Möglichkeiten sie haben."
+        ]
+      },
+      {
+        "kicker": "Der Ausweg",
+        "titel": "Die Lücke lässt sich schließen, wenn du sie kennst.",
+        "absaetze": [
+          "Der erste Schritt ist, deine persönliche Situation zu verstehen. Wie groß ist deine Rentenlücke wirklich? Welche Ansprüche hast du bereits und welche Möglichkeiten wurden bisher vielleicht noch gar nicht genutzt?",
+          "Im zweiten Schritt entwickeln wir gemeinsam einen Plan, der zu deinem Leben passt. Egal ob Teilzeit, Familie oder Beruf. Denn jede Frau hat eine andere Geschichte. Deshalb sollte auch ihre Vorsorge individuell sein."
+        ]
+      }
+    ],
+    "zitat": {
+      "text": "Teilzeit ist fast nie die Entscheidung einer Frau allein. Aber die Rentenlücke trägt sie allein. Das ändern wir.",
+      "autor": "Julia Pashchenko"
+    },
+    "handlungenUeberschrift": [],
+    "handlungen": [
+      {
+        "titel": "Renteninformation verstehen",
+        "lead": "",
+        "body": "Deine jährliche Renteninformation zeigt dir zwar deine bisherigen Ansprüche, aber nicht, wie viel Rente dir später unter Berücksichtigung der Inflation tatsächlich bleibt. Gemeinsam schauen wir uns deine Zahlen an und erklären sie verständlich."
+      },
+      {
+        "titel": "Pflege- & Erziehungszeiten anrechnen",
+        "lead": "",
+        "body": "Kindererziehungs- und Pflegezeiten können deine spätere Rente erhöhen. Viele Frauen wissen jedoch nicht, dass diese Zeiten aktiv beantragt werden müssen und verschenken dadurch wertvolle Rentenansprüche."
+      },
+      {
+        "titel": "Teilzeit-Lücke aktiv ausgleichen",
+        "lead": "",
+        "body": "Auch während einer Teilzeitbeschäftigung kannst du deine Rentenlücke Schritt für Schritt schließen. Schon kleine monatliche Beiträge können langfristig einen großen Unterschied machen. Gemeinsam finden wir die Vorsorgelösung, die zu deinem Leben passt."
+      },
+      {
+        "titel": "Fair teilen statt still tragen",
+        "lead": "",
+        "body": "Ist Teilzeit eine gemeinsame Entscheidung, sollte auch die finanzielle Vorsorge gemeinsam gedacht werden. Zusammen entwickeln wir ein Vorsorgekonzept, das eure Lebenssituation berücksichtigt und gleichzeitig deine finanzielle Unabhängigkeit stärkt."
+      }
+    ],
+    "fehlerUeberschrift": [],
+    "fehler": [],
+    "faqEintraege": [
+      {
+        "frage": "Wie kann ich meine Rentenlücke berechnen?",
+        "antwort": [
+          "Für eine erste Einschätzung kannst du den Rechner auf dieser Seite nutzen. Gib einfach deine Arbeitszeit, die Jahre in Teilzeit und dein Einkommen ein.",
+          "Möchtest du deine persönliche Rentenlücke genauer kennen, benötigst du deine jährliche Renteninformation der Deutschen Rentenversicherung. Gemeinsam schauen wir uns deine bisher erworbenen Rentenansprüche an und berechnen, was später nach Inflation und Abgaben tatsächlich übrigbleibt."
+        ]
+      },
+      {
+        "frage": "Wie stark reduziert Teilzeit meine Rente?",
+        "antwort": [
+          "Die gesetzliche Rente berechnet sich über sogenannte Entgeltpunkte. Je geringer dein Einkommen, desto weniger Rentenpunkte sammelst du. Arbeitest du über mehrere Jahre in Teilzeit, wirkt sich das direkt auf deine spätere Rente aus.",
+          "Hinzu kommt: Weniger Einkommen bedeutet häufig auch weniger Möglichkeiten, zusätzlich privat für das Alter vorzusorgen."
+        ]
+      },
+      {
+        "frage": "Zählt Elternzeit für die Rente?",
+        "antwort": [
+          "Ja. Pro Kind können bis zu drei Jahre Kindererziehungszeit auf dein Rentenkonto angerechnet werden. Wichtig ist jedoch, dass diese Zeiten bei der Deutschen Rentenversicherung beantragt werden.",
+          "Die eigentliche Rentenlücke entsteht häufig erst nach der Elternzeit, zum Beispiel durch einen Wiedereinstieg in Teilzeit oder eine längere Erwerbsunterbrechung."
+        ]
+      },
+      {
+        "frage": "Werden Pflegezeiten bei der Rente angerechnet?",
+        "antwort": [
+          "Ja, unter bestimmten Voraussetzungen. Pflegst du eine Person mit mindestens Pflegegrad 2 regelmäßig und erfüllst die gesetzlichen Voraussetzungen, können Rentenbeiträge von der Pflegekasse übernommen werden.",
+          "Viele Frauen kennen diese Möglichkeit nicht und verzichten dadurch unbewusst auf wertvolle Rentenansprüche."
+        ]
+      },
+      {
+        "frage": "Wann sollte ich anfangen, meine Rentenlücke zu schließen?",
+        "antwort": [
+          "Je früher, desto besser. Nicht, weil du sofort hohe Beiträge zahlen musst, sondern weil dein Geld mehr Zeit hat zu wachsen.",
+          "Schon kleine monatliche Beträge können durch den Zinseszinseffekt langfristig einen großen Unterschied machen. Und selbst wenn du erst später startest: Es ist nie zu spät, deine Zukunft aktiv zu gestalten."
+        ]
+      },
+      {
+        "frage": "Was ist der Gender Pension Gap?",
+        "antwort": [
+          "Der Gender Pension Gap beschreibt den Unterschied bei den Alterseinkünften von Frauen und Männern. In Deutschland erhalten Frauen aus eigenen Rentenansprüchen durchschnittlich 39,4 % weniger Alterssicherung als Männer.",
+          "Zu den wichtigsten Ursachen gehören Teilzeit, Care-Arbeit, Erwerbsunterbrechungen und der Gender Pay Gap."
+        ]
+      }
+    ],
+    "faqHinweis": "Hinweis: Alle Antworten dienen einer ersten Orientierung und ersetzen keine Steuer- oder Rechtsberatung. Wie deine persönliche Situation aussieht und welche Möglichkeiten du hast, besprechen wir gerne gemeinsam.",
+    "faqUeberschrift": [
+      {
+        "text": "Häufige Fragen zur ",
+        "stil": "normal"
+      },
+      {
+        "text": "Rentenlücke.",
+        "stil": "betont"
+      }
+    ],
+    "ctaUeberschrift": [
+      {
+        "text": "Wie groß ist ",
+        "stil": "normal"
+      },
+      {
+        "text": "deine Lücke?",
+        "stil": "betont"
+      }
+    ],
+    "ctaText": "Bis hierhin war alles Statistik. Deine Zahl hängt von deinem Leben ab — Stunden, Jahren, Verträgen. In {minuten} Minuten schauen wir gemeinsam drauf: kostenlos, ehrlich und in deinem Tempo.",
+    "metaTitel": "Die Rentenlücke — Teilzeit & Care-Arbeit | Womensurance",
+    "metaBeschreibung": "Warum Teilzeit und Care-Arbeit die Rentenlücke von Frauen vergrößern und was du dagegen tun kannst. Rentenlücke verstehen, berechnen, schließen."
+  },
+  {
+    "kennung": "scheidung",
+    "eyebrow": "Scheidung",
+    "titelZeilen": [
+      {
+        "text": "Getrennte Wege.",
+        "stil": "normal"
+      },
+      {
+        "text": "Geteilte Rente.",
+        "stil": "betont"
+      }
+    ],
+    "lead": "Mit einer Scheidung endet nicht nur eine Ehe. Auch die gemeinsame finanzielle Zukunft wird neu geregelt. Dabei werden die während der Ehe erworbenen Renten- und Versorgungsansprüche grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Dieses Verfahren nennt sich Versorgungsausgleich. Was das für deine persönliche Altersvorsorge bedeutet, wissen die wenigsten. Genau deshalb schauen wir uns gemeinsam an, welche Auswirkungen das auf deine spätere Rente hat und wo du gegebenenfalls neu vorsorgen solltest.",
+    "kennzahlen": [
+      {
+        "wert": 35,
+        "nachkommastellen": 0,
+        "einheit": "%",
+        "label": "der Ehen in Deutschland werden nach durchschnittlich rund 15 Jahren geschieden.",
+        "quelle": "Quelle: Destatis*"
+      },
+      {
+        "wert": 100,
+        "nachkommastellen": 0,
+        "einheit": "%",
+        "label": "der in der Ehezeit erworbenen Rentenanrechte werden im Versorgungsausgleich hälftig geteilt.",
+        "quelle": "VersAusglG*"
+      },
+      {
+        "wert": 50,
+        "nachkommastellen": 0,
+        "einheit": "%",
+        "label": "aller Scheidungsanträge erfolgen durch die Frau.",
+        "quelle": "Quelle: Destatis*"
+      }
+    ],
+    "kapitel": [
+      {
+        "kicker": "Das Verfahren",
+        "titel": "Was der Versorgungsausgleich wirklich macht",
+        "absaetze": [
+          "Mit einer Scheidung verändert sich nicht nur dein Alltag, sondern auch deine finanzielle Zukunft. Die Renten- und Versorgungsansprüche, die während der Ehe aufgebaut wurden, werden grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Dieses Verfahren nennt sich Versorgungsausgleich und läuft automatisch über das Familiengericht.",
+          "Gerade deshalb ist es wichtig zu wissen, welche Ansprüche berücksichtigt werden und welche Auswirkungen die Aufteilung auf deine spätere Rente hat. Wer seine Unterlagen versteht und die Berechnung nachvollziehen kann, trifft bessere Entscheidungen für die eigene Zukunft."
+        ]
+      },
+      {
+        "kicker": "Die Rechnung danach",
+        "titel": "Warum der Versorgungsausgleich allein oft nicht ausreicht",
+        "absaetze": [
+          "Der Versorgungsausgleich verteilt die Rentenansprüche, die während der Ehe aufgebaut wurden. Was er jedoch nicht ausgleicht, sind die finanziellen Auswirkungen von Elternzeit, Teilzeit oder längeren Erwerbsunterbrechungen. Gerade Frauen haben dadurch häufig auch nach der Scheidung eine geringere Altersvorsorge.",
+          "Nach einer Scheidung lohnt es sich deshalb, die eigene finanzielle Situation neu zu betrachten. Welche Rentenansprüche bleiben bestehen? Welche Versicherungen müssen angepasst werden? Und wo entstehen Versorgungslücken? Gemeinsam schaffen wir Klarheit und entwickeln eine Lösung, die zu deiner neuen Lebenssituation passt."
+        ]
+      },
+      {
+        "kicker": "Danach",
+        "titel": "Der Neustart braucht ein eigenes Fundament",
+        "absaetze": [
+          "Nach einer Scheidung beginnt nicht nur ein neuer Lebensabschnitt, sondern oft auch ein finanzieller Neuanfang. Jetzt ist der richtige Zeitpunkt, deine Absicherung und Altersvorsorge neu aufzustellen, passend zu deinem Leben und deinen Zukunftsplänen.",
+          "Gemeinsam prüfen wir bestehende Verträge, passen Bezugsberechtigungen an und schließen mögliche Versorgungslücken. So schaffst du dir Schritt für Schritt ein finanzielles Fundament, das unabhängig ist und zu deiner neuen Lebenssituation passt."
+        ]
+      }
+    ],
+    "zitat": {
+      "text": "Die meisten meiner Kundinnen treffe ich erst, wenn die Scheidung bereits abgeschlossen ist. Dann können wir vieles neu aufbauen, aber manches nicht mehr verändern. Deshalb wünsche ich mir, Frauen schon vorher begleiten zu dürfen.",
+      "autor": "Julia Pashchenko"
+    },
+    "handlungenUeberschrift": [
+      {
+        "text": "Was du jetzt ",
+        "stil": "normal"
+      },
+      {
+        "text": "konkret",
+        "stil": "betont"
+      },
+      {
+        "text": " tun kannst",
+        "stil": "normal"
+      }
+    ],
+    "handlungen": [
+      {
+        "titel": "Alle Rentenansprüche sammeln",
+        "lead": "Erst die vollständige Übersicht schafft Klarheit.",
+        "body": "Dazu gehören die gesetzliche Rente, Betriebsrenten, private Rentenversicherungen und mögliche Versorgungswerke. Nur wenn alle Ansprüche bekannt sind, lässt sich einschätzen, welche Auswirkungen der Versorgungsausgleich auf deine spätere Altersvorsorge hat."
+      },
+      {
+        "titel": "Die Unterlagen verstehen und prüfen",
+        "lead": "Nicht jede Zahl erklärt sich von selbst.",
+        "body": "Die Berechnungen im Versorgungsausgleich sind oft schwer nachvollziehbar. Deshalb lohnt es sich, die Unterlagen genau anzuschauen und zu verstehen, welche Rentenansprüche berücksichtigt wurden und was das für deine persönliche Situation bedeutet."
+      },
+      {
+        "titel": "Vereinbarungen bewusst entscheiden",
+        "lead": "Schnelle Lösungen sind nicht immer die besten.",
+        "body": "Eheverträge oder Scheidungsfolgenvereinbarungen können den Versorgungsausgleich beeinflussen. Bevor du etwas unterschreibst, solltest du verstehen, welche Auswirkungen die Regelung langfristig auf deine Altersvorsorge haben kann."
+      },
+      {
+        "titel": "Deine Vorsorge neu aufstellen",
+        "lead": "Der Neustart braucht ein eigenes Fundament.",
+        "body": "Nach der Scheidung sollten Bezugsberechtigungen, gemeinsame Verträge und deine persönliche Absicherung überprüft werden. Gemeinsam schauen wir, wie du deine Altersvorsorge und finanzielle Sicherheit passend zu deiner neuen Lebenssituation aufbauen kannst."
+      }
+    ],
+    "fehlerUeberschrift": [
+      {
+        "text": "5 Fehler, die viele Frauen nach einer Scheidung ",
+        "stil": "normal"
+      },
+      {
+        "text": "erst zu spät bemerken.",
+        "stil": "betont"
+      }
+    ],
+    "fehler": [
+      {
+        "titel": "Die eigenen Rentenansprüche nicht kennen",
+        "merksatz": "Wer seine Ansprüche nicht kennt, kann keine guten Entscheidungen treffen.",
+        "body": "Viele Frauen haben neben der gesetzlichen Rente weitere Rentenansprüche, zum Beispiel aus einer betrieblichen Altersvorsorge oder einer privaten Rentenversicherung. Nur wenn alle Ansprüche bekannt sind, lässt sich einschätzen, welche Auswirkungen der Versorgungsausgleich auf die eigene Altersvorsorge hat."
+      },
+      {
+        "titel": "Den Versorgungsausgleich nicht verstehen",
+        "merksatz": "Nicht alles sollte ungeprüft unterschrieben werden.",
+        "body": "Der Versorgungsausgleich ist komplex und für viele schwer nachvollziehbar. Deshalb lohnt es sich, die Berechnungen und die berücksichtigten Rentenansprüche genau zu verstehen. Nur so weißt du, welche Auswirkungen die Aufteilung auf deine spätere Altersvorsorge hat."
+      },
+      {
+        "titel": "Die eigene Vorsorge nach der Scheidung nicht neu planen",
+        "merksatz": "Der Versorgungsausgleich ersetzt keine Altersvorsorge.",
+        "body": "Der Versorgungsausgleich regelt die während der Ehe erworbenen Rentenansprüche. Er ersetzt jedoch nicht die Vorsorge für die Zukunft. Gerade nach einer Scheidung lohnt es sich, die eigene Altersvorsorge an die neue Lebenssituation anzupassen."
+      },
+      {
+        "titel": "Übertragene Ansprüche nicht überprüfen",
+        "merksatz": "Die neue Lebenssituation braucht eine neue Strategie.",
+        "body": "Nach einer Scheidung verändern sich Ziele, Einkommen und Zukunftspläne. Deshalb sollte geprüft werden, ob bestehende Vorsorgelösungen noch zur eigenen Situation passen oder angepasst werden sollten."
+      },
+      {
+        "titel": "Versicherungen nach der Scheidung nicht aktualisieren",
+        "merksatz": "Ein neuer Lebensabschnitt braucht auch eine neue Absicherung.",
+        "body": "Bezugsberechtigungen, gemeinsame Verträge oder veränderte Lebensumstände sollten nach einer Scheidung überprüft und angepasst werden. So stellst du sicher, dass deine Absicherung auch weiterhin zu deinem Leben passt."
+      }
+    ],
+    "faqEintraege": [
+      {
+        "frage": "Was ist der Versorgungsausgleich?",
+        "antwort": [
+          "Der Versorgungsausgleich regelt, wie die während der Ehe erworbenen Renten- und Versorgungsansprüche zwischen beiden Ehepartnern aufgeteilt werden. Das Verfahren wird im Rahmen der Scheidung grundsätzlich automatisch vom Familiengericht durchgeführt."
+        ]
+      },
+      {
+        "frage": "Wie wird der Versorgungsausgleich berechnet?",
+        "antwort": [
+          "Für jeden Rentenanspruch wird geprüft, welcher Teil während der Ehe erworben wurde. Dieser sogenannte Ehezeitanteil wird grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Die Berechnungen erfolgen durch die jeweiligen Versorgungsträger und bilden die Grundlage für die Entscheidung des Familiengerichts."
+        ]
+      },
+      {
+        "frage": "Welche Rentenansprüche werden berücksichtigt?",
+        "antwort": [
+          "Zum Versorgungsausgleich gehören grundsätzlich die gesetzliche Rentenversicherung, Betriebsrenten, Beamtenversorgungen, berufsständische Versorgungswerke sowie viele private Altersvorsorgeverträge. Welche Ansprüche im Einzelfall berücksichtigt werden, hängt von der jeweiligen Vertragsart ab."
+        ]
+      },
+      {
+        "frage": "Kann man den Versorgungsausgleich ausschließen?",
+        "antwort": [
+          "Ja. Durch einen notariellen Ehevertrag oder eine Scheidungsfolgenvereinbarung kann der Versorgungsausgleich ganz oder teilweise ausgeschlossen oder verändert werden. Bevor du einer solchen Vereinbarung zustimmst, solltest du genau verstehen, welche Auswirkungen sie auf deine spätere Altersvorsorge haben kann."
+        ]
+      },
+      {
+        "frage": "Was passiert bei einer kurzen Ehe?",
+        "antwort": [
+          "Bei einer Ehe von bis zu drei Jahren wird der Versorgungsausgleich grundsätzlich nur durchgeführt, wenn einer der Ehepartner ihn beantragt. Ob sich ein Antrag lohnt, hängt von der individuellen Situation ab."
+        ]
+      },
+      {
+        "frage": "Kann der Versorgungsausgleich später noch geändert werden?",
+        "antwort": [
+          "Änderungen sind nur in wenigen gesetzlich geregelten Ausnahmefällen möglich. Deshalb ist es wichtig, die Unterlagen und Berechnungen bereits während des Scheidungsverfahrens sorgfältig zu prüfen und offene Fragen frühzeitig zu klären."
+        ]
+      }
+    ],
+    "faqHinweis": "Hinweis: Die Antworten dienen einer ersten Orientierung und ersetzen keine Rechtsberatung. Für rechtliche Fragen solltest du dich an eine Rechtsanwältin oder einen Notar wenden. Ich unterstütze dich dabei, die Auswirkungen auf deine Altersvorsorge und Versicherungen verständlich einzuordnen.",
+    "faqUeberschrift": [
+      {
+        "text": "Häufige Fragen zum ",
+        "stil": "normal"
+      },
+      {
+        "text": "Versorgungsausgleich",
+        "stil": "betont"
+      }
+    ],
+    "ctaUeberschrift": [
+      {
+        "text": "Bevor der Scheidungsantrag gestellt wird, ",
+        "stil": "normal"
+      },
+      {
+        "text": "lass uns sprechen.",
+        "stil": "betont"
+      }
+    ],
+    "ctaText": "Ob das Verfahren noch vor dir liegt, gerade läuft oder bereits abgeschlossen ist: Gemeinsam verschaffen wir dir Klarheit über deine Altersvorsorge, deine Versicherungen und die nächsten sinnvollen Schritte. {minuten} Minuten. Kostenlos. Vertraulich. Auf Augenhöhe.",
+    "metaTitel": "Scheidung & Versorgungsausgleich — deine Rente | Womensurance",
+    "metaBeschreibung": "Was der Versorgungsausgleich mit deiner Rente macht und welche Versorgungslücken nach einer Scheidung entstehen. Verständlich erklärt."
+  }
+]

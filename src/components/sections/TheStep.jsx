@@ -4,6 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticButton from '../ui/MagneticButton';
 import { SOCIAL_ICONS } from '../ui/SocialIcons';
 import { BOOKING_URL, SOCIALS, CALL_MINUTES } from '../../config/site';
+import { fuellen, klasseFuerStil } from '../../lib/inhalt';
+import startseite from '../../content/startseite.json';
 
 export default function TheStep() {
   const root = useRef(null);
@@ -64,22 +66,26 @@ export default function TheStep() {
       />
 
       <div className="relative max-w-6xl mx-auto text-center">
+        {/* Jede Zeile bekommt ihre eigene `line-mask`, sonst läuft die
+            zeilenweise Einblendung nicht. Deshalb hier kein <Satz>, sondern
+            die Zeilen einzeln. */}
         <h2 className="display-xl text-paper text-balance" style={{ fontSize: 'clamp(2.6rem, 9vw, 10rem)' }}>
-          <span className="block line-mask"><span data-line>{CALL_MINUTES} Minuten.</span></span>
-          <span className="block line-mask"><span data-line>Kostenlos.</span></span>
-          <span className="block line-mask"><span data-line className="display-italic text-pink">Auf Augenhöhe.</span></span>
+          {startseite.abschlussZeilen.map((zeile, i) => (
+            <span key={i} className="block line-mask">
+              <span data-line className={klasseFuerStil(zeile.stil)}>
+                {fuellen(zeile.text, { minuten: CALL_MINUTES })}
+              </span>
+            </span>
+          ))}
         </h2>
 
         <p className="mt-12 max-w-xl mx-auto body-lead text-paper/55">
-          Vielleicht stellst du nach unserem Gespräch fest, dass wir nicht die
-          Richtigen füreinander sind. Auch das ist völlig okay. Mir ist wichtig,
-          dass du unser Gespräch mit mehr Klarheit verlässt, als du
-          hineingegangen bist.
+          {fuellen(startseite.abschlussText, { minuten: CALL_MINUTES })}
         </p>
 
         <div data-cta className="mt-12 flex flex-col items-center gap-6">
           <MagneticButton href={BOOKING_URL} target="_blank" variant="pink">
-            <span className="font-medium tracking-wide">Erstgespräch buchen</span>
+            <span className="font-medium tracking-wide">{startseite.abschlussButton}</span>
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -87,7 +93,7 @@ export default function TheStep() {
 
           {/* Social Media — sichtbar unter dem CTA */}
           <div className="mt-6 flex flex-col items-center gap-4">
-            <div className="eyebrow text-paper/55">Oder folge mir</div>
+            <div className="eyebrow text-paper/55">{startseite.abschlussSocialHinweis}</div>
             <div className="flex items-center gap-3">
               {SOCIALS.map((s) => (
                 <a

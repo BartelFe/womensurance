@@ -1,0 +1,84 @@
+{
+  "vorname": "Julia",
+  "rolle": "Fachwirtin für Versicherungen und Finanzen · DVM Ingolstadt",
+  "zitat": [
+    {
+      "text": "Ich will nicht, dass meine Kundinnen ",
+      "stil": "normal"
+    },
+    {
+      "text": "abgesichert",
+      "stil": "betont"
+    },
+    {
+      "text": " sind. Ich will, dass sie ",
+      "stil": "normal"
+    },
+    {
+      "text": "frei",
+      "stil": "kursiv"
+    },
+    {
+      "text": " sind.",
+      "stil": "normal"
+    }
+  ],
+  "zitatQuelle": "Julia Pashchenko, Gründerin",
+  "portraet": {
+    "datei": "julia-portrait.jpeg",
+    "alt": "Julia Pashchenko im pinken Blazer an ihrem Schreibtisch",
+    "breite": 704,
+    "hoehe": 939
+  },
+  "zweitbild": {
+    "datei": "julia-desk.jpeg",
+    "alt": "Julia Pashchenko am Besprechungstisch mit ihrem Tablet",
+    "breite": 704,
+    "hoehe": 934
+  },
+  "infokarteTitel": "Womensurance",
+  "infokarteText": "Julia, deine Versicherungsschwester. Sie redet Klartext, hört zu und bleibt an deiner Seite.",
+  "geschichteUeberschrift": [
+    {
+      "text": "Die Geschichte hinter ",
+      "stil": "normal"
+    },
+    {
+      "text": "womensurance",
+      "stil": "betont"
+    }
+  ],
+  "geschichteBild": {
+    "datei": "julia-geschichte.jpeg",
+    "alt": "Julia Pashchenko im Womensurance-Poloshirt vor dem Büro",
+    "breite": 1058,
+    "hoehe": 1476
+  },
+  "geschichteAbsaetze": [
+    "Womensurance ist entstanden, weil ich gesehen habe, wie schnell sich das Leben verändern kann und wie unvorbereitet viele Frauen dann sind.",
+    "Kurz nach meiner Ausbildung saß eine Kundin vor mir. Sie hatte einen guten Job, eine glückliche Familie und eigentlich das Gefühl, alles richtig gemacht zu haben.",
+    "Doch durch Elternzeit, reduzierte Arbeitszeit und eine Scheidung veränderte sich ihre Situation schlagartig. Plötzlich entstanden Versorgungslücken, über die vorher niemand gesprochen hatte.",
+    "In diesem Moment wurde mir klar: Frauen brauchen keine komplizierten Versicherungen. Sie brauchen jemanden, der ihnen verständlich erklärt, welche Entscheidungen heute ihre finanzielle Zukunft sichern.",
+    "Deshalb habe ich womensurance gegründet. Ich begleite Frauen dabei, ihre Versicherungs- und Vorsorgethemen zu verstehen und selbstbestimmte Entscheidungen zu treffen. Abgestimmt auf ihre Lebensphase, ihre Ziele und ihre Zukunft."
+  ],
+  "anspruchTitel": "Mein Anspruch:",
+  "anspruchText": "Jede Frau soll wissen, wofür sie abgesichert ist und sich in jeder Lebenslage finanziell sicher fühlen.",
+  "kurzprofil": [
+    {
+      "wert": "5+",
+      "label": "Jahre Erfahrung"
+    },
+    {
+      "wert": "100%",
+      "label": "Unabhängig"
+    },
+    {
+      "wert": "∅ {minuten}",
+      "label": "Min. Erstgespräch"
+    },
+    {
+      "wert": "IHK",
+      "label": "Zertifiziert"
+    }
+  ]
+}
