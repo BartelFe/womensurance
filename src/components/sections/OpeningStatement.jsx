@@ -583,7 +583,12 @@ export default function OpeningStatement() {
                       {on ? '✓' : '+'}
                     </span>
                     <span className="whitespace-nowrap">{m.label}</span>
-                    <span className="tnum font-bold opacity-60 whitespace-nowrap hidden sm:inline">−{m.euro} €</span>
+                    {/* opacity-80 statt -60: die Deckkraft multipliziert sich mit dem
+                        text-paper/70 des Knopfes. Mit 60 landete der Betrag bei
+                        effektiv 42 % und 3,34:1, gefordert sind bei 12px fett 4,5:1.
+                        0,70 × 0,80 = 0,56 ergibt 4,6:1 und trifft zugleich die
+                        projekteigene Untergrenze paper/55 aus A.9. */}
+                    <span className="tnum font-bold opacity-80 whitespace-nowrap hidden sm:inline">−{m.euro} €</span>
                   </button>
                 );
               })}

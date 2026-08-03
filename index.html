@@ -32,8 +32,104 @@
     <link rel="preload" href="/fonts/lato-v25-latin-300.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/lato-v25-latin-900.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/lato-v25-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <!--
+      Vorab-Anstrich des Ladebildschirms.
+
+      Die Seite wird komplett im Browser gerendert. Ohne das hier bleibt der
+      Bildschirm leer, bis das JavaScript geladen, geparst und ausgefuehrt ist
+      und React zum ersten Mal zeichnet: gemessen auf gedrosseltem Mobilfunk
+      rund 3,2 Sekunden. Dieser Block malt exakt dasselbe Bild wie
+      components/layout/Loader.jsx in seinem Ausgangszustand, kommt aber
+      direkt aus dem HTML. Der React-Ladebildschirm uebernimmt danach nahtlos
+      und entfernt diesen Block.
+
+      Deshalb: WER LOADER.JSX AENDERT, MUSS DAS HIER MITAENDERN. Weichen die
+      beiden voneinander ab, sieht man beim Uebernehmen ein Zucken.
+
+      Alle Werte stehen bewusst inline. Das Stylesheet ist render-blockierend,
+      der Block kann also ohnehin erst mit dessen Eintreffen malen; er darf
+      aber nicht zusaetzlich davon abhaengen, was darin steht.
+    -->
+    <style>
+      #vorab-lader {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: rgb(42 33 27);
+        font-family: 'Lato', system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      #vorab-lader .vl-oberzeile {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgb(232 227 225 / 0.55);
+        margin-bottom: 2rem;
+      }
+      #vorab-lader .vl-zeile {
+        font-weight: 300;
+        font-size: clamp(1.6rem, 5.5vw, 5.5rem);
+        letter-spacing: -0.015em;
+        line-height: 1.05;
+        white-space: nowrap;
+        text-align: center;
+        padding: 0 1rem;
+        color: rgb(232 227 225);
+      }
+      #vorab-lader .vl-fuss {
+        margin-top: 3rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        color: rgb(232 227 225 / 0.6);
+      }
+      /* Die Zeilenhoehen stammen aus Tailwinds text-xs und text-3xl und muessen
+         hier ausgeschrieben werden. Ohne sie sitzt der Fussblock 3 px hoeher
+         als beim React-Ladebildschirm, und genau das saehe man beim Ablösen. */
+      #vorab-lader .vl-label {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+      }
+      #vorab-lader .vl-zahl {
+        font-weight: 900;
+        font-size: 1.875rem;
+        letter-spacing: -0.03em;
+        line-height: 2.25rem;
+        font-feature-settings: 'tnum' 1;
+        color: rgb(232 227 225);
+      }
+      /* Innerhalb derselben Tab-Sitzung zeigt Home.jsx keinen Ladebildschirm
+         mehr. Dann darf auch der Vorab-Anstrich nicht kurz aufblitzen. */
+      html.intro-gesehen #vorab-lader { display: none; }
+    </style>
   </head>
   <body class="bg-ink text-paper antialiased">
+    <script>
+      // Laeuft vor dem ersten Zeichnen, damit der Vorab-Anstrich bei einer
+      // Rueckkehr innerhalb der Sitzung gar nicht erst sichtbar wird.
+      try {
+        if (sessionStorage.getItem('wmns-intro-seen')) {
+          document.documentElement.className += ' intro-gesehen';
+        }
+      } catch (e) { /* privater Modus: dann eben anzeigen */ }
+    </script>
+    <div id="vorab-lader" aria-hidden="true">
+      <div class="vl-oberzeile">Womensurance · Lade Wahrheit</div>
+      <div class="vl-zeile">Wie sicher bist du wirklich?</div>
+      <div class="vl-fuss">
+        <span class="vl-label">Gender Pension Gap</span>
+        <span class="vl-zahl">0,0</span>
+        <span>%</span>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

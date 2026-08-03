@@ -73,6 +73,14 @@ export default function App() {
   const reduced = useReducedMotion();
   useLenis(reduced);
 
+  // Den Vorab-Anstrich aus index.html abraeumen, sobald React zeichnet.
+  // Beide zeigen dasselbe Bild an derselben Stelle, das Ablösen ist deshalb
+  // nicht zu sehen. Ohne das Entfernen bliebe der statische Block ueber der
+  // Seite liegen.
+  useEffect(() => {
+    document.getElementById('vorab-lader')?.remove();
+  }, []);
+
   // Bei „Bewegung reduzieren" laufen GSAP-Einblendungen praktisch sofort durch.
   // Die gepinnten Sektionen bleiben — sie sind das Seitenlayout, keine Deko;
   // ihr Fortschritt hängt am Scroll und nicht an einer Zeitachse.

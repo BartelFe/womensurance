@@ -1,0 +1,29 @@
+# Womensurance
+
+Versicherungs- und Finanzberatung für Frauen, entlang der eigenen Lebensphasen.
+Womensurance ist eine Marke der Deutschen Versicherungsmakler GmbH & Co. KG
+(DVM), Gemmingerstr. 14, 85051 Ingolstadt. Beraterin ist Julia Pashchenko.
+
+Inhaltlicher Schwerpunkt ist die Rentenlücke von Frauen: wie Teilzeit,
+Care-Arbeit und Scheidung die spätere Rente verringern und was sich dagegen
+tun lässt. Die Website enthält interaktive Rechner, deren Eingaben das
+Endgerät der Nutzerin nie verlassen.
+
+## Seiten
+
+- [Startseite](https://womensurance.de/): Gender Pension Gap, Rechner für die eigene Rentenlücke, Lebensphasen, Beratungsablauf
+- [Rentenlücke](https://womensurance.de/rentenluecke): Teilzeit und Care-Arbeit, wie die Lücke entsteht, Handlungsmöglichkeiten, häufige Fragen
+- [Scheidung](https://womensurance.de/scheidung): Versorgungsausgleich, geteilte Rentenanrechte, häufige Fehler, häufige Fragen
+
+## Rechtliches
+
+- [Impressum](https://womensurance.de/impressum)
+- [Datenschutzerklärung](https://womensurance.de/datenschutz)
+- [Barrierefreiheitserklärung](https://womensurance.de/barrierefreiheit)
+
+## Hinweise zur Nutzung
+
+- Die Inhalte sind allgemeine Information und ersetzen keine individuelle Beratung, Rechts- oder Steuerberatung.
+- Zahlenangaben tragen ihre Quelle jeweils direkt am Wert. Bitte nur mit Quelle zitieren.
+- Beispielrechnungen beruhen auf Durchschnittswerten und sind unverbindlich.
+- Ansprechpartner für Rückfragen: info@dvm.de

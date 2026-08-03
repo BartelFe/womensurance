@@ -241,6 +241,26 @@ Alle redaktionellen Platzhalter auf Startseite, `/rentenluecke` und `/scheidung`
 2. *Die wachsende Textkontur im Ladebildschirm hält LCP auf.* Falsch, die Arithmetik passte verführerisch (2,0 s FCP + 2,4 s Animation ≈ 4,4 s LCP). Mit 0,3 s statt 2,4 s gemessen: LCP unverändert 4,4 bis 4,6 s.
 3. *Die Bundle-Aufteilung hat es verschlechtert.* Der erste Nachher-Lauf zeigte 40 gegen 52 vorher. Zwei weitere Läufe: 60 und 63. Ein Ausreißer.
 
+### A.16b · Zweite Runde, nach Felix' Messung auf der deployten Seite
+
+**Deployed mobil vorher 51 → 76.** Aufschlüsselung: FCP 3,2 s · LCP 4,0 s · **TBT 0 ms** · **CLS 0** · SI 6,7 s. TBT und CLS also bereits voll ausgereizt, die verbleibenden 24 Punkte lagen komplett bei LCP (12), FCP (6) und Speed Index (6).
+
+Der deployte Bericht nannte zwei Dinge, die lokal nicht sichtbar waren:
+- **Das LCP-Element ist der Cookie-Banner** (`<p class="text-sm text-paper/70 …">`), mit 2.550 ms „Verzögerung beim Rendering des Elements". Er ist auf Mobilgeräten der grösste gezeichnete Textblock, weil die Kopfbereichs-Überschrift bei `opacity: 0` startet und damit für LCP nicht zählt. **Das erklärt, warum die drei Experimente aus A.16 nichts bewegt haben: sie zielten alle auf den Ladebildschirm.**
+- **FCP 3,2 s bei TTFB 0,4 s.** Der Bildschirm bleibt fast drei Sekunden leer, weil die Seite vollständig im Browser gerendert wird und erst React etwas malt.
+
+**Gebaut: Vorab-Anstrich in `index.html`.** Ein statischer Block malt exakt den Ausgangszustand des Ladebildschirms direkt aus dem HTML; `App` entfernt ihn, sobald React zeichnet. Gegengeprüft mit berechneten Stilen und Bounding-Rects: **alle fünf Elemente pixel- und stilgleich**, das Ablösen ist unsichtbar. Ein Inline-Skript setzt `html.intro-gesehen`, damit der Block bei einer Rückkehr innerhalb der Tab-Sitzung nicht aufblitzt.
+- ⚠️ **`index.html` und `Loader.jsx` müssen synchron bleiben.** Weichen sie ab, sieht man beim Übernehmen ein Zucken. Die Zeilenhöhen mussten ausgeschrieben werden, weil Tailwinds `text-xs` und `text-3xl` eigene mitbringen; ohne sie sass der Fussblock 3 px höher.
+- ⚠️ **Ein früherer FCP verlängert das TBT-Messfenster.** TBT zählt von FCP bis TTI. Arbeit, die vorher davor lag und deshalb nicht zählte, fällt jetzt hinein. Deployed war TBT 0 ms, das kann dadurch steigen. **Vor/nach auf der deployten Seite gegenprüfen**, lokal ist der Effekt nicht sichtbar, weil ohne Netzlatenz auch React sofort malt.
+
+**`public/llms.txt` ergänzt** für die neue Lighthouse-Prüfung zum agentischen Browsen: H1 plus sechs Links, dazu Nutzungshinweise (keine Beratung, Zahlen nur mit Quelle zitieren).
+
+**Wieder ein vorbestehender Kontrastfehler, denselben Mechanismus wie in A.14.** Die Euro-Beträge auf den Lebensereignis-Knöpfen im Kopfbereich: `text-paper/70` mal `opacity-60` ergibt effektiv **42 %**, gemessen **3,34:1** bei 12 px fett, gefordert 4,5:1. Verletzt auch die projekteigene Untergrenze `paper/55` aus A.9. Jetzt `opacity-80` (0,70 × 0,80 = 0,56 ≈ 4,6:1). **Er taucht nur sporadisch in Berichten auf, weil die Chips bei `opacity: 0` starten und je nach Messzeitpunkt übersprungen werden.** Lehre, zum dritten Mal: Deckkräfte multiplizieren sich, und was animiert eingeblendet wird, entgeht der Prüfung.
+
+⚠️ **Messhygiene, zweimal reingefallen:** Auf diesem Rechner schwankt mobiles TBT zwischen 620 und 3.680 ms **für denselben Build**, wenn Dev-Server und Preview-Server parallel laufen. Der Dev-Server muss zum Messen aus. Danach reproduzierbar 64/64/67. Desktop ist stabil (99/99); ein Ausreisser auf 78 war ebenfalls Last. Auch die 19 offenen `chrome.exe` sind **nicht** von Lighthouse, sondern Felix' eigener Browser: vor dem Aufräumen die Kommandozeile prüfen, nicht blind `Stop-Process`.
+
+**Stand lokal nach dieser Runde:** mobil **64 bis 67**, Desktop **99**, A11y **100**, SEO **100**.
+
 **Offen: LCP mobil ~4,4 s.** Hält sich hartnäckig durch alle drei Experimente. Lighthouse endet die Messung, während der Ladebildschirm noch das Bild füllt (im Endbild des Berichts nachprüfbar), die eigentliche Seite sieht es also nie. Nächster Hebel wäre die Hauptthread-Arbeit der Startseite selbst: `splitChars` erzeugt pro Buchstabe ein Span, dazu `getTotalLength()` auf den SVG-Pfaden und die ScrollTrigger-Einrichtung aller acht Sektionen beim Mounten. Gegenprobe, die das belegt: **`/rentenluecke` erreicht mit demselben Bundle 75 bei TBT 320 ms**, die Startseite 50 bei TBT 1.700 ms.
 
 **Nicht behoben, mit Absicht:**
