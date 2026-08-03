@@ -48,7 +48,7 @@ const teile = (liste) =>
  */
 const bild = (quelle) => ({
   _type: 'bild',
-  _sanityAsset: `image@file://../../public/images/${quelle.datei}`,
+  _sanityAsset: `image@file://../public/images/${quelle.datei}`,
   alt: quelle.alt,
 });
 
