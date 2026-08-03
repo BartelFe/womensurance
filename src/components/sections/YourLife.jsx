@@ -146,12 +146,12 @@ export default function YourLife() {
               sticky Kind hätte darin praktisch keinen Laufweg. Ab md braucht
               es dafür `self-start`, sonst streckt das Grid die Zelle auf die
               volle Zeilenhöhe und das sticky greift wieder nicht. */}
-          <div className="sticky top-20 z-30 pointer-events-none md:top-28 md:self-start md:col-span-4 md:col-start-9 md:row-start-1 pb-8 md:pb-0">
-            {/* Mobil: große freie Zahl in der rechten oberen Ecke, ohne Band
-                und ohne Hintergrund (Wunsch Felix 08/2026). Sie klebt die
-                ganze Sektion über oben rechts und darf dabei über den
-                Kacheltexten liegen; die Größe orientiert sich an den
-                Deko-Ziffern unten rechts in den Kacheln. */}
+          <div className="z-30 pointer-events-none md:sticky md:top-28 md:self-start md:col-span-4 md:col-start-9 md:row-start-1 pb-8 md:pb-0">
+            {/* Mobil: große freie Zahl oben rechts am Sektionsanfang, ohne
+                Band und ohne Hintergrund (Wunsch Felix 08/2026). Bewusst
+                NICHT sticky: sie steht einfach dort und scrollt normal mit
+                raus. Ab md klebt der Zähler weiterhin in der rechten Spalte.
+                Die Größe orientiert sich an den Deko-Ziffern der Kacheln. */}
             <div className="text-right md:text-left">
               <div className="flex items-baseline justify-end gap-1 md:justify-start">
                 <span className="data-num text-ink text-3xl md:text-6xl">−</span>
