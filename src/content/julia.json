@@ -1,59 +1,6 @@
 {
-  "vorname": "Julia",
-  "rolle": "Fachwirtin für Versicherungen und Finanzen · DVM Ingolstadt",
-  "zitat": [
-    {
-      "text": "Ich will nicht, dass meine Kundinnen ",
-      "stil": "normal"
-    },
-    {
-      "text": "abgesichert",
-      "stil": "betont"
-    },
-    {
-      "text": " sind. Ich will, dass sie ",
-      "stil": "normal"
-    },
-    {
-      "text": "frei",
-      "stil": "kursiv"
-    },
-    {
-      "text": " sind.",
-      "stil": "normal"
-    }
-  ],
-  "zitatQuelle": "Julia Pashchenko, Gründerin",
-  "portraet": {
-    "datei": "julia-portrait.jpeg",
-    "alt": "Julia Pashchenko im pinken Blazer an ihrem Schreibtisch",
-    "breite": 704,
-    "hoehe": 939
-  },
-  "zweitbild": {
-    "datei": "julia-desk.jpeg",
-    "alt": "Julia Pashchenko am Besprechungstisch mit ihrem Tablet",
-    "breite": 704,
-    "hoehe": 934
-  },
-  "infokarteTitel": "Womensurance",
-  "infokarteText": "Julia, deine Versicherungsschwester. Sie redet Klartext, hört zu und bleibt an deiner Seite.",
-  "geschichteUeberschrift": [
-    {
-      "text": "Die Geschichte hinter ",
-      "stil": "normal"
-    },
-    {
-      "text": "womensurance",
-      "stil": "betont"
-    }
-  ],
-  "geschichteBild": {
-    "datei": "julia-geschichte.jpeg",
-    "alt": "Julia Pashchenko im Womensurance-Poloshirt vor dem Büro",
-    "breite": 1058,
-    "hoehe": 1476
-  },
+  "anspruchText": "Jede Frau soll wissen, wofür sie abgesichert ist und sich in jeder Lebenslage finanziell sicher fühlen.",
+  "anspruchTitel": "Mein Anspruch:",
   "geschichteAbsaetze": [
     "Womensurance ist entstanden, weil ich gesehen habe, wie schnell sich das Leben verändern kann und wie unvorbereitet viele Frauen dann sind.",
     "Kurz nach meiner Ausbildung saß eine Kundin vor mir. Sie hatte einen guten Job, eine glückliche Familie und eigentlich das Gefühl, alles richtig gemacht zu haben.",
@@ -61,24 +8,77 @@
     "In diesem Moment wurde mir klar: Frauen brauchen keine komplizierten Versicherungen. Sie brauchen jemanden, der ihnen verständlich erklärt, welche Entscheidungen heute ihre finanzielle Zukunft sichern.",
     "Deshalb habe ich womensurance gegründet. Ich begleite Frauen dabei, ihre Versicherungs- und Vorsorgethemen zu verstehen und selbstbestimmte Entscheidungen zu treffen. Abgestimmt auf ihre Lebensphase, ihre Ziele und ihre Zukunft."
   ],
-  "anspruchTitel": "Mein Anspruch:",
-  "anspruchText": "Jede Frau soll wissen, wofür sie abgesichert ist und sich in jeder Lebenslage finanziell sicher fühlen.",
+  "geschichteBild": {
+    "alt": "Julia Pashchenko im Womensurance-Poloshirt vor dem Büro",
+    "breite": 1058,
+    "hoehe": 1476,
+    "ref": "image-a9ba8a1926da2410ea32063651a9bd485271d80e-1058x1476-jpg"
+  },
+  "geschichteUeberschrift": [
+    {
+      "stil": "normal",
+      "text": "Die Geschichte hinter "
+    },
+    {
+      "stil": "betont",
+      "text": "womensurance"
+    }
+  ],
+  "infokarteText": "Julia, deine Versicherungsschwester. Sie redet Klartext, hört zu und bleibt an deiner Seite.",
+  "infokarteTitel": "Womensurance",
   "kurzprofil": [
     {
-      "wert": "5+",
-      "label": "Jahre Erfahrung"
+      "label": "Jahre Erfahrung",
+      "wert": "5+"
     },
     {
-      "wert": "100%",
-      "label": "Unabhängig"
+      "label": "Unabhängig",
+      "wert": "100%"
     },
     {
-      "wert": "∅ {minuten}",
-      "label": "Min. Erstgespräch"
+      "label": "Zertifiziert",
+      "wert": "IHK"
     },
     {
-      "wert": "IHK",
-      "label": "Zertifiziert"
+      "label": "Min. Erstgespräch",
+      "wert": "∅ 60"
     }
-  ]
+  ],
+  "portraet": {
+    "alt": "Julia Pashchenko im pinken Blazer an ihrem Schreibtisch",
+    "breite": 704,
+    "hoehe": 939,
+    "ref": "image-28e6500a456d5efa87a8077403a522b6ac7fba67-704x939-jpg"
+  },
+  "rolle": "Fachwirtin für Versicherungen und Finanzen · DVM Ingolstadt",
+  "vorname": "Julia",
+  "zitat": [
+    {
+      "stil": "normal",
+      "text": "Ich will nicht, dass meine Kundinnen "
+    },
+    {
+      "stil": "betont",
+      "text": "abgesichert"
+    },
+    {
+      "stil": "normal",
+      "text": " sind. Ich will, dass sie "
+    },
+    {
+      "stil": "kursiv",
+      "text": "frei"
+    },
+    {
+      "stil": "normal",
+      "text": " sind."
+    }
+  ],
+  "zitatQuelle": "Julia Pashchenko, Gründerin",
+  "zweitbild": {
+    "alt": "Julia Pashchenko am Besprechungstisch mit ihrem Tablet",
+    "breite": 704,
+    "hoehe": 934,
+    "ref": "image-8fddeb3112642e8c40a671eff70a5ba0c46b6a5e-704x934-jpg"
+  }
 }

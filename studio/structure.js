@@ -13,19 +13,22 @@ const EINZELSTUECKE = [
   { id: 'juliaSektion', typ: 'juliaSektion', titel: 'Vorstellung (Julia)', symbol: () => '👤' },
 ];
 
+const EINZELSTUECK_BY_ID = Object.fromEntries(EINZELSTUECKE.map((e) => [e.id, e]));
+
+const einzelstueckItem = (S, id) => {
+  const { typ, titel, symbol } = EINZELSTUECK_BY_ID[id];
+  return S.listItem()
+    .title(titel)
+    .id(id)
+    .icon(symbol)
+    .child(S.document().schemaType(typ).documentId(id).title(titel));
+};
+
 export const structure = (S) =>
   S.list()
     .title('Inhalte')
     .items([
-      ...EINZELSTUECKE.map(({ id, typ, titel, symbol }) =>
-        S.listItem()
-          .title(titel)
-          .id(id)
-          .icon(symbol)
-          .child(S.document().schemaType(typ).documentId(id).title(titel))
-      ),
-
-      S.divider(),
+      einzelstueckItem(S, 'startseite'),
 
       S.listItem()
         .title('Lebensphasen')
@@ -35,6 +38,10 @@ export const structure = (S) =>
             .title('Lebensphasen')
             .defaultOrdering([{ field: 'reihenfolge', direction: 'asc' }])
         ),
+
+      einzelstueckItem(S, 'juliaSektion'),
+
+      S.divider(),
 
       S.listItem()
         .title('Schritte der Beratung')
@@ -46,11 +53,11 @@ export const structure = (S) =>
         ),
 
       S.listItem()
-        .title('Stimmen')
+        .title('Testimonials')
         .icon(() => '💬')
         .child(
           S.documentTypeList('stimme')
-            .title('Stimmen')
+            .title('Testimonials')
             .defaultOrdering([{ field: 'reihenfolge', direction: 'asc' }])
         ),
 

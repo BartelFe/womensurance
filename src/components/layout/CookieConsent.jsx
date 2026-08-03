@@ -61,7 +61,7 @@ export default function CookieConsent() {
       <div className="p-6">
         <div className="eyebrow text-pink mb-3">Deine Daten, deine Wahl</div>
         <p className="text-sm text-paper/70 leading-relaxed">
-          Wir verwenden Cookies und ähnliche Technologien — einige sind technisch
+          Wir verwenden Cookies und ähnliche Technologien. Einige sind technisch
           notwendig, andere helfen uns, die Website zu verbessern und Inhalte zu
           zeigen, die zu dir passen. Statistik und Marketing laden{' '}
           <strong className="text-paper font-medium">erst nach deiner Einwilligung</strong>.

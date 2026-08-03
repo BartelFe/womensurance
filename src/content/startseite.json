@@ -1,96 +1,96 @@
 {
-  "heroZeilen": [
+  "abschlussButton": "Erstgespräch buchen",
+  "abschlussSocialHinweis": "Oder folge mir",
+  "abschlussText": "Vielleicht stellst du nach unserem Gespräch fest, dass wir nicht die Richtigen füreinander sind. Auch das ist völlig okay. Mir ist wichtig, dass du unser Gespräch mit mehr Klarheit verlässt, als du hineingegangen bist.",
+  "abschlussZeilen": [
     {
-      "text": "Über deine",
-      "stil": "normal"
+      "stil": "normal",
+      "text": "{minuten} Minuten."
     },
     {
-      "text": "Zukunft wird",
-      "stil": "normal"
+      "stil": "normal",
+      "text": "Kostenlos."
     },
     {
-      "text": "im Stillen",
-      "stil": "betont"
-    },
-    {
-      "text": "entschieden.",
-      "stil": "normal"
-    }
-  ],
-  "heroUntertitel": "Deine Versicherungsschwester: ehrlich, verständlich und an deiner Seite.",
-  "heroZusatz": "Spezialisiert auf Altersvorsorge, Arbeitskraft- und Sachversicherungen für Frauen.",
-  "heroChipsHinweis": "Und bei dir? Tippe an, was zutrifft",
-  "bescheidUeberschrift": [
-    {
-      "text": "Was die Prozente in ",
-      "stil": "normal"
-    },
-    {
-      "text": "Euro",
-      "stil": "betont"
-    },
-    {
-      "text": " bedeuten",
-      "stil": "normal"
+      "stil": "betont",
+      "text": "Auf Augenhöhe."
     }
   ],
   "bescheidAbsaetze": [
     "{gap} % sind mehr als nur eine Statistik. Für viele Frauen bedeuten sie jeden Monat mehrere hundert Euro weniger Rente. Hier siehst du, was diese Zahl ganz konkret für deine persönliche Situation bedeutet und warum es sich lohnt, früh gegenzusteuern.",
     "Tipp: Wähl oben im Diagramm an, was auf dich zutrifft, der Bescheid rechnet live mit."
   ],
-  "lueckeZeile1": "Deine Rentenlücke:",
-  "lueckeVorZahl": "durchschnittlich",
-  "lueckeZeile3": "Aber sie ist kein Schicksal.",
-  "lueckeText": "Die {basiswert} % sind ein Durchschnittswert. Wie groß deine persönliche Rentenlücke tatsächlich ist, hängt von deiner individuellen Lebenssituation ab. Gemeinsam finden wir heraus, was diese Zahl für dich bedeutet und welche Möglichkeiten du hast, schon heute gegenzusteuern.",
-  "methodeUeberschrift": [
+  "bescheidUeberschrift": [
     {
-      "text": "4 Schritte. ",
-      "stil": "normal"
+      "stil": "normal",
+      "text": "Was die Prozente in "
     },
     {
-      "text": "Ein Konzept.",
-      "stil": "betont"
+      "stil": "betont",
+      "text": "Euro"
+    },
+    {
+      "stil": "normal",
+      "text": " bedeuten"
+    }
+  ],
+  "buchungsUrl": "https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled",
+  "gespraechsdauer": 60,
+  "heroChipsHinweis": "Und bei dir? Tippe an, was zutrifft",
+  "heroUntertitel": "Deine Versicherungsschwester: ehrlich, verständlich und an deiner Seite.",
+  "heroZeilen": [
+    {
+      "stil": "normal",
+      "text": "Über deine"
+    },
+    {
+      "stil": "normal",
+      "text": "Zukunft wird"
+    },
+    {
+      "stil": "betont",
+      "text": "im Stillen"
+    },
+    {
+      "stil": "normal",
+      "text": "entschieden."
+    }
+  ],
+  "heroZusatz": "Spezialisiert auf Altersvorsorge, Arbeitskraft- und Sachversicherungen für Frauen.",
+  "lueckeText": "Die {basiswert} % sind ein Durchschnittswert. Wie groß deine persönliche Rentenlücke tatsächlich ist, hängt von deiner individuellen Lebenssituation ab. Gemeinsam finden wir heraus, was diese Zahl für dich bedeutet und welche Möglichkeiten du hast, schon heute gegenzusteuern.",
+  "lueckeVorZahl": "durchschnittlich",
+  "lueckeZeile1": "Deine Rentenlücke:",
+  "lueckeZeile3": "Aber sie ist kein Schicksal.",
+  "methodeUeberschrift": [
+    {
+      "stil": "normal",
+      "text": "4 Schritte. "
+    },
+    {
+      "stil": "betont",
+      "text": "Ein Konzept."
+    }
+  ],
+  "socialProfile": [
+    {
+      "label": "Instagram",
+      "netzwerk": "instagram",
+      "url": "https://www.instagram.com/womensurance/"
+    },
+    {
+      "label": "LinkedIn",
+      "netzwerk": "linkedin",
+      "url": "https://www.linkedin.com/in/julia-pashchenko/"
     }
   ],
   "stimmenUeberschrift": [
     {
-      "text": "{anzahl} Frauen. {anzahl} ",
-      "stil": "normal"
+      "stil": "normal",
+      "text": "{anzahl} Frauen. {anzahl} "
     },
     {
-      "text": "Geschichten.",
-      "stil": "betont"
-    }
-  ],
-  "abschlussZeilen": [
-    {
-      "text": "{minuten} Minuten.",
-      "stil": "normal"
-    },
-    {
-      "text": "Kostenlos.",
-      "stil": "normal"
-    },
-    {
-      "text": "Auf Augenhöhe.",
-      "stil": "betont"
-    }
-  ],
-  "abschlussText": "Vielleicht stellst du nach unserem Gespräch fest, dass wir nicht die Richtigen füreinander sind. Auch das ist völlig okay. Mir ist wichtig, dass du unser Gespräch mit mehr Klarheit verlässt, als du hineingegangen bist.",
-  "abschlussButton": "Erstgespräch buchen",
-  "abschlussSocialHinweis": "Oder folge mir",
-  "gespraechsdauer": 60,
-  "buchungsUrl": "https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled",
-  "socialProfile": [
-    {
-      "netzwerk": "instagram",
-      "label": "Instagram",
-      "url": "https://www.instagram.com/womensurance/"
-    },
-    {
-      "netzwerk": "linkedin",
-      "label": "LinkedIn",
-      "url": "https://www.linkedin.com/in/julia-pashchenko/"
+      "stil": "betont",
+      "text": "Geschichten."
     }
   ]
 }

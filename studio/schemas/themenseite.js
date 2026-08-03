@@ -18,7 +18,7 @@ export default {
     { name: 'fehler', title: 'Haeufige Fehler' },
     { name: 'faq', title: 'Haeufige Fragen' },
     { name: 'abschluss', title: 'Abschluss' },
-    { name: 'suchmaschine', title: 'Suchmaschine' },
+    { name: 'suchmaschine', title: 'SEO' },
   ],
   fields: [
     {

@@ -27,7 +27,7 @@ export const CATEGORIES = [
     label: 'Marketing',
     required: false,
     description:
-      'Ermöglicht Wiedererkennung über Plattformen hinweg (z. B. Meta Pixel für Instagram/TikTok-Anzeigen). Wird erst nach deiner Einwilligung geladen.',
+      'Ermöglicht Wiedererkennung über Plattformen hinweg (z. B. Meta Pixel für Instagram-Anzeigen, LinkedIn Insight Tag). Wird erst nach deiner Einwilligung geladen.',
   },
 ];
 

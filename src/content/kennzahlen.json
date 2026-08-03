@@ -1,38 +1,38 @@
 [
   {
-    "kennung": "pension",
-    "reihenfolge": 1,
-    "wert": 39.4,
     "einheit": "%",
-    "label": "Gender Pension Gap",
     "hinweis": "Frauen erhalten in Deutschland im Schnitt fast 40 % weniger Rente als Männer.",
-    "quelle": "Quelle noch zu belegen (Destatis, Gender Pension Gap)"
+    "kennung": "pension",
+    "label": "Gender Pension Gap",
+    "quelle": "Quelle noch zu belegen (Destatis, Gender Pension Gap)",
+    "reihenfolge": 1,
+    "wert": 39.4
   },
   {
-    "kennung": "parttime",
-    "reihenfolge": 2,
-    "wert": 49,
     "einheit": "%",
-    "label": "Frauen in Teilzeit",
     "hinweis": "Fast jede zweite erwerbstätige Frau arbeitet Teilzeit. Bei Männern: 12 %.",
-    "quelle": "Quelle noch zu belegen (Destatis, Teilzeitquote)"
+    "kennung": "parttime",
+    "label": "Frauen in Teilzeit",
+    "quelle": "Quelle noch zu belegen (Destatis, Teilzeitquote)",
+    "reihenfolge": 2,
+    "wert": 49
   },
   {
-    "kennung": "paygap",
-    "reihenfolge": 3,
-    "wert": 18,
     "einheit": "%",
-    "label": "Gender Pay Gap",
     "hinweis": "Unbereinigter Gehaltsunterschied zwischen Frauen und Männern.",
-    "quelle": "Quelle noch zu belegen (Destatis, Gender Pay Gap)"
+    "kennung": "paygap",
+    "label": "Gender Pay Gap",
+    "quelle": "Quelle noch zu belegen (Destatis, Gender Pay Gap)",
+    "reihenfolge": 3,
+    "wert": 18
   },
   {
-    "kennung": "care",
-    "reihenfolge": 4,
-    "wert": 44,
     "einheit": "%",
-    "label": "mehr unbezahlte Care-Arbeit",
     "hinweis": "Frauen übernehmen täglich rund 44 % mehr Sorgearbeit als Männer.",
-    "quelle": "Quelle noch zu belegen (Zeitverwendungserhebung)"
+    "kennung": "care",
+    "label": "mehr unbezahlte Care-Arbeit",
+    "quelle": "Quelle noch zu belegen (Zeitverwendungserhebung)",
+    "reihenfolge": 4,
+    "wert": 44
   }
 ]

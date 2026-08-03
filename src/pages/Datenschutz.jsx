@@ -6,18 +6,34 @@ import LegalLayout, { H2, H3, P, UL, Block, A } from '../components/legal/LegalL
  * angepasst auf den tatsächlichen Stack von womensurance.de:
  *   Hosting Vercel (statt IONOS) · eigenes Consent-Banner (statt Usercentrics) ·
  *   Sanity als CMS (kein Besucher-Kontakt, Bild-Proxy) · lokale Webfonts ·
- *   Microsoft Bookings (wie DVM) · GTM + Meta-Pixel nur nach Einwilligung.
+ *   Microsoft Bookings (wie DVM) · GTM, GA4, Meta-Pixel und LinkedIn Insight Tag
+ *   nur nach Einwilligung · Vercel Web Analytics + Speed Insights einwilligungsfrei.
  *
  * ⚠️ ENTWURF: Die juristischen Texte verantwortet die DVM über Maisel Consult
  * (Hr. Klotzenbücher) — diese Fassung ist die technische Zuarbeit + Vorlage
  * und MUSS vor Go-Live geprüft werden.
+ *
+ * ⚠️ DREI PUNKTE FÜR DIE PRÜFUNG DURCH MAISEL (Stand 03.08.2026):
+ *  1. Abschnitt 2, Sanity: Der Satz „Wir haben einen Vertrag über
+ *     Auftragsverarbeitung (AVV) mit Sanity geschlossen." ist zum jetzigen
+ *     Zeitpunkt NOCH NICHT zutreffend. Sanity bietet keine Selbstbedienungs-DPA
+ *     an (geprüft: sanity.io/legal/dpa = 404, die Terms of Service enthalten
+ *     keinerlei Art.-28-Regelungen). Der AVV ist bei legal@sanity.io angefragt.
+ *     Kommt keiner zustande, muss dieser Satz weg und die Rechtsgrundlage neu
+ *     bewertet werden.
+ *  2. Abschnitt 5, LinkedIn Insight Tag: bewusst NUR Standardvertragsklauseln
+ *     genannt. Ob LinkedIn unter der DPF-Zertifizierung von Microsoft geführt
+ *     wird, konnte ich nicht belastbar verifizieren. Falls Maisel es bestätigt,
+ *     gehört der DPF-Hinweis analog zu Google/Meta ergänzt.
+ *  3. GA4, Meta-Pixel und LinkedIn sind beschrieben, aber noch nicht scharf
+ *     geschaltet. Die IDs liefert die DVM. Erst danach live nehmen.
  */
 export default function Datenschutz() {
   return (
     <LegalLayout
       title="Datenschutzerklärung"
       subtitle="Transparent, wie wir es auch bei deinen Finanzen halten: Was mit deinen Daten auf dieser Website passiert."
-      stand="Juli 2026"
+      stand="August 2026"
     >
       {/* ── 1 ─────────────────────────────────────────────── */}
       <H2>1. Datenschutz auf einen Blick</H2>
@@ -105,6 +121,33 @@ export default function Datenschutz() {
         Hierbei handelt es sich um einen datenschutzrechtlich vorgeschriebenen Vertrag, der
         gewährleistet, dass dieser die personenbezogenen Daten unserer Websitebesucher nur
         nach unseren Weisungen und unter Einhaltung der DSGVO verarbeitet.
+      </P>
+
+      <H3>Vercel Web Analytics und Vercel Speed Insights</H3>
+      <P>
+        Zusätzlich zum Hosting setzen wir zwei Auswertungsfunktionen unseres Hosting-Anbieters
+        Vercel ein: <strong>Web Analytics</strong> zählt die Seitenaufrufe,{' '}
+        <strong>Speed Insights</strong> misst die Ladegeschwindigkeit der Seiten auf
+        tatsächlich genutzten Endgeräten. Beide Funktionen dienen ausschließlich dem Betrieb
+        und der technischen Verbesserung dieser Website.
+      </P>
+      <P>
+        Beide Funktionen setzen <strong>keine Cookies</strong> und speichern oder lesen keine
+        Informationen auf Ihrem Endgerät. Eine Einwilligung nach § 25 Abs. 1 TDDDG ist daher
+        nicht erforderlich. Besucherinnen und Besucher werden nicht mit einer dauerhaften
+        Kennung versehen, sondern anhand eines aus der Anfrage berechneten Prüfwerts
+        unterschieden, der spätestens nach 24 Stunden verworfen wird. Eine Wiedererkennung
+        über mehrere Websites hinweg oder eine Zusammenführung zu Nutzerprofilen findet nicht
+        statt.
+      </P>
+      <P>
+        Erfasst werden dabei: Zeitpunkt des Aufrufs, aufgerufene Adresse, verweisende Seite,
+        ungefährer Standort auf Ebene von Land, Region und Stadt, Betriebssystem, Browser und
+        Gerätetyp sowie die gemessenen Ladezeitwerte. IP-Adressen werden nicht gespeichert.
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; wir haben ein berechtigtes Interesse
+        daran, zu erkennen, welche Inhalte genutzt werden und ob die Website technisch
+        einwandfrei ausgeliefert wird. Die Verarbeitung ist von dem oben genannten Vertrag
+        über Auftragsverarbeitung mit Vercel umfasst.
       </P>
 
       <H3>Sanity (Content-Management-System)</H3>
@@ -512,10 +555,63 @@ export default function Datenschutz() {
         .
       </P>
 
+      <H3>Google Analytics 4</H3>
+      <P>
+        Diese Website nutzt Funktionen des Webanalysedienstes Google Analytics 4. Anbieter ist
+        die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Google
+        Analytics ermöglicht es uns, das Verhalten der Besucherinnen und Besucher dieser
+        Website zu analysieren, etwa welche Seiten aufgerufen werden, wie lange sie betrachtet
+        werden und über welchen Weg jemand auf die Website gelangt ist. Diese Auswertungen
+        fassen wir zu Statistiken zusammen, um unsere Inhalte zu verbessern.
+      </P>
+      <P>
+        Google Analytics verwendet Cookies und vergleichbare Wiedererkennungstechnologien.
+        Die dadurch erzeugten Informationen über Ihre Benutzung dieser Website werden in der
+        Regel an einen Server von Google übertragen und dort gespeichert.
+      </P>
+      <P>
+        Die Nutzung erfolgt ausschließlich auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1
+        lit. a DSGVO und § 25 Abs. 1 TDDDG; die Einwilligung ist jederzeit widerrufbar. Vor
+        Ihrer Einwilligung wird Google Analytics nicht geladen. Wir haben folgende
+        datenschutzfreundlichen Einstellungen gewählt:
+      </P>
+      <UL
+        items={[
+          'IP-Adressen werden von Google Analytics 4 gekürzt, bevor sie gespeichert werden; eine Zuordnung zu Ihrer Person ist uns dadurch nicht möglich.',
+          'Die Funktion „Google-Signale" ist deaktiviert. Es findet daher keine geräteübergreifende Zusammenführung mit Ihrem Google-Konto und keine Auswertung demografischer Merkmale statt.',
+          'Die Speicherdauer der Nutzungsdaten ist auf 14 Monate begrenzt; danach werden die Daten automatisch gelöscht.',
+        ]}
+      />
+      <P>
+        Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der
+        EU-Kommission gestützt. Das Unternehmen verfügt zudem über eine Zertifizierung nach
+        dem „EU-US Data Privacy Framework" (DPF). Weitere Informationen:{' '}
+        <A href="https://www.dataprivacyframework.gov/participant/5780">
+          dataprivacyframework.gov/participant/5780
+        </A>
+        .
+      </P>
+      <P>
+        Sie können die Erfassung durch Google Analytics zusätzlich verhindern, indem Sie das
+        unter dem folgenden Link verfügbare Browser-Add-on installieren:{' '}
+        <A href="https://tools.google.com/dlpage/gaoptout">tools.google.com/dlpage/gaoptout</A>
+        . Mehr zum Umgang mit Nutzerdaten bei Google Analytics finden Sie in der
+        Datenschutzerklärung von Google:{' '}
+        <A href="https://support.google.com/analytics/answer/6004245">
+          support.google.com/analytics/answer/6004245
+        </A>
+        .
+      </P>
+      <P>
+        <strong>Auftragsverarbeitung:</strong> Wir haben mit Google einen Vertrag über
+        Auftragsverarbeitung geschlossen und setzen die Vorgaben der deutschen
+        Datenschutzbehörden bei der Nutzung von Google Analytics vollständig um.
+      </P>
+
       <H3>Meta-Pixel (ehemals Facebook-Pixel)</H3>
       <P>
-        Diese Website kann zur Konversionsmessung den Besucheraktions-Pixel von
-        Facebook/Meta nutzen. Anbieter dieses Dienstes ist die Meta Platforms Ireland
+        Diese Website nutzt zur Konversionsmessung den Besucheraktions-Pixel von
+        Facebook/Meta. Anbieter dieses Dienstes ist die Meta Platforms Ireland
         Limited, Merrion Road, Dublin 4, D04 X2K5, Irland. Die erfassten Daten werden nach
         Aussage von Meta jedoch auch in die USA und in andere Drittländer übertragen.
       </P>
@@ -554,6 +650,43 @@ export default function Datenschutz() {
         „EU-US Data Privacy Framework" (DPF). Weitere Informationen:{' '}
         <A href="https://www.dataprivacyframework.gov/participant/4452">
           dataprivacyframework.gov/participant/4452
+        </A>
+        .
+      </P>
+
+      <H3>LinkedIn Insight Tag</H3>
+      <P>
+        Diese Website nutzt das Insight Tag von LinkedIn. Anbieter ist die LinkedIn Ireland
+        Unlimited Company, Wilton Place, Dublin 2, Irland.
+      </P>
+      <P>
+        Das LinkedIn Insight Tag ermöglicht es uns auszuwerten, ob Besucherinnen und Besucher
+        über eine Anzeige auf LinkedIn zu uns gefunden haben und ob sie anschließend eine für
+        uns relevante Handlung vorgenommen haben, etwa eine Terminbuchung aufgerufen haben.
+        Außerdem können wir Personen, die diese Website besucht haben, auf LinkedIn erneut
+        Anzeigen ausspielen (Retargeting) und erhalten anonyme Auswertungen über die
+        Zusammensetzung unserer Besucherschaft. Dabei werden ein Cookie gesetzt sowie
+        technische Informationen wie die IP-Adresse, Zeitstempel, aufgerufene Seiten,
+        Geräte- und Browserangaben und eine verschlüsselte LinkedIn-Mitgliedskennung
+        übertragen. LinkedIn kürzt oder entfernt diese Kennung nach Angaben des Anbieters
+        innerhalb von sieben Tagen und löscht die verbleibenden Daten innerhalb von 180 Tagen.
+      </P>
+      <P>
+        Die Nutzung erfolgt ausschließlich auf Grundlage Ihrer Einwilligung nach Art. 6 Abs. 1
+        lit. a DSGVO und § 25 Abs. 1 TDDDG; die Einwilligung ist jederzeit widerrufbar. Vor
+        Ihrer Einwilligung wird das Insight Tag nicht geladen. Die Datenübertragung in die USA
+        wird auf die Standardvertragsklauseln der EU-Kommission gestützt.
+      </P>
+      <P>
+        Wenn Sie ein LinkedIn-Konto besitzen, können Sie der Analyse Ihres Nutzungsverhaltens
+        und der Ausspielung personalisierter Anzeigen unabhängig von unserem
+        Einwilligungs-Banner direkt bei LinkedIn widersprechen:{' '}
+        <A href="https://www.linkedin.com/psettings/guest-controls/retargeting-opt-out">
+          linkedin.com/psettings/guest-controls/retargeting-opt-out
+        </A>
+        . Weitere Informationen zum Datenschutz bei LinkedIn finden Sie unter:{' '}
+        <A href="https://www.linkedin.com/legal/privacy-policy">
+          linkedin.com/legal/privacy-policy
         </A>
         .
       </P>
