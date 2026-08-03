@@ -50,7 +50,7 @@
       },
       {
         "antwort": [
-          "Der Gender Pension Gap beschreibt den Unterschied bei den Alterseinkünften von Frauen und Männern. In Deutschland erhalten Frauen aus eigenen Rentenansprüchen durchschnittlich 39,4 % weniger Alterssicherung als Männer.",
+          "Der Gender Pension Gap beschreibt den Unterschied bei den Alterseinkünften von Frauen und Männern. In Deutschland erhalten Frauen aus eigenen Rentenansprüchen durchschnittlich 36,0 % weniger Alterssicherung als Männer.",
           "Zu den wichtigsten Ursachen gehören Teilzeit, Care-Arbeit, Erwerbsunterbrechungen und der Gender Pay Gap."
         ],
         "frage": "Was ist der Gender Pension Gap?"
@@ -124,21 +124,21 @@
         "einheit": "%",
         "label": "der erwerbstätigen Frauen in Deutschland arbeiten Teilzeit — bei Männern sind es 12 %.",
         "nachkommastellen": 0,
-        "quelle": "Quelle: Statistisches Bundesamt*",
+        "quelle": "Statistisches Bundesamt, Pressemitteilung Nr. 175 vom 19.05.2025",
         "wert": 49
       },
       {
         "einheit": "%",
         "label": "weniger Rente erhalten Frauen im Schnitt als Männer (Gender Pension Gap).",
         "nachkommastellen": 1,
-        "quelle": "Quelle: Destatis*",
-        "wert": 39.4
+        "quelle": "Statistisches Bundesamt, Berichtsjahr 2025 (ohne Hinterbliebenenrenten)",
+        "wert": 36
       },
       {
         "einheit": "%",
         "label": "mehr unbezahlte Sorgearbeit leisten Frauen täglich gegenüber Männern.",
         "nachkommastellen": 0,
-        "quelle": "Quelle: Zeitverwendungserhebung*",
+        "quelle": "Statistisches Bundesamt, Zeitverwendungserhebung 2022",
         "wert": 44
       }
     ],
@@ -324,17 +324,17 @@
     "kennung": "scheidung",
     "kennzahlen": [
       {
-        "einheit": "%",
-        "label": "der Ehen in Deutschland werden nach durchschnittlich rund 15 Jahren geschieden.",
+        "einheit": "",
+        "label": "Ehescheidungen gab es 2025 in Deutschland, nach durchschnittlich 14 Jahren und 7 Monaten Ehe.",
         "nachkommastellen": 0,
-        "quelle": "Quelle: Destatis*",
-        "wert": 35
+        "quelle": "Statistisches Bundesamt, Pressemitteilung Nr. 220 vom 26.06.2026",
+        "wert": 130100
       },
       {
         "einheit": "%",
         "label": "der in der Ehezeit erworbenen Rentenanrechte werden im Versorgungsausgleich hälftig geteilt.",
         "nachkommastellen": 0,
-        "quelle": "VersAusglG*",
+        "quelle": "§ 1 Versorgungsausgleichsgesetz (VersAusglG)",
         "wert": 100
       },
       {

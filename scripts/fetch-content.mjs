@@ -124,6 +124,39 @@ async function hole() {
   }
 }
 
+/**
+ * Warnt bei Zahlen ohne belastbare Quelle.
+ *
+ * Hintergrund: Am 04.08.2026 stellte sich heraus, dass zwei von vier
+ * Kennzahlen jahrelang veraltete Werte trugen und mehrere Quellenangaben nur
+ * aus "Quelle: Destatis*" bestanden, mit einem Sternchen, das auf keine
+ * Fussnote verwies. Auf einer Website, die mit Zahlen argumentiert, ist das
+ * ein Glaubwuerdigkeitsrisiko.
+ *
+ * Bewusst nur eine Warnung, kein Abbruch: Builds laufen auch automatisch,
+ * wenn Julia im Studio veroeffentlicht. Eine Qualitaetspruefung darf ihr
+ * keinen Deploy zerschiessen. Die Warnung landet aber im Vercel-Log.
+ */
+function pruefeQuellen(daten) {
+  const schwach = (q) => !q || /noch zu belegen/i.test(q) || /\*\s*$/.test(q) || q.trim().length < 20;
+  const treffer = [];
+
+  for (const k of liste(daten.kennzahlen)) {
+    if (schwach(k.quelle)) treffer.push(`Kennzahl „${k.label}“: ${k.quelle || '(leer)'}`);
+  }
+  for (const s of liste(daten.themenseiten)) {
+    for (const k of liste(s.kennzahlen)) {
+      if (schwach(k.quelle)) treffer.push(`Unterseite, Zahl „${k.wert}${k.einheit || ''}“: ${k.quelle || '(leer)'}`);
+    }
+  }
+
+  if (treffer.length) {
+    console.warn('\n  ⚠ Zahlen ohne belastbare Quellenangabe:');
+    treffer.forEach((t) => console.warn(`     · ${t}`));
+    console.warn('  → Siehe „Kunden\\Womensurance (DVM)\\Zahlen und Quellen.md“.\n');
+  }
+}
+
 /** Meldet, dass die Inhalte aus dem Repository stehen bleiben. */
 function behalteBestand(grund) {
   const vorhanden = Object.keys(DATEIEN).every((name) => existsSync(resolve(ZIEL, name)));
@@ -156,6 +189,8 @@ try {
       + `${liste(daten.themenseiten).length} Unterseiten, ${anzahlStimmen} Stimmen`
       + `${anzahlStimmen === 0 ? ' (Stimmen-Sektion bleibt ausgeblendet)' : ''}`
     );
+
+    pruefeQuellen(daten);
   }
 } catch (fehler) {
   behalteBestand(fehler.message);

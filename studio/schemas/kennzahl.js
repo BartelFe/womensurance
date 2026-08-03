@@ -1,10 +1,17 @@
 /**
- * Eine Kennzahl aus dem Datenband der Startseite.
+ * Eine Kennzahl.
  *
- * Achtung: Der Wert der Kennzahl "Gender Pension Gap" ist zugleich der
- * Ausgangswert des Rechners im Hero. Aendert sich die Zahl, aendert sich also
- * auch die Zahl, die die Besucherin beim Klicken der Lebensereignisse sieht.
- * Deshalb steht die Quelle als Pflichtfeld daneben.
+ * Achtung: Der Wert der Kennzahl "Gender Pension Gap" (Kennung `pension`) ist
+ * zugleich der Ausgangswert des Rechners im Hero und die Zahl, die der
+ * Ladebildschirm hochzaehlt. Aendert sich die Zahl, aendert sich also auch
+ * das, was die Besucherin beim Klicken der Lebensereignisse sieht. Deshalb
+ * steht die Quelle als Pflichtfeld daneben.
+ *
+ * Diese Kopplung war von 07/2026 bis 04.08.2026 versehentlich unterbrochen:
+ * `src/data/gapStats.js` wurde von niemandem importiert, die Zahlen standen
+ * hartcodiert im Code, und Aenderungen hier blieben ohne jede Wirkung. Wieder
+ * verbunden am 04.08.2026. Wer die Verbindung erneut kappt, muss diesen Text
+ * mit anpassen.
  */
 export default {
   name: 'kennzahl',
@@ -29,7 +36,7 @@ export default {
       name: 'wert',
       title: 'Wert',
       type: 'number',
-      description: 'Nur die Zahl, ohne Prozentzeichen. Dezimaltrennzeichen ist der Punkt, also 39.4 fuer 39,4.',
+      description: 'Nur die Zahl, ohne Prozentzeichen. Dezimaltrennzeichen ist der Punkt, also 36.0 fuer 36,0.',
       validation: (Rule) => Rule.required().min(0).max(1000),
     },
     {

@@ -29,11 +29,19 @@ const LIFE_PHASES = [
 ];
 
 // Stützstellen (x) und Grundverläufe (y) beider Linien (viewBox 600×440).
-// Weiblich = Durchschnitts-Story (39,4 %): der Auto-Play-Drop beim Zeichnen.
+// Weiblich = Durchschnitts-Story (Gender Pension Gap, aktuell 36,0 %): der
+// Auto-Play-Drop beim Zeichnen.
 // Die Basis-Kurve endet bewusst "hoch" (260), damit die Toggles die Lücke
 // sichtbar weiter aufreißen können (max. Drop-Summe 150 → Ende 410 < Floor 425).
 // Nebeneffekt: Lückenlänge bleibt grob proportional zum Prozentwert
-// (39,4 % ≙ 150px · 70 % ≙ ~300px).
+// (Basiswert ≙ 150px · Basiswert plus alle Toggles ≙ ~300px).
+//
+// ⚠️ Die Geometrie ist NICHT nachkalibriert worden, als der Basiswert am
+// 04.08.2026 von 39,4 auf 36,0 % ging. Das ist Absicht: Die Proportionalität
+// war immer nur ein grober Nebeneffekt (die Toggle-Summe passte auch vorher
+// nicht exakt), und die Kurve ist von Hand auf den Floor bei 425 abgestimmt.
+// Sichtbar ist die Zahl, nicht die Pixelhöhe. Wer hier doch nachzieht, muss
+// die Drop-Summe und den Floor mitprüfen.
 const XS       = [0,   24,  108, 204, 300, 390, 480, 576, 600];
 const MALE_Y   = [170, 169, 164, 150, 133, 124, 117, 111, 110];
 const FEMALE_Y = [170, 172, 180, 196, 220, 238, 252, 258, 260];

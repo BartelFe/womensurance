@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { de1 } from '../../utils/format';
+import { HERO_GAP_VALUE } from '../../data/gapStats';
 
 export default function Loader({ onComplete }) {
   const root = useRef(null);
@@ -21,7 +22,9 @@ export default function Loader({ onComplete }) {
     const counter = counterRef.current;
     const obj = { v: 0 };
     tl.to(obj, {
-      v: 39.4,
+      // Kommt aus dem Redaktionssystem, damit Ladebildschirm und Rechner nicht
+      // auseinanderlaufen koennen. Siehe data/gapStats.js.
+      v: HERO_GAP_VALUE,
       duration: 2.4,
       ease: 'power2.inOut',
       onUpdate: () => {

@@ -71,7 +71,7 @@ export default {
               name: 'wert',
               title: 'Wert',
               type: 'number',
-              description: 'Nur die Zahl. Dezimaltrennzeichen ist der Punkt, also 39.4 fuer 39,4.',
+              description: 'Nur die Zahl. Dezimaltrennzeichen ist der Punkt, also 36.0 fuer 36,0.',
               validation: (Rule) => Rule.required(),
             },
             {

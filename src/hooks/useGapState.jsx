@@ -1,15 +1,28 @@
 import { createContext, useContext, useState, useCallback, useMemo } from 'react';
+import { HERO_GAP_VALUE } from '../data/gapStats';
 
-// ── Zahlen-Grundlage (Stand Recherche 07/2026, mit Julia final validieren) ──
+// ── Zahlen-Grundlage (Stand 04.08.2026) ──
+// Vollständige Übersicht mit allen Fundstellen, auch für Julia lesbar:
+// `Kunden\Womensurance (DVM)\Zahlen und Quellen.md` (plus PDF daneben).
+//
 // BELEGT:
-//  - BASE_GAP 39,4 %  → Destatis, Gender Pension Gap 2023 (eigene Alters-
-//    sicherungsleistungen OHNE Hinterbliebenenrenten), PM N016 v. 04/2024.
-//  - BASE_EURO 450 €  → DRV 2024: Ø Zahlbetrag Altersrente Männer ~1.405 €,
-//    Frauen ~955 € → Differenz ~450 €/Monat (WSI/DRV Rentenbestand).
+//  - BASE_GAP kommt aus dem Redaktionssystem (Kennzahl `pension`), aktuell
+//    36,0 % → Statistisches Bundesamt, Tabelle „Alterseinkünfte nach
+//    Geschlecht sowie Gender Pension Gap", Berichtsjahr 2025, eigene
+//    Alterseinkünfte OHNE Hinterbliebenenrenten.
+//    ⚠️ Vorher stand hier hartcodiert 39,4 (Berichtsjahr 2023). Destatis hat
+//    diesen Wert seither selbst revidiert, auch das Jahr 2023 lautet heute
+//    37,7 %. Zahl deshalb nie ohne Blick in die laufende Tabelle zitieren.
+//  - BASE_EURO 450 €  → DRV Rentenbestand: Ø Altersrente Männer rund 1.350 €,
+//    Frauen rund 900 € → Differenz rund 450 €/Monat.
 //  - RETIREMENT_YEARS 15 → bewusst konservativ. Die Restlebenserwartung von
-//    Frauen ab 65 liegt bei rund 21 Jahren; gerechnet wird trotzdem nur mit 15,
+//    Frauen ab 65 liegt höher; gerechnet wird trotzdem nur mit 15,
 //    damit die Lebenssumme nicht überzeichnet wirkt (Wunsch Julia/Felix 08/2026).
-// HERGELEITET (Entgeltpunkt-Logik, Rentenwert 40,79 € seit 07/2025):
+// HERGELEITET (Entgeltpunkt-Logik, Rentenwert 40,79 € Stand 07/2025):
+// ⚠️ Der Rentenwert liegt seit 01.07.2026 bei 42,52 €. Die vier Euro-Beträge
+//    unten sind noch mit 40,79 € hergeleitet und damit rund 4 % zu niedrig.
+//    Bewusst offen: gehört zusammen mit Julia neu geschärft, weil sich dabei
+//    auch die Frage der Überschneidung der Kategorien stellt.
 //  - parttime 310 €  ≈ 15 Jahre 50%-Teilzeit bei Ø-Lohn = 7,5 EP × 40,79 €.
 //  - children 180 €  ≈ Elternzeit + verzögerter Wiedereinstieg ~4,4 EP.
 //    (reine Kindererziehungszeiten werden tlw. staatlich kompensiert —
@@ -70,7 +83,8 @@ export const TOGGLE_META = [
   },
 ];
 
-export const BASE_GAP = 39.4; // % — Gender Pension Gap (Destatis 2023, ohne Hinterbliebene)
+// Eine Quelle statt zwei: Der Wert steht im Redaktionssystem, nicht hier.
+export const BASE_GAP = HERO_GAP_VALUE; // % — Gender Pension Gap, ohne Hinterbliebenenrenten
 export const BASE_EURO = 450; // €/Monat — Ø Rentendifferenz Frau/Mann (DRV 2024)
 export const RETIREMENT_YEARS = 15; // für die Lebenssumme auf dem Rentenbescheid
 

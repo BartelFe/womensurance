@@ -1,12 +1,12 @@
 [
   {
     "einheit": "%",
-    "hinweis": "Frauen erhalten in Deutschland im Schnitt fast 40 % weniger Rente als Männer.",
+    "hinweis": "Frauen erhalten in Deutschland aus eigenen Ansprüchen im Schnitt gut ein Drittel weniger Rente als Männer.",
     "kennung": "pension",
     "label": "Gender Pension Gap",
-    "quelle": "Quelle noch zu belegen (Destatis, Gender Pension Gap)",
+    "quelle": "Statistisches Bundesamt, Alterseinkünfte nach Geschlecht, Berichtsjahr 2025 (ohne Hinterbliebenenrenten)",
     "reihenfolge": 1,
-    "wert": 39.4
+    "wert": 36
   },
   {
     "einheit": "%",

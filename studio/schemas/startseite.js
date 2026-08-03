@@ -109,7 +109,7 @@ export default {
       type: 'text',
       rows: 5,
       group: 'luecke',
-      description: 'Der Platzhalter {basiswert} wird durch den Ausgangswert der Rentenluecke ersetzt, aktuell 39,4.',
+      description: 'Der Platzhalter {basiswert} wird durch den Ausgangswert der Rentenluecke ersetzt. Der kommt aus der Kennzahl "Gender Pension Gap" und liegt aktuell bei 36,0.',
       validation: (Rule) => Rule.required().max(500),
     },
 

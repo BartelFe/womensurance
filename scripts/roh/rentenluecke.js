@@ -14,20 +14,20 @@ export const inhalt = {
           value: 49,
           unit: '%',
           label: 'der erwerbstätigen Frauen in Deutschland arbeiten Teilzeit — bei Männern sind es 12 %.',
-          source: 'Quelle: Statistisches Bundesamt*',
+          source: 'Statistisches Bundesamt, Pressemitteilung Nr. 175 vom 19.05.2025',
         },
         {
-          value: 39.4,
+          value: 36,
           unit: '%',
           decimals: 1,
           label: 'weniger Rente erhalten Frauen im Schnitt als Männer (Gender Pension Gap).',
-          source: 'Quelle: Destatis*',
+          source: 'Statistisches Bundesamt, Berichtsjahr 2025 (ohne Hinterbliebenenrenten)',
         },
         {
           value: 44,
           unit: '%',
           label: 'mehr unbezahlte Sorgearbeit leisten Frauen täglich gegenüber Männern.',
-          source: 'Quelle: Zeitverwendungserhebung*',
+          source: 'Statistisches Bundesamt, Zeitverwendungserhebung 2022',
         },
       ],
   chapters: [
@@ -121,7 +121,7 @@ export const faqRoh = {
     {
       q: 'Was ist der Gender Pension Gap?',
       a: [
-        'Der Gender Pension Gap beschreibt den Unterschied bei den Alterseinkünften von Frauen und Männern. In Deutschland erhalten Frauen aus eigenen Rentenansprüchen durchschnittlich 39,4 % weniger Alterssicherung als Männer.',
+        'Der Gender Pension Gap beschreibt den Unterschied bei den Alterseinkünften von Frauen und Männern. In Deutschland erhalten Frauen aus eigenen Rentenansprüchen durchschnittlich 36,0 % weniger Alterssicherung als Männer.',
         'Zu den wichtigsten Ursachen gehören Teilzeit, Care-Arbeit, Erwerbsunterbrechungen und der Gender Pay Gap.',
       ],
     },

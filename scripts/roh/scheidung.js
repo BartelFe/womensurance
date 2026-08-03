@@ -11,16 +11,16 @@ export const inhalt = {
   lead: "Mit einer Scheidung endet nicht nur eine Ehe. Auch die gemeinsame finanzielle Zukunft wird neu geregelt. Dabei werden die während der Ehe erworbenen Renten- und Versorgungsansprüche grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Dieses Verfahren nennt sich Versorgungsausgleich. Was das für deine persönliche Altersvorsorge bedeutet, wissen die wenigsten. Genau deshalb schauen wir uns gemeinsam an, welche Auswirkungen das auf deine spätere Rente hat und wo du gegebenenfalls neu vorsorgen solltest.",
   stats: [
         {
-          value: 35,
-          unit: '%',
-          label: 'der Ehen in Deutschland werden nach durchschnittlich rund 15 Jahren geschieden.',
-          source: 'Quelle: Destatis*',
+          value: 130100,
+          unit: '',
+          label: 'Ehescheidungen gab es 2025 in Deutschland, nach durchschnittlich 14 Jahren und 7 Monaten Ehe.',
+          source: 'Statistisches Bundesamt, Pressemitteilung Nr. 220 vom 26.06.2026',
         },
         {
           value: 100,
           unit: '%',
           label: 'der in der Ehezeit erworbenen Rentenanrechte werden im Versorgungsausgleich hälftig geteilt.',
-          source: 'VersAusglG*',
+          source: '§ 1 Versorgungsausgleichsgesetz (VersAusglG)',
         },
         {
           value: 50,
