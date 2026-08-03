@@ -13,20 +13,29 @@ import LegalLayout, { H2, H3, P, UL, Block, A } from '../components/legal/LegalL
  * (Hr. Klotzenbücher) — diese Fassung ist die technische Zuarbeit + Vorlage
  * und MUSS vor Go-Live geprüft werden.
  *
- * ⚠️ DREI PUNKTE FÜR DIE PRÜFUNG DURCH MAISEL (Stand 03.08.2026):
- *  1. Abschnitt 2, Sanity: Der Satz „Wir haben einen Vertrag über
- *     Auftragsverarbeitung (AVV) mit Sanity geschlossen." ist zum jetzigen
- *     Zeitpunkt NOCH NICHT zutreffend. Sanity bietet keine Selbstbedienungs-DPA
- *     an (geprüft: sanity.io/legal/dpa = 404, die Terms of Service enthalten
- *     keinerlei Art.-28-Regelungen). Der AVV ist bei legal@sanity.io angefragt.
- *     Kommt keiner zustande, muss dieser Satz weg und die Rechtsgrundlage neu
- *     bewertet werden.
- *  2. Abschnitt 5, LinkedIn Insight Tag: bewusst NUR Standardvertragsklauseln
+ * ⚠️ ZWEI PUNKTE FÜR DIE PRÜFUNG DURCH MAISEL (Stand 03.08.2026):
+ *  1. Abschnitt 5, LinkedIn Insight Tag: bewusst NUR Standardvertragsklauseln
  *     genannt. Ob LinkedIn unter der DPF-Zertifizierung von Microsoft geführt
  *     wird, konnte ich nicht belastbar verifizieren. Falls Maisel es bestätigt,
  *     gehört der DPF-Hinweis analog zu Google/Meta ergänzt.
- *  3. GA4, Meta-Pixel und LinkedIn sind beschrieben, aber noch nicht scharf
+ *  2. GA4, Meta-Pixel und LinkedIn sind beschrieben, aber noch nicht scharf
  *     geschaltet. Die IDs liefert die DVM. Erst danach live nehmen.
+ *
+ * ✅ ERLEDIGT (03.08.2026) — der AVV mit Sanity liegt vor und der Satz in
+ * Abschnitt 2 stimmt jetzt. Sanity hat sein „Data Processing Addendum"
+ * (Fassung Mai 2025) auf Anfrage per Mail geschickt. Es kann laut Anbieter
+ * weder unterschrieben noch verhandelt werden, weil es Bestandteil des
+ * Subscription Agreement ist: „The signature in the Agreement shall satisfy
+ * this signature requirement." Es deckt Art. 28 Abs. 3 lit. a bis h ab und
+ * bindet in Ziffer 10.1 die EU-Standardvertragsklauseln 2021/914 (Modul 2,
+ * Verantwortlicher an Auftragsverarbeiter) ein. Damit trägt auch Anlage 3
+ * der unterzeichneten AVV, die genau diese Klauseln als Grundlage der
+ * Drittlandübermittlung nennt.
+ * Zwei weiche Stellen, die Maisel bewerten sollte: Ziffer 8 gewährt ein
+ * Audit als Dokumentenprüfung (Richtlinien, SOC-2-Bericht), keine
+ * Vor-Ort-Inspektion; Ziffer 9 verweist für die Löschung auf das
+ * Hauptvertragswerk statt eine eigene Frist zu nennen. Beides ist bei
+ * SaaS-Anbietern üblich.
  */
 export default function Datenschutz() {
   return (
