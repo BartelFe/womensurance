@@ -269,6 +269,34 @@ Der deployte Bericht nannte zwei Dinge, die lokal nicht sichtbar waren:
 
 ⚠️ **`og:url`, `twitter:url` und `og:image` in `index.html` zeigen noch auf `womensurance.vercel.app`.** Bewusst so gelassen: auf `womensurance.de` umgestellt wäre die Linkvorschau kaputt, solange die Domain nicht steht. **Zum Go-Live mit umziehen.**
 
+### A.16c · Dritte Runde: die letzten zwei Netz-Hebel
+
+⚠️ **PSI und die lokale Messung widersprechen sich beim selben Build.** Felix' PageSpeed-Bericht vom 03.08. und mein eigener Lauf gegen dieselbe deployte Seite (Hash `index-C52q0Mx8.js` in **beiden** Läufen, also nachweislich derselbe Build):
+
+| | PSI | lokal gemessen |
+|---|---|---|
+| FCP | 3,3 s | 1,7 s |
+| Speed Index | 6,2 s | 2,0 s |
+| TBT | 140 ms | 1.140 ms |
+
+Der Filmstreifen des lokalen Laufs zeigt **ab 439 ms Inhalt auf dem Bildschirm**, der Vorab-Anstrich aus A.16b arbeitet also. PSI meldet trotzdem FCP 3,3 s und nennt als LCP-Element weiterhin den **React**-Ladebildschirm, nicht den statischen Block. **Ungeklärt.** Beim nächsten PSI-Lauf gezielt nachsehen, ob FCP fällt; die lokale Zahl ist für FCP/SI nicht belastbar, weil localhost keine Netzlatenz hat.
+
+**Gebaut, beides ohne sichtbare Änderung:**
+
+1. **Stylesheet wird in die `index.html` eingebettet** (Vite-Plugin `cssEinbetten` in `vite.config.js`). Es war die einzige render-blockierende Ressource; PSI bezifferte sie mit **450 ms**. 41 kB roh, rund 9 kB komprimiert, alle `url()` darin absolut (`/fonts/...`), das Verschieben ändert also keine Pfade. Beleg: im Nachher-Lauf **fehlt die CSS-Anfrage komplett**, und der CSS-Hash ist in beiden Builds identisch (`index-D_Zr65hy.css`), die Stilregeln sind also byteweise unverändert, nur der Transportweg. Die Vorab-Anstrich-Regeln gewinnen über ID-Selektoren unabhängig von der Reihenfolge im `head`.
+   - ⚠️ Das Plugin **warnt nur**, wenn der Austausch nicht greift, statt abzubrechen. Grund: Builds laufen auch per Sanity-Webhook, wenn Julia veröffentlicht. Ein Tempo-Kniff darf ihr keinen Deploy zerschiessen. Preis dafür: eine stille Regression ist möglich, deshalb bei Vite-Updates einmal `grep -c 'rel="stylesheet"' dist/index.html` (soll 0 sein).
+
+2. **Das Partikelfeld wird erst bei Leerlauf geladen** (`requestIdleCallback`, Timeout 1.500 ms, Timer als Ersatz für ältere Safari-Versionen). Der Brocken ist 220 kB und war der längste Strang im Abhängigkeitsbaum (973 ms mobil): er teilte sich die Leitung mit Stylesheet und Schriften, die sichtbar gebraucht werden, während er selbst hinter dem Ladebildschirm liegt. 1,5 s liegen komfortabel vor dem Ende des Ladebildschirms. Beleg: Startzeit der Anfrage 323 ms → 444 ms lokal; auf einem langsamen Gerät kommt das Leerlauf-Fenster deutlich später, dort ist die Verschiebung grösser.
+
+**Lokal ist der Gewinn nicht messbar:** vorher 75/65, nachher 71/76, FCP 1,8 → 1,7 s, SI 1,8 → 1,7 s. Die Streuung kommt komplett aus der TBT und überdeckt alles. **Das ist erwartbar und kein Gegenbeweis:** beide Hebel sparen Netz-Rundreise und Bandbreitenkonkurrenz, und genau die gibt es auf localhost nicht. Der Nachweis kann nur über PSI nach dem Deploy kommen.
+
+**Keine sichtbare Änderung, belegt:** die Endbilder beider Lighthouse-Läufe (echtes Chrome) sind identisch.
+
+**Nicht angefasst, mit Begründung:**
+- **Erzwungener dynamischer Umbruch, 249 ms** (`index-*.js:26:1876`, dazu 210 ms bei `65:2710`). Ohne Sourcemaps nicht zuzuordnen, und PSI meldet TBT mit 140 ms ohnehin im grünen Bereich. Aufwand steht nicht zum Nutzen.
+- **Schrift-Preloads** (300/900/regular) decken sich nicht ganz mit dem, was zuerst gemalt wird (der Ladebildschirm braucht auch 700). Bei `font-display: swap` blockieren Schriften aber weder FCP noch LCP, der Effekt wäre reine Bandbreitenverschiebung mit unklarem Vorzeichen.
+- **DOM 573 Elemente** und **4 nicht zusammengesetzte Animationen**: beides ohne Eingriff in die Choreografie nicht zu ändern, also nicht ohne sichtbare Folgen.
+
 ---
 
 # B · Projekt-, Design- & Story-Kontext (ursprünglich, ~Mai 2026)

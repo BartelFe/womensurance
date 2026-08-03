@@ -90,11 +90,20 @@ export default function OpeningStatement() {
   // Partikelfeld nachladen.
   //
   // Der Ladebildschirm ("Wie sicher bist du wirklich?") deckt die ersten vier
-  // Sekunden den kompletten Bildschirm ab. Das Nachladen faellt genau in dieses
-  // Fenster: Der Abruf startet sofort beim Mounten, und weil three.js hinter
-  // dem Ladebildschirm aufgebaut wird, ist das Feld bereits da, wenn der
-  // Vorhang hochgeht. Fuer Rueckkehrerinnen ohne Ladebildschirm blendet es
-  // sich weich ein statt aufzuploppen (siehe BackgroundField).
+  // Sekunden den kompletten Bildschirm ab. Das Nachladen faellt in dieses
+  // Fenster: weil three.js hinter dem Ladebildschirm aufgebaut wird, ist das
+  // Feld bereits da, wenn der Vorhang hochgeht. Fuer Rueckkehrerinnen ohne
+  // Ladebildschirm blendet es sich weich ein statt aufzuploppen (siehe
+  // BackgroundField).
+  //
+  // Der Abruf startet aber bewusst NICHT sofort beim Mounten. Der Brocken ist
+  // 220 kB gross und war damit der laengste Strang im Abhaengigkeitsbaum: er
+  // hat auf gedrosseltem Mobilfunk knapp eine Sekunde lang die Leitung mit
+  // Stylesheet und Schriften geteilt, die beide sichtbar gebraucht werden,
+  // waehrend das Feld hinter dem Vorhang liegt und niemand es sieht. Also
+  // erst, wenn der Hauptthread Luft hat, spaetestens nach 1,5 Sekunden. Das
+  // liegt komfortabel vor dem Ende des Ladebildschirms, sichtbar aendert sich
+  // dadurch nichts.
   //
   // Bei "Bewegung reduzieren" wird es gar nicht erst geladen: ein dauerhaft
   // driftendes Partikelfeld ist genau die Art von Bewegung, die dann
@@ -103,13 +112,24 @@ export default function OpeningStatement() {
   useEffect(() => {
     if (reduced) return undefined;
     let abgebrochen = false;
-    import('../canvas/BackgroundField').then(
-      () => { if (!abgebrochen) setFeldBereit(true); },
-      // Faellt der Abruf aus (Netz weg, Chunk fehlt), bleibt der Kopfbereich
-      // ohne Partikel. Er ist Deko, dafuer bricht nichts.
-      () => {}
-    );
-    return () => { abgebrochen = true; };
+
+    const holen = () => {
+      import('../canvas/BackgroundField').then(
+        () => { if (!abgebrochen) setFeldBereit(true); },
+        // Faellt der Abruf aus (Netz weg, Chunk fehlt), bleibt der Kopfbereich
+        // ohne Partikel. Er ist Deko, dafuer bricht nichts.
+        () => {}
+      );
+    };
+
+    // requestIdleCallback fehlt in aelteren Safari-Versionen, daher der Timer
+    // als Ersatz. Beide Wege landen im selben Zeitfenster.
+    if (typeof requestIdleCallback === 'function') {
+      const id = requestIdleCallback(holen, { timeout: 1500 });
+      return () => { abgebrochen = true; cancelIdleCallback(id); };
+    }
+    const id = setTimeout(holen, 1200);
+    return () => { abgebrochen = true; clearTimeout(id); };
   }, [reduced]);
   const firstRun = useRef(true);
   const displayedEuro = useRef(0);
