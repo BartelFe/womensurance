@@ -147,25 +147,23 @@ export default function YourLife() {
               es dafür `self-start`, sonst streckt das Grid die Zelle auf die
               volle Zeilenhöhe und das sticky greift wieder nicht. */}
           <div className="sticky top-20 z-30 pointer-events-none md:top-28 md:self-start md:col-span-4 md:col-start-9 md:row-start-1 pb-8 md:pb-0">
-            {/* Mobil ein durchgehendes Band direkt unter der Nav, nicht ein
-                frei schwebendes Kästchen: ein Kästchen legte sich beim
-                Scrollen immer wieder über einzelne Textzeilen der Kacheln.
-                Ein deckendes Band über die volle Breite (daher `-mx-6`)
-                liest sich dagegen als Kopfzeile — der Text verschwindet
-                sauber darunter. `flex-row-reverse` stellt die Zahl nach
-                rechts, ohne die Reihenfolge fürs Desktop-Layout zu drehen. */}
-            <div
-              className="-mx-6 flex flex-row-reverse items-center justify-between gap-3 border-b border-clay-light bg-paper px-6 py-2
-                         md:mx-0 md:block md:border-0 md:bg-transparent md:px-0 md:py-0"
-            >
-              <div className="flex items-baseline gap-1">
-                <span className="data-num text-ink text-xl md:text-6xl">−</span>
-                <span ref={counterRef} className="data-num text-pink-display text-3xl md:text-7xl">
+            {/* Mobil: große freie Zahl in der rechten oberen Ecke, ohne Band
+                und ohne Hintergrund (Wunsch Felix 08/2026). Sie klebt die
+                ganze Sektion über oben rechts und darf dabei über den
+                Kacheltexten liegen; die Größe orientiert sich an den
+                Deko-Ziffern unten rechts in den Kacheln. */}
+            <div className="text-right md:text-left">
+              <div className="flex items-baseline justify-end gap-1 md:justify-start">
+                <span className="data-num text-ink text-3xl md:text-6xl">−</span>
+                <span
+                  ref={counterRef}
+                  className="data-num text-pink-display text-[clamp(3.4rem,16vw,4.5rem)] md:text-7xl"
+                >
                   {de1(baseGap)}
                 </span>
-                <span className="data-num text-ink text-xl md:text-6xl">%</span>
+                <span className="data-num text-ink text-3xl md:text-6xl">%</span>
               </div>
-              <div className="text-[11px] text-ink/75 md:mt-1.5 md:text-xs">der Männer-Rente</div>
+              <div className="text-[11px] text-ink/75 mt-1 md:mt-1.5 md:text-xs">der Männer-Rente</div>
             </div>
           </div>
 

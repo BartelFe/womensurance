@@ -27,21 +27,23 @@ const SHARED = [
 ];
 
 // Punkt-Positionen in % des Canvas (links = ihr Konto, rechts = seins)
-// y-Werte enden bei 74 %, damit die Punkte nicht in die Zähler am
-// Kartenfuß laufen.
+// Erste Reihe bei 24 % statt 20 %, sonst hängt sie mobil zu dicht unter
+// den Kopfzeilen "Dein/Sein Rentenkonto"; die Reihen stehen gleichmäßig
+// im 16-%-Raster und enden bei 72 %, damit die Punkte nicht in die
+// Zähler am Kartenfuß laufen.
 const HER_DOTS = [
-  { x: 8, y: 20 }, { x: 16, y: 20 }, { x: 24, y: 20 },
-  { x: 8, y: 38 }, { x: 16, y: 38 }, { x: 24, y: 38 },
+  { x: 8, y: 24 }, { x: 16, y: 24 }, { x: 24, y: 24 },
+  { x: 8, y: 40 }, { x: 16, y: 40 }, { x: 24, y: 40 },
 ];
 const HER_EMPTY = [
   { x: 8, y: 56 }, { x: 16, y: 56 }, { x: 24, y: 56 }, { x: 32, y: 56 },
 ];
 const HIS_DOTS = [
-  { x: 68, y: 20 }, { x: 76, y: 20 }, { x: 84, y: 20 }, { x: 92, y: 20 },
-  { x: 68, y: 38 }, { x: 76, y: 38 }, { x: 84, y: 38 }, { x: 92, y: 38 },
+  { x: 68, y: 24 }, { x: 76, y: 24 }, { x: 84, y: 24 }, { x: 92, y: 24 },
+  { x: 68, y: 40 }, { x: 76, y: 40 }, { x: 84, y: 40 }, { x: 92, y: 40 },
   { x: 68, y: 56 }, { x: 76, y: 56 },
   // die letzten 4 wandern rüber:
-  { x: 84, y: 56 }, { x: 92, y: 56 }, { x: 84, y: 74 }, { x: 92, y: 74 },
+  { x: 84, y: 56 }, { x: 92, y: 56 }, { x: 84, y: 72 }, { x: 92, y: 72 },
 ];
 
 export default function SplitAccounts() {

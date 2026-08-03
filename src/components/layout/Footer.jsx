@@ -53,13 +53,17 @@ export default function Footer() {
             lief dadurch aus dem Bild. Ab md wieder zweispaltig. */}
         <div className="flex flex-col gap-5 md:flex-row md:flex-wrap md:items-center md:justify-between text-xs text-paper/55">
           <span className="leading-relaxed">© 2026 Womensurance — Eine Marke der Deutschen Versicherungsmakler GmbH &amp; Co. KG</span>
-          <div className="flex flex-wrap gap-x-6 gap-y-3">
+          {/* Mobil 2×2: oben Impressum + Datenschutz, darunter
+              Cookie-Einstellungen + Barrierefreiheit (Wunsch Felix 08/2026).
+              `order-last` schiebt Barrierefreiheit nur mobil ans Ende,
+              ab md gilt wieder die DOM-Reihenfolge. */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3 md:flex md:flex-wrap">
             <Link to="/impressum" className="hover:text-pink">Impressum</Link>
             <Link to="/datenschutz" className="hover:text-pink">Datenschutz</Link>
-            <Link to="/barrierefreiheit" className="hover:text-pink">Barrierefreiheit</Link>
+            <Link to="/barrierefreiheit" className="order-last hover:text-pink md:order-none">Barrierefreiheit</Link>
             <button
               onClick={() => window.dispatchEvent(new CustomEvent('wmns-open-consent'))}
-              className="hover:text-pink"
+              className="text-left hover:text-pink"
             >
               Cookie-Einstellungen
             </button>

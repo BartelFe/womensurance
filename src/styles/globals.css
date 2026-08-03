@@ -313,4 +313,10 @@
 .line-mask {
   overflow: hidden;
   display: block;
+  /* Luft für Diakritika: bei line-height 0.98 kappt der overflow sonst
+     die Ü-Punkte (z. B. "Über deine Zukunft"). overflow clippt erst an
+     der Padding-Kante, das negative margin gleicht die Höhe wieder aus,
+     das Satzbild bleibt also unverändert. */
+  padding-top: 0.12em;
+  margin-top: -0.12em;
 }
