@@ -18,7 +18,11 @@ export default function Footer() {
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={s.label}
+                // Der sichtbare Text ist die Kurzform ("IG"), der Name fuer
+                // assistive Technik der volle ("Instagram"). WCAG 2.5.3 verlangt,
+                // dass der sichtbare Text im zugaenglichen Namen vorkommt, sonst
+                // findet Sprachsteuerung den Link nicht ("Klick IG").
+                aria-label={s.short ? `${s.short}, ${s.label}` : s.label}
                 className="w-10 h-10 rounded-full border border-paper/20 hover:border-pink hover:text-pink transition-colors flex items-center justify-center text-xs font-medium"
               >
                 {s.short}

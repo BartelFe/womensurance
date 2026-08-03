@@ -93,14 +93,13 @@ export default function TheTruth() {
         </div>
       </div>
 
-      {/* Decorative oversized text */}
+      {/* Decorative oversized text — Inhalt kommt per CSS, siehe globals.css */}
       <div
         aria-hidden="true"
-        className="absolute -bottom-8 -right-8 display-italic text-paper/[0.025] select-none pointer-events-none"
+        data-deko="Lücke"
+        className="deko-wasserzeichen absolute -bottom-8 -right-8 display-italic text-paper/[0.025] select-none pointer-events-none"
         style={{ fontSize: '32vw', lineHeight: 0.8 }}
-      >
-        Lücke
-      </div>
+      />
     </section>
   );
 }

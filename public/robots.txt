@@ -1,0 +1,12 @@
+# womensurance.de
+# Ohne diese Datei liefert die SPA-Weiterleitung aus vercel.json fuer
+# /robots.txt die index.html aus. Suchmaschinen bekommen dann HTML statt
+# Regeln (Lighthouse: "robots.txt is not valid"). Statische Dateien werden
+# von Vercel vor den Rewrites ausgeliefert, deshalb gewinnt diese Datei.
+
+User-agent: *
+Allow: /
+
+# Die Vorschau-Domain soll nicht in den Index. Zusaetzlich zeigt jede Seite
+# per rel=canonical auf womensurance.de.
+Sitemap: https://womensurance.de/sitemap.xml

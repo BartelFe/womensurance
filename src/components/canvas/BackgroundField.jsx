@@ -79,7 +79,16 @@ export default function BackgroundField() {
   return (
     // Rein dekoratives Partikelfeld — trägt keine Information und wird
     // deshalb von assistiven Technologien übersprungen.
-    <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+    //
+    // Das Einblenden läuft als reine CSS-Animation (siehe globals.css). Ein
+    // Zustandswechsel per requestAnimationFrame wäre naheliegender, greift aber
+    // nicht, solange der Tab im Hintergrund liegt: dort feuert kein Frame, das
+    // Feld bliebe auf Deckkraft 0 stehen. Die CSS-Animation startet mit dem
+    // Element und holt das beim Sichtbarwerden von selbst nach.
+    <div
+      className="absolute inset-0 -z-10 pointer-events-none feld-einblenden"
+      aria-hidden="true"
+    >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 55 }}
         dpr={[1, 1.5]}

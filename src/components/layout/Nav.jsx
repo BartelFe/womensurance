@@ -132,7 +132,11 @@ export default function Nav() {
                   aria-expanded={lifeOpen}
                   aria-controls="nav-lifephases"
                   aria-label={lifeOpen ? 'Lebensphasen ausblenden' : 'Lebensphasen anzeigen'}
-                  className="inline-flex items-center p-1 -m-1 transition-colors hover:text-pink"
+                  /* p-2 statt p-1: das Pfeilchen ist 8px gross, mit p-1 ergab das
+                     eine 16x16-Klickflaeche. WCAG 2.5.8 verlangt 24x24. Das
+                     negative Margin hebt das Padding im Layout wieder auf, das
+                     Satzbild der Navigation aendert sich also nicht. */
+                  className="inline-flex items-center p-2 -m-2 transition-colors hover:text-pink"
                 >
                   <svg
                     width="8" height="8" viewBox="0 0 8 8" fill="none" aria-hidden="true"

@@ -220,6 +220,35 @@ Alle redaktionellen Platzhalter auf Startseite, `/rentenluecke` und `/scheidung`
 
 **Zwei rechtliche Sachstände geprüft und korrigiert** (Details in der Checkliste A.8): das Vercel-DPA gilt automatisch mit den Nutzungsbedingungen, es gibt nichts zu klicken; einen Sanity-AVV gibt es **nicht** per Selbstbedienung, der muss bei `legal@sanity.io` angefordert werden. Dazu die Hobby-Plan-Frage: Hobby ist laut Vercels Fair Use Guidelines auf nicht-kommerzielle Privatnutzung beschränkt, bezahltes Hosting fällt ausdrücklich darunter.
 
+## A.16 · Lighthouse-Runde 03.08.2026
+
+**Messaufbau.** `npm run build` → `npm run preview` (Port 4173, in `launch.json` als `womensurance-prod`) → `npx lighthouse` über das Skript im Scratchpad. **Nie am Dev-Server messen.** Lokale Zahlen sind gegenüber Vercel gedrückt (kein Brotli, kein HTTP/2, kein CDN, und auf Felix' Rechner laufen zwei Server parallel), also **nur lokal gegen lokal vergleichen**, nie lokal gegen deployed. Einzelläufe schwanken beim TBT um ±50 %: **immer mindestens zwei Läufe**, sonst zieht man aus Rauschen falsche Schlüsse (genau das ist in dieser Runde einmal passiert).
+
+**Ausgangswert deployed (mobil):** Performance 51 · A11y 96 · Best Practices 100 · SEO 92.
+**Ergebnis lokal, gleicher Aufbau vorher/nachher:** Performance 50 → **~60** · A11y 96 → **100** · SEO 92 → **100** · Desktop **96 bis 99**. FCP 3,4 s → **2,0 s**, Speed Index 3,4 s → **2,0 s**, TBT ~1.700 ms → ~900 ms.
+
+**Behoben:**
+- **three.js/R3F aus dem Haupt-Bundle gelöst.** `BackgroundField` kommt per `lazy()` nach. Haupt-Bundle **383 kB → 163 kB gzip**. Der Abruf startet beim Mounten und fällt hinter den vierseitigen Ladebildschirm, ist also nicht sichtbar. Bei `prefers-reduced-motion` wird der Brocken **gar nicht** geladen: ein dauernd driftendes Partikelfeld ist genau die Bewegung, die dann unerwünscht ist. Einblenden per CSS-Animation, **nicht** per `requestAnimationFrame`: im Hintergrund-Tab feuert kein Frame, das Feld bliebe sonst auf Deckkraft 0 stehen.
+- **`public/robots.txt` fehlte.** Der SPA-Rewrite aus `vercel.json` lieferte für `/robots.txt` die `index.html` aus, Suchmaschinen bekamen HTML statt Regeln. Dazu `public/sitemap.xml` mit allen sechs Routen. Statische Dateien gewinnen bei Vercel vor den Rewrites.
+- **`rel=canonical` je Route** (in `ScrollManager`, nicht im HTML: eine SPA hat nur eine `index.html`, ein festes Canonical im Kopf würde alle Unterseiten auf die Startseite zeigen lassen). Zeigt auf `SITE_URL` = `womensurance.de`, damit die Vorschau-Adresse als Kopie gilt und nach dem Umzug nicht zwei identische Seiten konkurrieren.
+- **WCAG 2.5.3 im Footer.** Sichtbar stand „IG", der zugängliche Name war „Instagram". Sprachsteuerung findet den Link so nicht. Jetzt „IG, Instagram".
+- **WCAG 2.5.8 in der Navigation.** Das Aufklapp-Pfeilchen hatte eine 16×16-Klickfläche, gefordert sind 24×24. `p-1 -m-1` → `p-2 -m-2`, das negative Margin hält das Satzbild.
+- **Deko-Wasserzeichen „Lücke"** (in `TheTruth` und `TopicPage`) steht jetzt als `content: attr(data-deko)` in CSS statt als Textknoten im DOM. Grund: bei 2,5 % Deckkraft misst axe 1,06:1 und meldet einen Verstoß. **`aria-hidden` hilft dagegen nicht**, weil Kontrast eine visuelle Anforderung ist und axe deshalb auch für Screenreader unsichtbare Elemente prüft. WCAG 1.4.3 nimmt rein dekorativen Text ausdrücklich aus, generierter Inhalt ist per Definition präsentational. Wer den Text zurück ins JSX holt, holt den Fehlalarm mit.
+- `lato-300` vorgeladen; der Ladebildschirm setzt in genau diesem Schnitt, war aber nicht in der Preload-Liste.
+
+**Drei Hypothesen geprüft und widerlegt.** Nicht wiederholen:
+1. *Der 4-Sekunden-Ladebildschirm drückt die Werte.* Falsch. Mit abgeschaltetem Ladebildschirm gemessen: LCP bleibt bei 4,3 s und **FCP wird schlechter** (2,0 s → 2,8 s), weil dann der volle Kopfbereich statt einer einfachen Textzeile den ersten Paint tragen muss. Der Ladebildschirm **hilft** FCP und Speed Index.
+2. *Die wachsende Textkontur im Ladebildschirm hält LCP auf.* Falsch, die Arithmetik passte verführerisch (2,0 s FCP + 2,4 s Animation ≈ 4,4 s LCP). Mit 0,3 s statt 2,4 s gemessen: LCP unverändert 4,4 bis 4,6 s.
+3. *Die Bundle-Aufteilung hat es verschlechtert.* Der erste Nachher-Lauf zeigte 40 gegen 52 vorher. Zwei weitere Läufe: 60 und 63. Ein Ausreißer.
+
+**Offen: LCP mobil ~4,4 s.** Hält sich hartnäckig durch alle drei Experimente. Lighthouse endet die Messung, während der Ladebildschirm noch das Bild füllt (im Endbild des Berichts nachprüfbar), die eigentliche Seite sieht es also nie. Nächster Hebel wäre die Hauptthread-Arbeit der Startseite selbst: `splitChars` erzeugt pro Buchstabe ein Span, dazu `getTotalLength()` auf den SVG-Pfaden und die ScrollTrigger-Einrichtung aller acht Sektionen beim Mounten. Gegenprobe, die das belegt: **`/rentenluecke` erreicht mit demselben Bundle 75 bei TBT 320 ms**, die Startseite 50 bei TBT 1.700 ms.
+
+**Nicht behoben, mit Absicht:**
+- *„Browser errors were logged to the console"* lokal: `/_vercel/insights/script.js` und `/_vercel/speed-insights/script.js` gibt es nur auf Vercel. Deployed war Best Practices **100**. Kein Defekt.
+- *„Missing source maps for large first-party JavaScript"*: Sourcemaps auszuliefern hieße, den Quellcode der Kundenseite offenzulegen. Der Punkt ist diagnostisch und kostet keine Wertung.
+
+⚠️ **`og:url`, `twitter:url` und `og:image` in `index.html` zeigen noch auf `womensurance.vercel.app`.** Bewusst so gelassen: auf `womensurance.de` umgestellt wäre die Linkvorschau kaputt, solange die Domain nicht steht. **Zum Go-Live mit umziehen.**
+
 ---
 
 # B · Projekt-, Design- & Story-Kontext (ursprünglich, ~Mai 2026)

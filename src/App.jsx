@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useLenis } from './hooks/useLenis';
 import { useReducedMotion } from './hooks/useReducedMotion';
 import { GapProvider } from './hooks/useGapState';
+import { SITE_URL } from './config/site';
 
 import Cursor from './components/layout/Cursor';
 import GrainOverlay from './components/layout/GrainOverlay';
@@ -32,6 +33,19 @@ function ScrollManager() {
     // ScrollTrigger nach dem Paint der neuen Seite neu vermessen
     const t = setTimeout(() => ScrollTrigger.refresh(), 100);
     return () => clearTimeout(t);
+  }, [pathname]);
+
+  // rel=canonical je Route. In einer SPA gibt es nur eine index.html, ein fest
+  // im HTML stehender Canonical wuerde also auf allen Unterseiten dieselbe
+  // Adresse nennen und die Unterseiten aus dem Index draengen.
+  useEffect(() => {
+    let link = document.querySelector('link[rel="canonical"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'canonical';
+      document.head.appendChild(link);
+    }
+    link.href = SITE_URL + pathname;
   }, [pathname]);
 
   return null;

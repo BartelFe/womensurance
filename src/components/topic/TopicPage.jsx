@@ -98,12 +98,11 @@ export default function TopicPage({
           </p>
         </div>
         <div
-          className="absolute -bottom-10 -right-6 display-italic text-paper/[0.03] select-none pointer-events-none"
+          data-deko="Lücke"
+          className="deko-wasserzeichen absolute -bottom-10 -right-6 display-italic text-paper/[0.03] select-none pointer-events-none"
           style={{ fontSize: '26vw', lineHeight: 0.8 }}
           aria-hidden="true"
-        >
-          Lücke
-        </div>
+        />
       </section>
 
       {/* ── Optionale Grafik-Sektion direkt nach dem Hero ── */}

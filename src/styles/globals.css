@@ -320,3 +320,34 @@
   padding-top: 0.12em;
   margin-top: -0.12em;
 }
+
+/* Deko-Wasserzeichen ("Lücke") in TheTruth und TopicPage.
+   Der Text steht bewusst in CSS statt im DOM. Er ist reine Dekoration, und
+   WCAG 1.4.3 nimmt rein dekorativen Text ausdrücklich von der
+   Kontrastforderung aus. Bei 2,5 % Deckkraft ist er aber weit von jedem
+   messbaren Wert entfernt, deshalb meldet ihn jeder automatische Prüfer
+   (axe, Lighthouse) als Verstoß. aria-hidden hilft dort nicht: Kontrast ist
+   eine visuelle Anforderung, axe prüft deshalb auch Elemente, die für
+   Screenreader unsichtbar sind. Als generierter Inhalt ist der Text
+   präsentational und verschwindet zusätzlich aus Textauswahl und
+   Zwischenablage. Wer ihn zurück ins JSX holt, holt sich den Fehlalarm mit. */
+.deko-wasserzeichen::after {
+  content: attr(data-deko);
+}
+
+/* Einblenden des Partikelfelds, das nach dem Haupt-Bundle nachgeladen wird.
+   Beim ersten Besuch liegt der Ladebildschirm darüber und niemand sieht davon
+   etwas. Bei einer Rückkehr ohne Ladebildschirm erschiene das Feld sonst
+   schlagartig mitten im Bild. */
+@keyframes feld-einblenden {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.feld-einblenden {
+  animation: feld-einblenden 900ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feld-einblenden { animation: none; }
+}

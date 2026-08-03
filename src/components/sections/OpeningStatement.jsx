@@ -1,6 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import BackgroundField from '../canvas/BackgroundField';
+
+// three.js und React-Three-Fiber machen den mit Abstand groessten Teil des
+// Bundles aus und werden fuer nichts gebraucht ausser dem dekorativen
+// Partikelfeld hinter dem Kopfbereich. Als statischer Import lagen sie im
+// Haupt-Bundle und mussten geladen, geparst und ausgefuehrt sein, bevor
+// ueberhaupt etwas auf dem Bildschirm stand. Jetzt kommen sie als eigenes
+// Stueck nach. Siehe den Effekt unten, warum das nicht sichtbar wird.
+const BackgroundField = lazy(() => import('../canvas/BackgroundField'));
 import { splitChars } from '../../utils/splitText';
 import { BOOKING_URL } from '../../config/site';
 import { useGap, TOGGLE_META } from '../../hooks/useGapState';
@@ -79,6 +86,31 @@ export default function OpeningStatement() {
 
   const [introDone, setIntroDone] = useState(false);
   const chartReady = useRef(false);
+
+  // Partikelfeld nachladen.
+  //
+  // Der Ladebildschirm ("Wie sicher bist du wirklich?") deckt die ersten vier
+  // Sekunden den kompletten Bildschirm ab. Das Nachladen faellt genau in dieses
+  // Fenster: Der Abruf startet sofort beim Mounten, und weil three.js hinter
+  // dem Ladebildschirm aufgebaut wird, ist das Feld bereits da, wenn der
+  // Vorhang hochgeht. Fuer Rueckkehrerinnen ohne Ladebildschirm blendet es
+  // sich weich ein statt aufzuploppen (siehe BackgroundField).
+  //
+  // Bei "Bewegung reduzieren" wird es gar nicht erst geladen: ein dauerhaft
+  // driftendes Partikelfeld ist genau die Art von Bewegung, die dann
+  // unerwuenscht ist, und spart nebenbei den gesamten Brocken.
+  const [feldBereit, setFeldBereit] = useState(false);
+  useEffect(() => {
+    if (reduced) return undefined;
+    let abgebrochen = false;
+    import('../canvas/BackgroundField').then(
+      () => { if (!abgebrochen) setFeldBereit(true); },
+      // Faellt der Abruf aus (Netz weg, Chunk fehlt), bleibt der Kopfbereich
+      // ohne Partikel. Er ist Deko, dafuer bricht nichts.
+      () => {}
+    );
+    return () => { abgebrochen = true; };
+  }, [reduced]);
   const firstRun = useRef(true);
   const displayedEuro = useRef(0);
   const ysRef = useRef(null);
@@ -293,7 +325,11 @@ export default function OpeningStatement() {
       id="hero"
       className="relative h-[100svh] overflow-hidden bg-ink flex flex-col"
     >
-      <BackgroundField />
+      {feldBereit && (
+        <Suspense fallback={null}>
+          <BackgroundField />
+        </Suspense>
+      )}
 
       {/* Fixed-nav clearance */}
       <div className="h-24 md:h-24 shrink-0" />

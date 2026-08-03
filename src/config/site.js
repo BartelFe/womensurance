@@ -7,6 +7,13 @@
 
 import startseite from '../content/startseite.json';
 
+// Endgueltige Adresse der Seite. Steht schon auf womensurance.de, obwohl die
+// Seite derzeit noch unter womensurance.vercel.app erreichbar ist: das
+// rel=canonical jeder Seite zeigt damit auf das spaetere Ziel, und Google
+// wertet die Vorschau-Adresse als Kopie statt als eigenstaendige Seite. Ohne
+// das konkurrieren nach dem Umzug zwei identische Seiten miteinander.
+export const SITE_URL = 'https://womensurance.de';
+
 export const BOOKING_URL =
   startseite.buchungsUrl || 'https://outlook.office.com/book/Womensurance@dvm.de/?ismsaljsauthenabled';
 
