@@ -16,11 +16,12 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const WURZEL = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const QUELLE = resolve(WURZEL, 'src/content');
 const ZIEL = resolve(WURZEL, 'studio/seed');
+const BILDER = resolve(WURZEL, 'public/images');
 
 const lies = (name) => JSON.parse(readFileSync(resolve(QUELLE, name), 'utf8'));
 
@@ -43,12 +44,13 @@ const teile = (liste) =>
 
 /**
  * Bildverweis fuer den Import. `_sanityAsset` weist den Import an, die Datei
- * hochzuladen und die Referenz selbst einzusetzen. Der Pfad ist relativ zur
- * Importdatei.
+ * hochzuladen und die Referenz selbst einzusetzen. Absoluter file://-URI,
+ * weil Windows einen relativen `file://../` URI als UNC-Host `..` fehlinterpretiert
+ * (ENOENT auf `\\..\...`).
  */
 const bild = (quelle) => ({
   _type: 'bild',
-  _sanityAsset: `image@file://../../public/images/${quelle.datei}`,
+  _sanityAsset: `image@${pathToFileURL(resolve(BILDER, quelle.datei)).href}`,
   alt: quelle.alt,
 });
 
