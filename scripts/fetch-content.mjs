@@ -157,6 +157,49 @@ function pruefeQuellen(daten) {
   }
 }
 
+/**
+ * Warnt bei Bildern ohne Alternativtext.
+ *
+ * Erste Verteidigungslinie ist das Studio: `alt` ist im Schema (`objects.js`,
+ * Objekt `bild`) ein Pflichtfeld, Sanity laesst ohne Alternativtext gar nicht
+ * veroeffentlichen. Das hier ist die zweite Linie fuer den Fall, dass ein
+ * aelterer Datensatz vor der Regel entstanden ist oder jemand per API schreibt.
+ *
+ * Der Grund fuer den doppelten Boden: Auf `/barrierefreiheit` steht seit dem
+ * 04.08.2026 als zugesicherte Eigenschaft, dass jedes Inhaltsbild einen
+ * Alternativtext traegt. Eine Zusicherung, die niemand nachprueft, ist keine.
+ *
+ * Wie bei `pruefeQuellen` nur eine Warnung, kein Abbruch: Julias
+ * Veroeffentlichungen loesen den Build automatisch aus.
+ */
+function pruefeAltTexte(daten) {
+  const treffer = [];
+
+  const gehe = (wert, pfad) => {
+    if (Array.isArray(wert)) {
+      wert.forEach((eintrag, i) => gehe(eintrag, `${pfad}[${i}]`));
+      return;
+    }
+    if (!wert || typeof wert !== 'object') return;
+
+    // Ein Bild erkennt man daran, dass es auf eine Datei oder ein Sanity-Asset zeigt.
+    const istBild = typeof wert.ref === 'string' || typeof wert.datei === 'string';
+    if (istBild && (!wert.alt || !wert.alt.trim())) {
+      treffer.push(`${pfad} → ${wert.ref || wert.datei}`);
+    }
+
+    Object.entries(wert).forEach(([schluessel, unterwert]) => gehe(unterwert, `${pfad}.${schluessel}`));
+  };
+
+  Object.entries(daten).forEach(([schluessel, wert]) => gehe(wert, schluessel));
+
+  if (treffer.length) {
+    console.warn('\n  ⚠ Bilder ohne Alternativtext (BFSG-Zusicherung auf /barrierefreiheit):');
+    treffer.forEach((t) => console.warn(`     · ${t}`));
+    console.warn('  → Im Studio nachtragen, das Feld heisst „Alternativtext“.\n');
+  }
+}
+
 /** Meldet, dass die Inhalte aus dem Repository stehen bleiben. */
 function behalteBestand(grund) {
   const vorhanden = Object.keys(DATEIEN).every((name) => existsSync(resolve(ZIEL, name)));
@@ -191,6 +234,7 @@ try {
     );
 
     pruefeQuellen(daten);
+    pruefeAltTexte(daten);
   }
 } catch (fehler) {
   behalteBestand(fehler.message);

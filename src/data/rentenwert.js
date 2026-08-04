@@ -15,5 +15,14 @@
  */
 export const AKTUELLER_RENTENWERT = 42.52;
 
+/**
+ * Seit wann dieser Wert gilt, für die sichtbare Angabe unter dem Rechner.
+ *
+ * ⚠️ Steht bewusst direkt neben der Zahl. Vorher war das Datum an anderer
+ * Stelle hartcodiert und blieb beim Wechsel auf 42,52 € auf „07/2025" stehen:
+ * neuer Wert, altes Datum. Zusammen ändern oder gar nicht.
+ */
+export const RENTENWERT_STAND = '07/2026';
+
 /** Für die sichtbare Angabe unter dem Rechner, z. B. „42,52 €". */
 export const RENTENWERT_TEXT = AKTUELLER_RENTENWERT.toFixed(2).replace('.', ',');

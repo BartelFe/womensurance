@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import MagneticButton from '../ui/MagneticButton';
 import { BOOKING_URL } from '../../config/site';
 import { RETIREMENT_YEARS } from '../../hooks/useGapState';
-import { AKTUELLER_RENTENWERT } from '../../data/rentenwert';
+import { AKTUELLER_RENTENWERT, RENTENWERT_STAND, RENTENWERT_TEXT } from '../../data/rentenwert';
 
 // Offizielle Entgeltpunkt-Logik (vereinfacht):
 //  EP/Jahr = eigenes Jahresbrutto ÷ Durchschnittsentgelt (gedeckelt ~BBG)
@@ -140,8 +140,8 @@ export default function ParttimeCalculator() {
               onChange={setSalary}
             />
             <p className="text-[12px] text-ink/75 leading-relaxed">
-              Vereinfachte Beispielrechnung · Rentenwert {RENTENWERT.toFixed(2).replace('.', ',')} €
-              (Stand 07/2025) · Vollzeit = 40 Std. · ohne Lohnentwicklung &amp; Ausgleichszeiten.
+              Vereinfachte Beispielrechnung · Rentenwert {RENTENWERT_TEXT} €
+              (Stand {RENTENWERT_STAND}) · Vollzeit = 40 Std. · ohne Lohnentwicklung &amp; Ausgleichszeiten.
             </p>
           </div>
 

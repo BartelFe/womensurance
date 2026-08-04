@@ -49,6 +49,24 @@ export function A({ href, children }) {
   );
 }
 
+/**
+ * Link auf eine andere Seite dieser Website.
+ *
+ * `A` oben ist bewusst nur für externe Ziele: es setzt fest `target="_blank"`.
+ * Für einen Verweis innerhalb der Website wäre das falsch, weil sich ohne
+ * Vorwarnung ein neuer Tab öffnet und die Seite unnötig neu geladen wird.
+ */
+export function AIntern({ to, children }) {
+  return (
+    <Link
+      to={to}
+      className="text-pink-deep underline decoration-pink/40 underline-offset-2 hover:text-pink transition-colors break-words"
+    >
+      {children}
+    </Link>
+  );
+}
+
 /** Adress-/Kontaktblock ohne Aufzählungspunkte */
 export function Block({ lines }) {
   return (
