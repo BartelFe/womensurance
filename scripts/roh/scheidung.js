@@ -23,10 +23,11 @@ export const inhalt = {
           source: '§ 1 Versorgungsausgleichsgesetz (VersAusglG)',
         },
         {
-          value: 50,
+          value: 51.7,
           unit: '%',
-          label: 'aller Scheidungsanträge erfolgen durch die Frau.',
-          source: 'Quelle: Destatis*',
+          decimals: 1,
+          label: 'der Scheidungen im Jahr 2025 betrafen Paare mit minderjährigen Kindern. Insgesamt ging es um rund 113.400 Kinder.',
+          source: 'Statistisches Bundesamt, Pressemitteilung Nr. 220 vom 26.06.2026',
         },
       ],
   chapters: [

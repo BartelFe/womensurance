@@ -9,17 +9,15 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* Die Karte fuellt das Fenster exakt aus, damit ein Screenshot des
+     Ansichtsfensters genau die Karte trifft. Ohne Rand, ohne Zentrierung:
+     `scripts/og-bild.mjs` schiesst mit --window-size=1200,630. */
   html, body {
-    background: #2a2624;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
+    background: #0a0807;
+    margin: 0;
+    padding: 0;
     font-family: 'Fraunces', Georgia, serif;
     color: #f4ede4;
-    gap: 24px;
   }
 
   .hint {
@@ -170,12 +168,6 @@
 </head>
 <body>
 
-  <div class="hint">
-    Rechtsklick auf die Karte → <b>Untersuchen</b> → Element <code>.og</code> markieren →
-    Rechtsklick im DOM-Panel → <b>Capture node screenshot</b>.<br/>
-    Ergebnis: PNG mit exakt <b>1200 × 630</b>. Als <b>og-image.jpg</b> ins <code>/public</code>-Verzeichnis speichern.
-  </div>
-
   <div class="og">
     <header class="head">
       <div class="left">
@@ -186,7 +178,7 @@
     </header>
 
     <div class="core">
-      <div class="num">−39,4%</div>
+      <div class="num">−36,0%</div>
       <div class="sub">
         Prozent weniger Rente. Für Frauen.<br/>
         Im Schnitt. In Deutschland. Heute.

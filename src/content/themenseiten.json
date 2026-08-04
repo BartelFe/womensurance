@@ -339,10 +339,10 @@
       },
       {
         "einheit": "%",
-        "label": "aller Scheidungsanträge erfolgen durch die Frau.",
-        "nachkommastellen": 0,
-        "quelle": "Quelle: Destatis*",
-        "wert": 50
+        "label": "der Scheidungen im Jahr 2025 betrafen Paare mit minderjährigen Kindern. Insgesamt ging es um rund 113.400 Kinder.",
+        "nachkommastellen": 1,
+        "quelle": "Statistisches Bundesamt, Pressemitteilung Nr. 220 vom 26.06.2026",
+        "wert": 51.7
       }
     ],
     "lead": "Mit einer Scheidung endet nicht nur eine Ehe. Auch die gemeinsame finanzielle Zukunft wird neu geregelt. Dabei werden die während der Ehe erworbenen Renten- und Versorgungsansprüche grundsätzlich zwischen beiden Ehepartnern aufgeteilt. Dieses Verfahren nennt sich Versorgungsausgleich. Was das für deine persönliche Altersvorsorge bedeutet, wissen die wenigsten. Genau deshalb schauen wir uns gemeinsam an, welche Auswirkungen das auf deine spätere Rente hat und wo du gegebenenfalls neu vorsorgen solltest.",
