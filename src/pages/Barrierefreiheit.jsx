@@ -79,25 +79,29 @@ import LegalLayout, { H2, H3, P, UL, Block, A, AIntern } from '../components/leg
  * ⚠️ OFFEN FÜR DIE RECHTLICHE PRÜFUNG (Werkvertrag § 2 Abs. 6) — eine Frage,
  * die der Auftragnehmer nicht entscheiden kann und darf:
  *
- *   Ist die DVM überhaupt verpflichtet? § 3 Abs. 3 BFSG nimmt Kleinstunternehmen
- *   ausdrücklich aus, die Dienstleistungen anbieten. Kleinstunternehmen ist nach
- *   § 2 Nr. 17 BFSG, wer weniger als zehn Personen beschäftigt und höchstens
- *   2 Mio. € Jahresumsatz oder Jahresbilanzsumme hat. Die Mitarbeiterzahl der
- *   DVM ist dem Auftragnehmer nicht bekannt.
+ *   Ist die DVM überhaupt verpflichtet?
  *
- *   Zweitens greift der sachliche Anwendungsbereich nur, wenn eine
- *   „Dienstleistung im elektronischen Geschäftsverkehr" vorliegt. § 2 Nr. 26
- *   BFSG verlangt dafür, dass sie „im Hinblick auf den Abschluss eines
- *   Verbrauchervertrags" erbracht wird. Diese Website informiert und führt zu
- *   einem Beratungstermin; ein Vertrag wird auf ihr nicht geschlossen.
- *   Versicherungsvermittlung ist in § 1 Abs. 3 BFSG auch nicht eigens genannt
- *   (anders als Bankdienstleistungen für Verbraucher).
+ *   Die Größenausnahme ist erledigt und hilft nicht: § 3 Abs. 3 BFSG nimmt
+ *   Kleinstunternehmen aus, das sind nach § 2 Nr. 17 solche mit weniger als
+ *   zehn Beschäftigten und höchstens 2 Mio. € Umsatz oder Bilanzsumme. Die DVM
+ *   liegt bei beidem darüber (bestätigt von Felix am 04.08.2026). Sie ist also
+ *   kein Kleinstunternehmen, die Ausnahme greift nicht.
  *
- *   Fällt die Antwort auf beides negativ aus, ist diese Seite eine freiwillige
- *   Zusicherung statt einer Pflichtangabe. Sie kann dann trotzdem stehen
- *   bleiben, aber der Abschnitt „Rechtsgrundlage" müsste umformuliert werden,
- *   weil er sonst eine Pflicht behauptet, die nicht besteht. Freiwillig oder
- *   nicht: Was hier zugesichert wird, gilt und ist nachgemessen.
+ *   Damit hängt alles an einer Frage: Liegt eine „Dienstleistung im
+ *   elektronischen Geschäftsverkehr" vor? § 2 Nr. 26 BFSG verlangt dafür, dass
+ *   sie „im Hinblick auf den Abschluss eines Verbrauchervertrags" erbracht
+ *   wird. Dagegen spricht, dass diese Website informiert und zu einem
+ *   Beratungstermin führt, ein Vertrag auf ihr aber nicht geschlossen wird,
+ *   und dass Versicherungsvermittlung in § 1 Abs. 3 BFSG nicht eigens genannt
+ *   ist (anders als Bankdienstleistungen für Verbraucher). Dafür spricht der
+ *   Buchungslink zum Erstgespräch: reine Visitenkarten-Seiten sind unstreitig
+ *   nicht erfasst, Seiten mit Anbahnungsfunktion sind umstritten.
+ *
+ *   Fällt die Antwort negativ aus, ist diese Seite eine freiwillige Zusicherung
+ *   statt einer Pflichtangabe. Sie kann dann trotzdem stehen bleiben, aber der
+ *   Abschnitt „Rechtsgrundlage" müsste umformuliert werden, weil er sonst eine
+ *   Pflicht behauptet, die nicht besteht. Freiwillig oder nicht: Was hier
+ *   zugesichert wird, gilt und ist nachgemessen.
  *
  * ✏️ Keine Gedankenstriche in diesem Projekt (Wunsch Felix, 01.08.2026).
  */
