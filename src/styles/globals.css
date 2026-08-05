@@ -311,7 +311,6 @@
 }
 
 .line-mask {
-  overflow: hidden;
   display: block;
   /* Luft für Diakritika: bei line-height 0.98 kappt der overflow sonst
      die Ü-Punkte (z. B. "Über deine Zukunft"). overflow clippt erst an
@@ -319,6 +318,32 @@
      das Satzbild bleibt also unverändert. */
   padding-top: 0.12em;
   margin-top: -0.12em;
+
+  /* Unten fehlte dieselbe Luft, deshalb war das "g" in "Auf Augenhöhe."
+     angeschnitten (gemeldet von Felix, 06.08.2026). Nachgemessen auf dem
+     Handy bei 41,6 px Lato Bold Italic: die Tinte reicht 3,6 px unter die
+     Maskenkante, also rund 0,09 em. 0,16 em gibt Reserve für andere
+     Schnitte und Größen.
+
+     ⚠️ Warum clip-path statt overflow plus padding-bottom: Der erste Versuch
+     war padding-bottom mit ausgleichendem negativem margin, analog zu oben.
+     Das ging schief, weil die Zeilen Geschwister sind und ihre vertikalen
+     Margins zusammenfallen. Beim Zusammenfallen gewinnt nur der negativste
+     Wert, das Padding beider Zeilen bleibt aber stehen. Ergebnis: die Seite
+     wurde 18 px höher und der Zeilenabstand in den Überschriften änderte
+     sich. Gemessen, nicht vermutet.
+
+     clip-path zieht nur das Sichtfenster auf und lässt die Box in Ruhe. Der
+     negative Wert reicht über die Border-Box hinaus, links und rechts bleibt
+     0, dort klemmt es also weiter wie zuvor. Das ersetzt `overflow: hidden`,
+     beides zusammen würde sich zur kleineren Fläche schneiden und die
+     Unterlänge bliebe gekappt.
+
+     Kein Leck bei der Einblendung: Die Zeile startet auf yPercent 100 und
+     damit rund 50 px tiefer, ihre Tinte beginnt erst 10 px unterhalb der
+     Boxkante, bleibt also auch mit dem größeren Fenster verdeckt.
+     Zusätzlich läuft opacity von 0 mit. */
+  clip-path: inset(0 0 -0.16em 0);
 }
 
 /* Deko-Wasserzeichen ("Lücke") in TheTruth und TopicPage.

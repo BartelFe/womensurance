@@ -67,6 +67,30 @@ export default function TheNotice() {
       const stamp = root.current.querySelector('[data-stamp]');
       const outro = root.current.querySelector('[data-outro]');
 
+      /* Vorlauf: Bescheid und Überschrift blenden ein, WÄHREND die Sektion
+         hereinscrollt — also bevor der Pin greift.
+
+         Vorher hingen beide in der gepinnten Timeline unten, die erst bei
+         `start: 'top top'` loslegt. Dazwischen lag ein totes Stück: Der
+         Kopfbereich ist 100svh hoch, sobald er nach oben rausgescrollt ist,
+         steht der Bescheid noch auf Deckkraft 0. Auf dem Handy gemessen
+         (375x812): bei scrollY 700 endete der letzte sichtbare Inhalt bei
+         106 px, darunter waren 706 px leer, das sind 87 % des Bildschirms.
+         Gemeldet von Felix am 06.08.2026 mit Screenshot.
+
+         Eigener Trigger statt frühere Startzeit in der Timeline, weil der
+         Pin zwingend bei 'top top' beginnen muss. Beim Zurückscrollen
+         blendet es sauber wieder aus, die gewünschte Überblendung bleibt. */
+      const einblenden = {
+        trigger: root.current,
+        start: 'top 85%',
+        end: 'top 20%',
+        scrub: 0.5,
+      };
+      gsap.fromTo(intro, { opacity: 0, y: 20 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: einblenden });
+      // Karte kommt gerade herein (kein Kippwinkel — Wunsch Julia 07/2026)
+      gsap.fromTo(card, { opacity: 0, yPercent: 8 }, { opacity: 1, yPercent: 0, ease: 'none', scrollTrigger: einblenden });
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: root.current,
@@ -79,21 +103,21 @@ export default function TheNotice() {
         },
       });
 
-      // Früh sichtbar werden — sonst wirkt der Pin-Einstieg wie ein schwarzer Screen
-      tl.fromTo(intro, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2 }, 0);
-      // Karte kommt gerade herein (kein Kippwinkel — Wunsch Julia 07/2026)
-      tl.fromTo(card, { opacity: 0, yPercent: 8 }, { opacity: 1, yPercent: 0, duration: 0.45 }, 0.1);
-
       // Posten stempeln sich ein (alle 5 immer in der Timeline)
+      // Start bei 0.25 statt 0.8: Die 0.8 waren der Platz, den Überschrift
+      // und Karte in dieser Timeline gebraucht haben. Die laufen jetzt im
+      // Vorlauf, also darf der erste Posten sofort kommen. Alles Weitere
+      // hängt an `afterRows` und rutscht automatisch mit.
+      const rowsStart = 0.25;
       rows.forEach((row, i) => {
         tl.fromTo(
           row,
           { opacity: 0, y: 16 },
           { opacity: 1, y: 0, duration: 0.35 },
-          0.8 + i * 0.3
+          rowsStart + i * 0.3
         );
       });
-      const afterRows = 0.8 + rows.length * 0.3 + 0.25;
+      const afterRows = rowsStart + rows.length * 0.3 + 0.25;
 
       // Monatliche Minderung zählt hoch — Zielwert live aus Ref
       tl.fromTo(sumBlock, { opacity: 0 }, { opacity: 1, duration: 0.3 }, afterRows);
